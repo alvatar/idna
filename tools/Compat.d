@@ -1,5 +1,5 @@
 
-module dnia.tools.Compat;
+module idna.tools.Compat;
 
 public alias char[] string;
 
