@@ -1,0 +1,10 @@
+-I../../..
+-I../../../xf/ext
+-I../../../xf
+-g
+-debug
+-L-lGL
+-L-lXrandr
+-c
+-deps=idna.cyma.application.Main.moduleDeps
+../application/Main.d

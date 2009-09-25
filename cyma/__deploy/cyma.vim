@@ -1,14 +1,12 @@
-" Load Session before loading custom configuration
-source Session.vim
-
 " Quick settings
 let g:projectPath = "/data/projects/idna/cyma/"
 let g:programName = "Cyma"
-let g:compilerName = "dmd"
-let makeString = "xfbuild ../application/Main.d +full +noop +c".g:compilerName." +obin/".g:programName." -I../../.. -I../../ext -g -debug"
+let makeString = "xfbuild ../application/Main.d +full +noop +cdmd +obin/".g:programName." -I../../.. -I../../../xf/ext -I../../../xf -g -debug -L-lGL -L-lXrandr"
 
 " Paths and global variables for custom functions
 execute "cd ".g:projectPath."__deploy"
+" Load Session before loading custom configuration
+source Session.vim
 let CTags_CScope_Top_Dir = g:projectPath."__deploy"
 let CTags_CScope_Dir_List = g:projectPath.".."
 let Make_Dir = g:projectPath."__deploy"

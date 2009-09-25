@@ -6,7 +6,15 @@ private {
 	import idna.cyma.view.DrawableObject;
 }
 
-class Node {
+class Node
+{
+	this( DrawableObject idrawable
+		, bool iisLeaf )
+	{
+		drawable = idrawable;
+		isLeaf = iisLeaf;
+	}
+
 	/++ Nodes contain nodes creating a tree +/
 	alias LinkedList!(typeof(this)) ChildrenNodes;
 	private ChildrenNodes children;

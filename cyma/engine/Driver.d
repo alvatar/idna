@@ -1,14 +1,28 @@
 module idna.cyma.engine.Driver;
 
 private{
+	import xf.utils.Singleton;
+
+	import idna.cyma.engine.Command;
 	import idna.cyma.model.Model;
 }
 
-interface IDriver {
-	void process( IModel );
+class Driver
+{
+	void init()
+	{
+	}
+
+	void process( Model model )
+	{
+	}
 }
 
-class Driver : IDriver {
-	void process( IModel ) {
+alias Singleton!(Driver) driver;
+
+debug void injectCommands( Model model, Command[] commands )
+{
+	foreach( com; commands ) {
+		com.execute( model );
 	}
 }

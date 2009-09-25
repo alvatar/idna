@@ -8,9 +8,21 @@ private {
  + A drawable object is basically an element with some information for its
  + processing in different backends
  +/
-class DrawableObject {
+class DrawableObject
+{
+	enum Type {
+		Line
+		, Polyline
+		, Circle
+		, Arc
+		, Rectangle
+		, Image
+	}
 	/++ The type of drawable object +/
-	uint type;
+	Type type;
+
+	/++ Size in bytes of the drawable object +/
+	size_t sizeInBytes;
 
 	/++ The element to draw +/
 	Element element;

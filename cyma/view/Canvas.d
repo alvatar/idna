@@ -1,8 +1,12 @@
 module idna.cyma.view.Canvas;
 
-import idna.cyma.view.DrawableObject;
+private {
+	import idna.tools.Compat;
+	import idna.cyma.view.DrawableObject;
+}
 
 interface ICanvas
 {
+	void init();
 	void draw( DrawableObject );
 }

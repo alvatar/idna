@@ -4,12 +4,21 @@ private {
 	import idna.cyma.engine.Driver;
 
 	import idna.cyma.controller.Ui;
+	import idna.cyma.view.Drawer;
 }
 
-class HybridGui : IUi {
-	void processInput() {
+class HybridGui : Ui {
+	void init()
+	{
 	}
 
-	void makeCommands( IDriver driver ) {
+	void doUi( Driver driver
+			, DrawFunctionInfo[] drawFunctions )
+	{
+	}
+
+	IJob getMainProcess()
+	{
+		return null;
 	}
 }

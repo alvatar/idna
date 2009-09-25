@@ -1,9 +1,8 @@
 module idna.cyma.model.Model;
 
 private {
-	import tango.io.Stdout;
 	import tango.util.container.LinkedList;
-	import tango.util.container.more.Heap;
+	import idna.tools.Compat;
 
 	import idna.cyma.view.DrawableObject;
 
@@ -14,22 +13,30 @@ private {
 /++ Alias for the type of the layers structure +/
 alias LinkedList!(Layer) LayerStructure;
 
-/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + Interface for Models. Models should be only accessed from this interface
- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-interface IModel {
-}
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A Model owns all layers and all the data that defines the document. Should
  + also take care of the optimizations and offer the possibility of traversing
  + through the use of DrawableObjects
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class Model : IModel {
-	// A model is a set of layers that can be rearranged
-	LayerStructure layers;
+class Model
+{
+	private{
+		this() {}
+	}
 
-	int opApply( int delegate (ref Node) dg ) {
+	static Model create()
+	{
+		return new typeof(this);
+	}
+
+	private {
+		// A model is a set of layers that can be rearranged
+		LayerStructure layers;
+	}
+
+	int opApply( int delegate (ref Node) dg )
+	{
 		int result;
 		layers.Iterator layersIt;
 		foreach( ref layer; layersIt ) {
@@ -48,10 +55,12 @@ class Model : IModel {
  + This class encapsulates access to drawable objects in the nodes iterated
  + over a model
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-private class ModelDrawables {
+private class ModelDrawables
+{
 	Model model;
 
-	int opApply( int delegate (ref DrawableObject) dg ) {
+	int opApply( int delegate (ref DrawableObject) dg )
+	{
 		int result;
 		foreach( node; model ) {
 			result = dg( node.drawable );
@@ -64,9 +73,9 @@ private class ModelDrawables {
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Helper function to get drawables from a model
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-ModelDrawables drawables (IModel model) {
-	ModelDrawables modelDrawables;
-	// Here is where the downcast is made to the right type (not implemented)
-	modelDrawables.model = cast(Model)model;
+ModelDrawables drawables (Model model)
+{
+	ModelDrawables modelDrawables = new ModelDrawables;
+	modelDrawables.model = model;
 	return modelDrawables;
 }

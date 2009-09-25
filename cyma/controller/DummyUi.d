@@ -3,20 +3,28 @@ module idna.cyma.controller.DummyUi;
 private {
 	import idna.cyma.controller.Ui;
 	import idna.cyma.engine.Driver;
+	import idna.cyma.view.Drawer;
 }
 
 /+
- + Class for issuing commands artificially
+ + Class for issuing commands artificially and testing
+ + drawer/canvas/model combinations
  +/
-class DummyUi : IUi {
+class DummyUi : Ui
+{
 	
-	this() {
+	void init ()
+	{
 		//currentCommands
 	}
 
-	void processInput() {
+	void doUi( Driver driver
+			, DrawFunctionInfo[] drawFunctions )
+	{
 	}
-
-	void makeCommands( IDriver driver ) {
+	
+	IJob getMainProcess()
+	{
+		return null;
 	}
 }

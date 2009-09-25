@@ -19,11 +19,11 @@ nmap <silent> \c <Plug>Traditionalj
 vmap ]% ]%m'gv``
 vmap a% [%v]%
 nmap gx <Plug>NetrwBrowseX
-nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")
-noremap <F11> :call Compile(1)
-noremap <F10> :call CleanXfBuild()
-nmap <F9> :!bin/Cyma 
 nnoremap <F3> :vimgrep // **
+nmap <F9> :!bin/Cyma 
+noremap <F10> :call CleanXfBuild()
+noremap <F11> :call Compile(1)
+nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 noremap <Plug>VisualFirstLine :call EnhancedCommentify('', 'first',   line("'<"), line("'>"))
 noremap <Plug>VisualTraditional :call EnhancedCommentify('', 'guess',   line("'<"), line("'>"))
@@ -71,7 +71,7 @@ set helplang=en
 set hlsearch
 set iminsert=0
 set imsearch=0
-set makeprg=xfbuild\ ../application/Main.d\ +full\ +noop\ +cdmd\ +obin/Cyma\ -I../../..\ -I../../ext\ -g
+set makeprg=xfbuild\ ../application/Main.d\ +full\ +noop\ +cdmd\ +obin/Cyma\ -I../../..\ -I../../../xf/ext\ -I../../../xf\ -g\ -debug\ -L-lGL\ -L-lXrandr
 set mouse=a
 set mousemodel=popup
 set path=.,/usr/include,,,.**,/data/projects/idna/cyma/**
@@ -118,9 +118,9 @@ let Tlist_Exit_OnlyWindow =  1
 let NetrwTopLvlMenu = "Netrw."
 let Tlist_Display_Prototype =  0 
 let Tlist_Ctags_Cmd = "exuberant-ctags"
+let NetrwMenuPriority =  80 
 let Tlist_Highlight_Tag_On_BufEnter =  1 
 let Tlist_Auto_Highlight_Tag =  1 
-let NetrwMenuPriority =  80 
 let Tlist_Show_Menu =  0 
 let Tlist_Max_Tag_Length =  10 
 let Tlist_Use_Right_Window =  0 
@@ -133,23 +133,24 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +57 /data/projects/idna/cyma/model/Model.d
-badd +7 /data/projects/idna/cyma/application/Main.d
-badd +46 /data/projects/idna/cyma/view/Drawer.d
+badd +4 /data/projects/idna/cyma/model/Model.d
+badd +29 /data/projects/idna/cyma/application/Main.d
+badd +68 /data/projects/idna/cyma/view/Drawer.d
 badd +4 /data/projects/idna/cyma/model/Layer.d
 badd +28 /data/projects/idna/cyma/model/Substrate.d
 badd +4 /data/projects/idna/cyma/view/DrawableObject.d
-badd +8 /data/projects/idna/cyma/view/Canvas.d
-badd +9 /data/projects/idna/cyma/view/GLCanvas.d
-badd +22 /data/projects/idna/cyma/controller/DummyUi.d
+badd +13 /data/projects/idna/cyma/view/Canvas.d
+badd +22 /data/projects/idna/cyma/view/GLCanvas.d
+badd +24 /data/projects/idna/cyma/controller/DummyUi.d
 badd +1 /data/projects/idna/cyma/engine/Element.d
-badd +22 /data/projects/idna/cyma/controller/Ui.d
-badd +8 /data/projects/idna/cyma/engine/Driver.d
-badd +1 .objs/idna-cyma-application-Main.o:/data/projects/idna/cyma/__deploy/../application/Main.d
-badd +9 /data/projects/idna/cyma/controller/UiCreator.d
-badd +5 /data/projects/idna/cyma/controller/HybridGui.d
+badd +25 /data/projects/idna/cyma/controller/Ui.d
+badd +14 /data/projects/idna/cyma/engine/Driver.d
+badd +1 /data/projects/idna/cyma/controller/UiCreator.d
+badd +16 /data/projects/idna/cyma/controller/HybridGui.d
+badd +167 /data/projects/idna/cyma/controller/GlUi.d
+badd +19 /data/projects/idna/cyma/controller/UiManager.d
 silent! argdel *
-edit /data/projects/idna/cyma/application/Main.d
+edit /data/projects/idna/cyma/view/Drawer.d
 set splitbelow splitright
 wincmd _ | wincmd |
 split
@@ -172,7 +173,7 @@ let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
 setlocal noarabic
-setlocal noautoindent
+setlocal autoindent
 setlocal balloonexpr=
 setlocal nobinary
 setlocal bufhidden=
@@ -182,7 +183,7 @@ setlocal cindent
 setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
-setlocal comments=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal completefunc=
@@ -212,7 +213,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=nroql2
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=0
@@ -267,15 +268,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 7 - ((6 * winheight(0) + 23) / 46)
+let s:l = 87 - ((34 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-7
-normal! 0
+87
+normal! 017l
 wincmd w
 argglobal
-edit /data/projects/idna/cyma/controller/DummyUi.d
+edit /data/projects/idna/cyma/controller/GlUi.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -286,7 +287,7 @@ let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
 setlocal noarabic
-setlocal noautoindent
+setlocal autoindent
 setlocal balloonexpr=
 setlocal nobinary
 setlocal bufhidden=
@@ -296,7 +297,7 @@ setlocal cindent
 setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
-setlocal comments=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal completefunc=
@@ -326,7 +327,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=nroql2
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=0
@@ -381,12 +382,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 17 - ((16 * winheight(0) + 22) / 45)
+let s:l = 152 - ((43 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-17
-normal! 0
+152
+normal! 04l
 wincmd w
 exe '1resize ' . ((&lines * 46 + 47) / 94)
 exe '2resize ' . ((&lines * 45 + 47) / 94)

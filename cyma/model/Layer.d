@@ -13,11 +13,13 @@ private {
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + This implements the foreach algorithm at the layer level
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class Layer {
+class Layer
+{
 	// Link to the layers of the model
 	Substrate[] substrates;
 
-	int opApply( int delegate (ref Substrate) dg ) {
+	int opApply( int delegate (ref Substrate) dg )
+	{
 		int result;
 		for( int i = 0; i < substrates.length; i++ ) {
 			result = dg( substrates[i] );
