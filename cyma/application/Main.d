@@ -9,7 +9,7 @@ import idna.cyma.view.Drawer;
 import idna.cyma.model.Model;
 import idna.cyma.engine.Driver;
 import idna.cyma.engine.Command;
-import idna.cyma.application.MessageBox;
+import idna.cyma.application.AsyncMessageHub;
 
 int main( string[] args )
 {
