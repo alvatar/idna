@@ -9,11 +9,10 @@ private {
 	import idna.cyma.view.GLCanvas;
 }
 
-class DrawFunctionInfo
-{
+class DrawFunctionInfo {
+
 	this( string iname
-		, void delegate() ifunc )
-	{
+		, void delegate() ifunc ) {
 		name = iname;
 		func = ifunc;
 	}
@@ -22,22 +21,7 @@ class DrawFunctionInfo
 	string name;
 }
 
-class Drawer
-{
-	/*
-	private {
-		this() {}
-		static typeof(this) instance;
-	}
-
-	static typeof(this) get() {
-		if( instance is null ) {
-			instance = new typeof(this);
-			instance.init();
-		}
-		return instance;
-	}
-	*/
+class Drawer {
 
 	/++
 	 + Structure holding information about registered Canvas
@@ -84,9 +68,8 @@ class Drawer
 		*/
 		// TODO: A clean system to generate draw functions depending
 		// on the canvas. CURRENTLY ONLY GlCanvas
-		auto canvasName = "GlCanvas";
-		auto canvasInfo = canvasMap[canvasName];
 		void drawGlCanvas( Model injectModel ) {
+			auto canvasInfo = canvasMap["GlCanvas"];
 			if( canvasInfo.active ) {
 				// Traverse the model and draw it on each active canvas
 				foreach( drawable; drawables(injectModel) ) {
@@ -96,7 +79,7 @@ class Drawer
 		}
 
 		return( [ new DrawFunctionInfo(
-				canvasName.dup
+				"GlCanvasFunc"
 				, Curry(&drawGlCanvas, model)
 					) ] );
 	}
@@ -108,7 +91,7 @@ class Drawer
 	void registerCanvas( ICanvas canvas, string name ) {
 		CanvasInfo canvasInfo = { false, true, canvas };
 		canvasMap[name] = canvasInfo;
-		debug {
+		debug(verbose) {
 			stdout( "New registered Canvas: {}", name );
 		}
 	}

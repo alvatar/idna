@@ -2,27 +2,24 @@ module idna.cyma.model.Node;
 
 private {
 	import tango.util.container.LinkedList;
-
-	import idna.cyma.view.DrawableObject;
 }
 
-class Node
-{
-	this( DrawableObject idrawable
-		, bool iisLeaf )
-	{
-		drawable = idrawable;
+package import idna.cyma.engine.Element;
+
+class Node {
+
+	this( Element ielement, bool iisLeaf ) {
+		element = ielement;
 		isLeaf = iisLeaf;
 	}
 
 	/++ Nodes contain nodes creating a tree +/
 	alias LinkedList!(typeof(this)) ChildrenNodes;
-	private ChildrenNodes children;
+	private ChildrenNodes _children;
 
 	/++ A flag to know if this is a leaf node +/
 	bool isLeaf;
 
-	/++ The renderable graphic data +/
-	DrawableObject drawable;
+	/++ The engine element in the node +/
+	Element element;
 }
-

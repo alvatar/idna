@@ -14,13 +14,10 @@ private {
 		import xf.input.Writer;
 	}
 
-	import idna.tools.Compat;
 	import idna.tools.Curry;
 
 	import idna.cyma.application.AsyncMessageHub;
 	import idna.cyma.controller.Ui;
-	import idna.cyma.engine.Driver;
-	import idna.cyma.view.Drawer;
 }
 
 /+

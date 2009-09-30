@@ -1,7 +1,6 @@
+module dnia.cyma.engine.elements.Arc;
 
-module dnia.dosd.engine.elements.Line;
-
-class Line : Element
+class Arc : Element
 {
 
 }

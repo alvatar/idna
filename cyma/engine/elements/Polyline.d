@@ -1,7 +1,6 @@
+module dnia.cyma.engine.elements.Polyline;
 
-module dnia.dosd.engine.elements.Line;
-
-class Line : Element
+class Polyline : Element
 {
 
 }

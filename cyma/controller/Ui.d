@@ -2,7 +2,7 @@ module idna.cyma.controller.Ui;
 
 package import xf.core.JobHub;
 
-private {
+package {
 	import idna.tools.Compat;
 	import idna.cyma.view.Drawer;
 	import idna.cyma.engine.Driver;

@@ -3,45 +3,42 @@ module idna.cyma.view.GLCanvas;
 private {
 	import idna.tools.Compat;
 
-	import idna.cyma.view.Drawer;
 	import idna.cyma.view.DrawableObject;
 }
 
 public import idna.cyma.view.Canvas;
 
-class GLCanvas : ICanvas
-{
+class GLCanvas : ICanvas {
 	/++
 	 + Implementation of the init() method for OpenGL backend
 	 +/
-	void init()
-	{
+	void init() {
 	}
 
 	/++
 	 + Implementation of the draw() method for OpenGL backend
 	 +/
-	void draw( DrawableObject drawable )
-	{
+	void draw( DrawableObject drawable ) {
+		/*
 		switch( drawable.type ) {
-			case drawable.Type.Line:
-				stdout("LINE");
+			case drawable.Types.Line:
 			break;
-			case drawable.Type.Polyline:
+			case drawable.Types.Polyline:
 				stdout("POLYLINE");
 			break;
-			case drawable.Type.Circle:
+			case drawable.Types.Circle:
 				stdout("CIRCLE");
 			break;
-			case drawable.Type.Arc:
+			case drawable.Types.Arc:
 				stdout("ARC");
 			break;
-			case drawable.Type.Rectangle:
+			case drawable.Types.Rectangle:
 				stdout("RECTANGLE");
 			break;
-			case drawable.Type.Image:
+			case drawable.Types.Image:
 				stdout("IMAGE");
 			break;
 		}
+		*/
 	}
 }

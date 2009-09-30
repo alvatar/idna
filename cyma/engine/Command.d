@@ -2,11 +2,14 @@ module idna.cyma.engine.Command;
 
 private {
 	import idna.tools.Compat;
-	import idna.cyma.model.Model;
 }
 
-interface ICommand
-{
+package {
+	import idna.cyma.model.Model;
+	import idna.cyma.model.Node;
+}
+
+interface ICommand {
 	void execute( Model );
 }
 
@@ -14,8 +17,8 @@ interface ICommand
 + Context of execution. Used for injecting arbitrary data needed
 + for execution
 +/
-class CommandContext
-{
+class CommandContext {
+
 	private {
 		string _contextInfo;
 	}
@@ -29,8 +32,8 @@ class CommandContext
 /++
  + Abstract class for common functionality of the commands
  +/
-abstract class Command : ICommand
-{
+abstract class Command : ICommand {
+
 	enum State {
 		Created
 		, Initialized
@@ -47,34 +50,23 @@ abstract class Command : ICommand
 	/++ Name of the command +/
 	string _name;
 
-	string name( string name )
-	{
+	string name( string name ) {
 		return _name = name;
 	}
 
-	string name()
-	{
+	string name() {
 		return _name;
 	}
 
 	CommandContext _context;
 
-	Command context( CommandContext context )
-	{
+	Command context( CommandContext context ) {
 		_context = context;
 		return this;
 	}
 
-	CommandContext context()
-	{
+	CommandContext context() {
 		return _context;
 	}
 }
 
-debug class DummyCommand : Command
-{
-	void execute( Model model )
-	{
-		stdout("Dummy Command executed");
-	}
-}

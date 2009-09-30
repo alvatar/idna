@@ -7,21 +7,18 @@ private{
 	import idna.cyma.model.Model;
 }
 
-class Driver
-{
-	void init()
-	{
+class Driver {
+
+	void init() {
 	}
 
-	void process( Model model )
-	{
+	void process( Model model ) {
 	}
 }
 
 alias Singleton!(Driver) driver;
 
-debug void injectCommands( Model model, Command[] commands )
-{
+debug void injectCommands( Model model, Command[] commands ) {
 	foreach( com; commands ) {
 		com.execute( model );
 	}

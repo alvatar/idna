@@ -133,6 +133,7 @@ class AsyncMessageHub : MessageHub {
 		/+
 		 + Get messages with a type, casted accordingly
 		 +/
+		 // TODO: classinfo doesn't work like this
 		 T[] fromType( string type ) {
 			T[] result;
 			TaggedMessage tmsg;
@@ -179,11 +180,12 @@ class AsyncMessageHub : MessageHub {
 		/+
 		 + Get messages with a type, casted accordingly
 		 +/
-		 T[] fromType( string type, void delegate(T msg) dg ) {
+		 // TODO: classinfo doesn't work like this
+		 T[] fromType(U)( void delegate(T msg) dg ) {
 			T[] result;
 			TaggedMessage tmsg;
 			foreach( msg; pendingMessages ) {
-				if( msg.classinfo.name == type ) {
+				if( cast(U)msg ) {
 					debug if( cast(T)msg !is null ) {
 						throw new Exception(
 								"Error casting TaggedMessage to" ~ T.stringof

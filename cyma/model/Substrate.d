@@ -2,6 +2,7 @@
 module idna.cyma.model.Substrate;
 
 private {
+	import idna.tools.Compat;
 	import idna.cyma.model.Node;
 }
 
@@ -20,7 +21,7 @@ class Substrate
 	 +/
 	void addNode( Node newNode )
 	{
-		nodesRoot[$] = newNode;
+		nodesRoot ~= newNode;
 	}
 
 	int opApply( int delegate (ref Node) dg )

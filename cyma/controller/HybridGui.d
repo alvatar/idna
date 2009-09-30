@@ -1,24 +1,19 @@
 module idna.cyma.controller.HybridGui;
 
 private {
-	import idna.cyma.engine.Driver;
-
 	import idna.cyma.controller.Ui;
-	import idna.cyma.view.Drawer;
 }
 
 class HybridGui : Ui {
-	void init()
-	{
+
+	void init() {
 	}
 
 	void doUi( Driver driver
-			, DrawFunctionInfo[] drawFunctions )
-	{
+			, DrawFunctionInfo[] drawFunctions ) {
 	}
 
-	IJob getMainProcess()
-	{
+	IJob getMainProcess() {
 		return null;
 	}
 }

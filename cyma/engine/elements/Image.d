@@ -1,4 +1,4 @@
-module dnia.dosd.engine.elements.Line;
+module dnia.cyma.engine.elements.Image;
 
 private {
 	import xf.omg.core.LinearAlgebra;
@@ -7,7 +7,7 @@ private {
 /++
  + A line is a geometric entity composed of 2 vectors
  +/
-class Line : Element {
+class Image : Element {
 	/++ 2 Points define a line +/
 	vec2 pointA;
 	vec2 pointB;

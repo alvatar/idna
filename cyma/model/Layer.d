@@ -1,7 +1,10 @@
 module idna.cyma.model.Layer;
 
 private {
-	import idna.cyma.model.Substrate;
+	import idna.tools.Compat;
+	import idna.cyma.model.RasterSubstrate;
+	import idna.cyma.model.StaticVectorSubstrate;
+	import idna.cyma.model.DynamicVectorSubstrate;
 	import idna.cyma.model.Node;
 }
 
@@ -10,16 +13,33 @@ private {
  + depending on the type of representation (raster, static vectors, dynamic
  + vectors).
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + This implements the foreach algorithm at the layer level
- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class Layer
-{
-	// Link to the layers of the model
-	Substrate[] substrates;
+class Layer {
 
-	int opApply( int delegate (ref Substrate) dg )
-	{
+	this() {
+		substrates[0] = new RasterSubstrate;
+		rasterSubstrate = cast(RasterSubstrate)substrates[0];
+		substrates[1] = new StaticVectorSubstrate;
+		staticVectorSubstrate = cast(StaticVectorSubstrate)substrates[1];
+		substrates[2] = new DynamicVectorSubstrate;
+		dynamicVectorSubstrate = cast(DynamicVectorSubstrate)substrates[2];
+		debug(verbose) stdout( "Substrates created" );
+	}
+
+	public {
+		/++ Link to the layers of the model +/
+		RasterSubstrate rasterSubstrate;
+		StaticVectorSubstrate staticVectorSubstrate;
+		DynamicVectorSubstrate dynamicVectorSubstrate;
+	}
+
+	private {
+		Substrate[3] substrates;
+	}
+
+	/++
+	 + opApply
+	 +/
+	int opApply( int delegate (ref Substrate) dg ) {
 		int result;
 		for( int i = 0; i < substrates.length; i++ ) {
 			result = dg( substrates[i] );
