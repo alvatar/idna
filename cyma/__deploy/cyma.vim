@@ -17,23 +17,29 @@ execute "set path+=".g:projectPath."**"
 " execute "set makeprg=".formatedMakeString
 execute "set makeprg=".makeString
 
-" Clean Xfbuilds' excrements
-function! CleanXfBuild()
-	execute "cd ".g:projectPath."__deploy"
-	execute "!./clean.sh"
-endfunction
-
 " View imports graph
 function! ViewImportsGraph()
 	execute "cd ".g:projectPath."__deploy"
 	execute "!./graph.sh"
 endfunction
 
+" Run program
+function! RunProgram()
+	execute "cd ".g:projectPath."__deploy"
+	execute "!./run.sh"
+endfunction
+
+" Clean Xfbuilds' excrements
+function! CleanProgram()
+	execute "cd ".g:projectPath."__deploy"
+	execute "!./clean.sh"
+endfunction
+
 " Shortcuts
 nnoremap <F3> :vimgrep /<C-R><C-W>/ **<CR>
 noremap <F8> :call ViewImportsGraph()<CR>
-execute "nmap <F9> :!bin/".g:programName." <CR>"
-noremap <F10> :call CleanXfBuild()<CR>
+noremap <F9> :call RunProgram()<CR>
+noremap <F10> :call CleanProgram()<CR>
 noremap <F11> :call Compile(1)<CR>
 inoremap <F11> <ESC>:call Compile(1)<CR>
 nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")<CR>
