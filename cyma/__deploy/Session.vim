@@ -71,7 +71,7 @@ set helplang=en
 set hlsearch
 set iminsert=0
 set imsearch=0
-set makeprg=xfbuild\ ../application/Main.d\ +full\ +noop\ +cdmd\ +obin/Cyma\ -I../../..\ -I../../../xf/ext\ -I../../../xf\ -g\ -debug\ -L-lGL\ -L-lXrandr
+set makeprg=xfbuild\ ../application/Main.d\ +full\ +noop\ +cdmd\ +obin/Cyma\ -I../../..\ -I../../../xf/ext\ -I../../../xf\ -g\ -debug\ -debug=verbose\ -L-lGL\ -L-lXrandr
 set mouse=a
 set mousemodel=popup
 set path=.,/usr/include,,,.**,/data/projects/idna/cyma/**
@@ -94,27 +94,26 @@ let Tlist_Max_Submenu_Items =  20
 let Tlist_Auto_Update =  1 
 let CTags_CScope_Dir_List = "/data/projects/idna/cyma/.."
 let Tlist_WinWidth =  30 
+let Tlist_Exit_OnlyWindow =  1 
+let Tlist_Display_Tag_Scope =  1 
 let Tlist_Enable_Fold_Column =  1 
 let Tlist_Close_On_Select =  1 
 let Tlist_GainFocus_On_ToggleOpen =  1 
 let Tlist_Use_SingleClick =  0 
-let Tlist_WinHeight =  10 
 let Tlist_File_Fold_Auto_Close =  0 
 let Tlist_Auto_Open =  0 
 let EnhCommentifyTraditionalMode = "Yes"
 let Tlist_Show_One_File =  1 
 let CTags_CScope_Top_Dir = "/data/projects/idna/cyma/__deploy"
 let EnhCommentifyRespectIndent = "yes"
-let Tlist_Inc_Winwidth =  1 
 let EnhCommentifyPretty = "yes"
-let Tlist_Display_Tag_Scope =  1 
 let Tlist_Compact_Format =  0 
+let Tlist_WinHeight =  10 
 let EnhCommentifyCallbackExists = "Yes"
 let TagList_title = "__Tag_List__"
 let Tlist_Use_Horiz_Window =  0 
 let EnhCommentifyAlignRight = "no"
 let EnhCommentifyMultiPartBlocks = "yes"
-let Tlist_Exit_OnlyWindow =  1 
 let NetrwTopLvlMenu = "Netrw."
 let Tlist_Display_Prototype =  0 
 let Tlist_Ctags_Cmd = "exuberant-ctags"
@@ -123,6 +122,7 @@ let Tlist_Highlight_Tag_On_BufEnter =  1
 let Tlist_Auto_Highlight_Tag =  1 
 let Tlist_Show_Menu =  0 
 let Tlist_Max_Tag_Length =  10 
+let Tlist_Inc_Winwidth =  1 
 let Tlist_Use_Right_Window =  0 
 let Make_Dir = "/data/projects/idna/cyma/__deploy"
 let Tlist_Process_File_Always =  0 
@@ -133,24 +133,32 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +4 /data/projects/idna/cyma/model/Model.d
-badd +29 /data/projects/idna/cyma/application/Main.d
-badd +68 /data/projects/idna/cyma/view/Drawer.d
-badd +4 /data/projects/idna/cyma/model/Layer.d
-badd +28 /data/projects/idna/cyma/model/Substrate.d
-badd +4 /data/projects/idna/cyma/view/DrawableObject.d
+badd +13 /data/projects/idna/cyma/model/Model.d
+badd +28 /data/projects/idna/cyma/application/Main.d
+badd +80 /data/projects/idna/cyma/view/Drawer.d
+badd +24 /data/projects/idna/cyma/model/Layer.d
+badd +24 /data/projects/idna/cyma/model/Substrate.d
+badd +24 /data/projects/idna/cyma/view/DrawableObject.d
 badd +13 /data/projects/idna/cyma/view/Canvas.d
 badd +22 /data/projects/idna/cyma/view/GLCanvas.d
 badd +24 /data/projects/idna/cyma/controller/DummyUi.d
-badd +1 /data/projects/idna/cyma/engine/Element.d
+badd +12 /data/projects/idna/cyma/engine/Element.d
 badd +25 /data/projects/idna/cyma/controller/Ui.d
-badd +14 /data/projects/idna/cyma/engine/Driver.d
+badd +28 /data/projects/idna/cyma/engine/Driver.d
 badd +1 /data/projects/idna/cyma/controller/UiCreator.d
 badd +16 /data/projects/idna/cyma/controller/HybridGui.d
-badd +167 /data/projects/idna/cyma/controller/GlUi.d
+badd +95 /data/projects/idna/cyma/controller/GlUi.d
 badd +19 /data/projects/idna/cyma/controller/UiManager.d
+badd +14 /data/projects/idna/cyma/engine/Command.d
+badd +4 /data/projects/idna/cyma/engine/commands/DummyCommand.d
+badd +24 /data/projects/idna/cyma/engine/commands/AddLine.d
+badd +1 /data/projects/idna/cyma/engine/commands/All.d
+badd +7 /data/projects/idna/cyma/model/RasterSubstrate.d
+badd +1 /data/projects/idna/cyma/model/StaticVectorSubstrate.d
+badd +7 /data/projects/idna/cyma/model/DynamicVectorSubstrate.d
+badd +15 /data/projects/idna/cyma/model/Node.d
 silent! argdel *
-edit /data/projects/idna/cyma/view/Drawer.d
+edit /data/projects/idna/cyma/model/Node.d
 set splitbelow splitright
 wincmd _ | wincmd |
 split
@@ -160,8 +168,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 46 + 47) / 94)
-exe '2resize ' . ((&lines * 45 + 47) / 94)
+exe '1resize ' . ((&lines * 37 + 38) / 77)
+exe '2resize ' . ((&lines * 37 + 38) / 77)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -268,15 +276,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 87 - ((34 * winheight(0) + 23) / 46)
+let s:l = 21 - ((20 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-87
-normal! 017l
+21
+normal! 01l
 wincmd w
 argglobal
-edit /data/projects/idna/cyma/controller/GlUi.d
+edit /data/projects/idna/cyma/engine/commands/AddLine.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -287,7 +295,7 @@ let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
 setlocal noarabic
-setlocal autoindent
+setlocal noautoindent
 setlocal balloonexpr=
 setlocal nobinary
 setlocal bufhidden=
@@ -297,7 +305,7 @@ setlocal cindent
 setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal comments=
 setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal completefunc=
@@ -327,7 +335,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
+setlocal formatoptions=nroql2
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=0
@@ -382,15 +390,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 152 - ((43 * winheight(0) + 22) / 45)
+let s:l = 12 - ((11 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-152
-normal! 04l
+12
+normal! 06l
 wincmd w
-exe '1resize ' . ((&lines * 46 + 47) / 94)
-exe '2resize ' . ((&lines * 45 + 47) / 94)
+exe '1resize ' . ((&lines * 37 + 38) / 77)
+exe '2resize ' . ((&lines * 37 + 38) / 77)
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
