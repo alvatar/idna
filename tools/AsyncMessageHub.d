@@ -1,4 +1,4 @@
-module idna.cyma.application.AsyncMessageHub;
+module idna.tools.AsyncMessageHub;
 
 private {
 	import tango.util.container.LinkedList;

@@ -1,14 +1,16 @@
-module idna.cyma.view.GLCanvas;
+module idna.cyma.view.GlCanvas;
 
 private {
-	import idna.tools.Compat;
+	import xf.dog.Dog;
 
+	import idna.tools.Compat;
+	import idna.cyma.view.Canvas;
 	import idna.cyma.view.DrawableObject;
 }
 
-public import idna.cyma.view.Canvas;
 
-class GLCanvas : ICanvas {
+class GlCanvas : Canvas {
+
 	/++
 	 + Implementation of the init() method for OpenGL backend
 	 +/
@@ -20,6 +22,24 @@ class GLCanvas : ICanvas {
 	 +/
 	void draw( DrawableObject drawable ) {
 		/*
+		gl.Clear(GL_COLOR_BUFFER_BIT);
+
+		gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
+			gl.BlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+			gl.Rotatef(.005f, 0, 0, 1);
+			gl.immediate( GL_TRIANGLES, {
+				gl.Color4f (1,    0,    0, 0.5f);
+				gl.Vertex3f(-1,  -1,   -2);
+
+				gl.Color4f (0,    1,    0, 0.5f);
+				gl.Vertex3f(1,   -1,   -2);
+
+				gl.Color4f (0,    0,    1, 0.5f);
+				gl.Vertex3f(0,    1,   -2);
+				} );
+		}
+		*/
+
 		switch( drawable.type ) {
 			case drawable.Types.Line:
 			break;
@@ -39,6 +59,5 @@ class GLCanvas : ICanvas {
 				stdout("IMAGE");
 			break;
 		}
-		*/
 	}
 }

@@ -6,40 +6,20 @@ private {
 	import idna.tools.Compat;
 	import idna.tools.Curry;
 	import idna.cyma.model.Model;
-	import idna.cyma.view.GLCanvas;
-}
-
-class DrawFunctionInfo {
-
-	this( string iname
-		, void delegate() ifunc ) {
-		name = iname;
-		func = ifunc;
-	}
-
-	void delegate() func;
-	string name;
+	import idna.cyma.view.DrawActor;
 }
 
 class Drawer {
-
-	/++
-	 + Structure holding information about registered Canvas
-	 +/
-	struct CanvasInfo {
-		bool initialized;
-		bool active;
-		ICanvas canvasInstance;
-	}
-
-	/++ AA for registered canvas information +/
-	CanvasInfo[string] canvasMap;
+	
+	/++ Draw functions information, everything needed to execute them +/
+	DrawActor[] drawActors;
 
 	/++
 	 + Iterate over each active and uninitalized canvas
 	 +/
 	 void init() {
-		 drawer.registerCanvas( new GLCanvas, "GlCanvas" );
+		 /*
+		 drawer.registerCanvas( new GlCanvas, "GlCanvas" );
 
 		 foreach( canvasInfo; drawer.canvasMap ) {
 			 if( !canvasInfo.initialized ) {
@@ -47,12 +27,13 @@ class Drawer {
 				 canvasInfo.initialized = true;
 			 }
 		 }
+		 */
 	 }
 
 	/++
 	 + Iterate over each active canvas, traversing the model
 	 +/
-	DrawFunctionInfo[] draw( Model model ) {
+	DrawActor[] yield( Model model ) {
 		/*
 		void drawFunc(Model injectModel) {
 			// Check which canvas are currently active
@@ -66,8 +47,8 @@ class Drawer {
 			}
 		}
 		*/
-		// TODO: A clean system to generate draw functions depending
-		// on the canvas. CURRENTLY ONLY GlCanvas
+
+		/*
 		void drawGlCanvas( Model injectModel ) {
 			auto canvasInfo = canvasMap["GlCanvas"];
 			if( canvasInfo.active ) {
@@ -78,16 +59,40 @@ class Drawer {
 			}
 		}
 
-		return( [ new DrawFunctionInfo(
+		return( [ DrawFunctionInfo(
 				"GlCanvasFunc"
 				, Curry(&drawGlCanvas, model)
+				, DrawFunctionInfo.DrawContext( null )
 					) ] );
+		*/
+
+		// TODO: A clean system to generate draw functions depending
+		// on the actor. CURRENTLY ONLY GlCanvas
+		drawActors[0]
+			.context
+			.canvas.linkWithDrawActor( &drawActors[0] );
+
+		void drawGlCanvas( Model injectModel ) {
+			if( drawActors[0].active ) {
+				// Traverse the model and draw it on each active canvas
+				foreach( drawable; drawables(injectModel) ) {
+					drawActors[0]
+						.context
+						.canvas.draw( drawable );
+				}
+			}
+		}
+
+		drawActors[0].func = Curry( &drawGlCanvas, model );
+		
+		return drawActors;
 	}
 
 	/++
 	 + Register canvas for use by the drawer. Mixed in by canvas classes's
 	 + constructors
 	 +/
+	 /*j
 	void registerCanvas( ICanvas canvas, string name ) {
 		CanvasInfo canvasInfo = { false, true, canvas };
 		canvasMap[name] = canvasInfo;
@@ -95,6 +100,7 @@ class Drawer {
 			stdout( "New registered Canvas: {}", name );
 		}
 	}
+	*/
 }
 
 alias Singleton!(Drawer) drawer;

@@ -4,11 +4,13 @@ package import xf.core.JobHub;
 
 package {
 	import idna.tools.Compat;
-	import idna.cyma.view.Drawer;
 	import idna.cyma.engine.Driver;
+	import idna.cyma.view.DrawActor;
+	import idna.cyma.view.Drawer;
 }
 
 interface Ui {
+
 	/++
 	 + Init function, common to all user interfaces. Must be overriden,
 	 + even if no initialization is necessary
@@ -22,7 +24,7 @@ interface Ui {
 	 + through a IDriver
 	 +/
 	void doUi( Driver driver
-			, DrawFunctionInfo[] drawFunctions );
+			, DrawActor[] drawActor );
 
 	/++
 	 + Get the process that executes the user interface

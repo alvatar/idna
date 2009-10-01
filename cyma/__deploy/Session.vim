@@ -19,11 +19,11 @@ nmap <silent> \c <Plug>Traditionalj
 vmap ]% ]%m'gv``
 vmap a% [%v]%
 nmap gx <Plug>NetrwBrowseX
-nnoremap <F3> :vimgrep // **
-nmap <F9> :!bin/Cyma 
-noremap <F10> :call CleanXfBuild()
-noremap <F11> :call Compile(1)
 nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")
+noremap <F11> :call Compile(1)
+noremap <F10> :call CleanProgram()
+noremap <F9> :call RunProgram()
+nnoremap <F3> :vimgrep // **
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 noremap <Plug>VisualFirstLine :call EnhancedCommentify('', 'first',   line("'<"), line("'>"))
 noremap <Plug>VisualTraditional :call EnhancedCommentify('', 'guess',   line("'<"), line("'>"))
@@ -49,7 +49,7 @@ nmap <C-Space>t :cs find t 
 nmap <C-Space>c :cs find c 
 nmap <C-Space>g :cs find g 
 nmap <C-Space>s :cs find s 
-nnoremap <silent> <F8> :TlistToggle
+noremap <F8> :call ViewImportsGraph()
 nnoremap <F2><F2> :!opera 
 nnoremap <F2> :!opera http://www.google.es/search?q=&ie=utf-8&oe=utf-8&aq=t
 inoremap <NL> /<++.\{-1,}++>c//e
@@ -71,7 +71,7 @@ set helplang=en
 set hlsearch
 set iminsert=0
 set imsearch=0
-set makeprg=xfbuild\ ../application/Main.d\ +full\ +noop\ +cdmd\ +obin/Cyma\ -I../../..\ -I../../../xf/ext\ -I../../../xf\ -g\ -debug\ -debug=verbose\ -L-lGL\ -L-lXrandr
+set makeprg=./build.sh
 set mouse=a
 set mousemodel=popup
 set path=.,/usr/include,,,.**,/data/projects/idna/cyma/**
@@ -94,26 +94,27 @@ let Tlist_Max_Submenu_Items =  20
 let Tlist_Auto_Update =  1 
 let CTags_CScope_Dir_List = "/data/projects/idna/cyma/.."
 let Tlist_WinWidth =  30 
-let Tlist_Exit_OnlyWindow =  1 
-let Tlist_Display_Tag_Scope =  1 
 let Tlist_Enable_Fold_Column =  1 
 let Tlist_Close_On_Select =  1 
 let Tlist_GainFocus_On_ToggleOpen =  1 
 let Tlist_Use_SingleClick =  0 
+let Tlist_WinHeight =  10 
 let Tlist_File_Fold_Auto_Close =  0 
 let Tlist_Auto_Open =  0 
 let EnhCommentifyTraditionalMode = "Yes"
 let Tlist_Show_One_File =  1 
 let CTags_CScope_Top_Dir = "/data/projects/idna/cyma/__deploy"
 let EnhCommentifyRespectIndent = "yes"
+let Tlist_Inc_Winwidth =  1 
 let EnhCommentifyPretty = "yes"
+let Tlist_Display_Tag_Scope =  1 
 let Tlist_Compact_Format =  0 
-let Tlist_WinHeight =  10 
 let EnhCommentifyCallbackExists = "Yes"
 let TagList_title = "__Tag_List__"
 let Tlist_Use_Horiz_Window =  0 
 let EnhCommentifyAlignRight = "no"
 let EnhCommentifyMultiPartBlocks = "yes"
+let Tlist_Exit_OnlyWindow =  1 
 let NetrwTopLvlMenu = "Netrw."
 let Tlist_Display_Prototype =  0 
 let Tlist_Ctags_Cmd = "exuberant-ctags"
@@ -122,7 +123,6 @@ let Tlist_Highlight_Tag_On_BufEnter =  1
 let Tlist_Auto_Highlight_Tag =  1 
 let Tlist_Show_Menu =  0 
 let Tlist_Max_Tag_Length =  10 
-let Tlist_Inc_Winwidth =  1 
 let Tlist_Use_Right_Window =  0 
 let Make_Dir = "/data/projects/idna/cyma/__deploy"
 let Tlist_Process_File_Always =  0 
@@ -134,157 +134,39 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +13 /data/projects/idna/cyma/model/Model.d
-badd +28 /data/projects/idna/cyma/application/Main.d
-badd +80 /data/projects/idna/cyma/view/Drawer.d
+badd +39 /data/projects/idna/cyma/application/Main.d
+badd +72 /data/projects/idna/cyma/view/Drawer.d
 badd +24 /data/projects/idna/cyma/model/Layer.d
-badd +24 /data/projects/idna/cyma/model/Substrate.d
-badd +24 /data/projects/idna/cyma/view/DrawableObject.d
-badd +13 /data/projects/idna/cyma/view/Canvas.d
-badd +22 /data/projects/idna/cyma/view/GLCanvas.d
-badd +24 /data/projects/idna/cyma/controller/DummyUi.d
+badd +12 /data/projects/idna/cyma/model/Substrate.d
+badd +30 /data/projects/idna/cyma/view/DrawableObject.d
+badd +6 /data/projects/idna/cyma/view/Canvas.d
+badd +18 /data/projects/idna/cyma/controller/DummyUi.d
 badd +12 /data/projects/idna/cyma/engine/Element.d
-badd +25 /data/projects/idna/cyma/controller/Ui.d
+badd +26 /data/projects/idna/cyma/controller/Ui.d
 badd +28 /data/projects/idna/cyma/engine/Driver.d
 badd +1 /data/projects/idna/cyma/controller/UiCreator.d
-badd +16 /data/projects/idna/cyma/controller/HybridGui.d
-badd +95 /data/projects/idna/cyma/controller/GlUi.d
+badd +13 /data/projects/idna/cyma/controller/HybridGui.d
+badd +154 /data/projects/idna/cyma/controller/GlUi.d
 badd +19 /data/projects/idna/cyma/controller/UiManager.d
-badd +14 /data/projects/idna/cyma/engine/Command.d
+badd +40 /data/projects/idna/cyma/engine/Command.d
 badd +4 /data/projects/idna/cyma/engine/commands/DummyCommand.d
-badd +24 /data/projects/idna/cyma/engine/commands/AddLine.d
+badd +1 /data/projects/idna/cyma/engine/commands/AddLine.d
 badd +1 /data/projects/idna/cyma/engine/commands/All.d
 badd +7 /data/projects/idna/cyma/model/RasterSubstrate.d
 badd +1 /data/projects/idna/cyma/model/StaticVectorSubstrate.d
 badd +7 /data/projects/idna/cyma/model/DynamicVectorSubstrate.d
-badd +15 /data/projects/idna/cyma/model/Node.d
+badd +21 /data/projects/idna/cyma/model/Node.d
+badd +9 /data/projects/idna/cyma/view/GlCanvas.d
+badd +6 /data/projects/idna/cyma/view/DrawActor.d
+badd +10 /data/projects/idna/cyma/view/DrawContext.d
 silent! argdel *
-edit /data/projects/idna/cyma/model/Node.d
+edit /data/projects/idna/cyma/view/Drawer.d
 set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 37 + 38) / 77)
-exe '2resize ' . ((&lines * 37 + 38) / 77)
 argglobal
-let s:cpo_save=&cpo
-set cpo&vim
-map <buffer> \o <Plug>OrganizeImports
-map <buffer> \i <Plug>Autoimport
-noremap <buffer> <Plug>OrganizeImports :OrganizeImports
-noremap <buffer> <Plug>Autoimport :Autoimport =expand("<cword>")
-let &cpo=s:cpo_save
-unlet s:cpo_save
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal completefunc=
-setlocal nocopyindent
-setlocal nocursorcolumn
-set cursorline
-setlocal cursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal noexpandtab
-if &filetype != 'd'
-setlocal filetype=d
-endif
-setlocal foldcolumn=0
-set nofoldenable
-setlocal nofoldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-set foldmethod=syntax
-setlocal foldmethod=syntax
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=es,en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal swapfile
-setlocal synmaxcol=3000
-if &syntax != 'd'
-setlocal syntax=d
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-let s:l = 21 - ((20 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-21
-normal! 01l
-wincmd w
-argglobal
-edit /data/projects/idna/cyma/engine/commands/AddLine.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -390,15 +272,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 12 - ((11 * winheight(0) + 18) / 37)
+let s:l = 72 - ((58 * winheight(0) + 46) / 93)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-12
-normal! 06l
-wincmd w
-exe '1resize ' . ((&lines * 37 + 38) / 77)
-exe '2resize ' . ((&lines * 37 + 38) / 77)
+72
+normal! 03l
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

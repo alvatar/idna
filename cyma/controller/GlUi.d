@@ -16,20 +16,20 @@ private {
 
 	import idna.tools.Curry;
 
-	import idna.cyma.application.AsyncMessageHub;
+	import idna.tools.AsyncMessageHub;
 	import idna.cyma.controller.Ui;
 }
 
 /+
  + Basic user interface based on Dog (opengl)
  +/
-class GlUi : Ui
-{
+class GlUi : Ui {
+
 	private {
-		/// The main opengl context
+		/++ The main opengl context +/
 		GLWindow context;
 
-		/// The keyboard reader
+		/++ The keyboard reader +/
 		SimpleKeyboardReader keyboard;
 
 		void handleKeyboard()
@@ -47,8 +47,7 @@ class GlUi : Ui
 	/++
 	 + Init function
 	 +/
-	void init()
-	{
+	void init() {
 		keyboard = new SimpleKeyboardReader( inputHub.mainChannel );
 		context = GLWindow();
 
@@ -107,20 +106,19 @@ class GlUi : Ui
 	 + User interface loop
 	 +/
 	void doUi( Driver driver
-			, DrawFunctionInfo[] drawFunctionInfos )
-	{
+			, DrawActor[] drawActors ) {
 		// Wrap each draw function, in case it needs some preparation
 		//
 		// Store functions specific for each type of canvas that this UI
 		// is able to handle
 		// TODO: some cache mechanism. THIS IS CRAP
-		scope void delegate( void delegate() )[string] glDrawSurfaces;
-		foreach( funcInfo; drawFunctionInfos ) {
+		scope void delegate( void delegate() )[string] glDrawWrapper;
+		foreach( actor; drawActors ) {
 			// Simple wrapper for the draw function. Allows to create UI
 			// context to allow execution of the draw function
 			// TODO: some system for creating different wrapper depending
 			// on the function type
-			glDrawSurfaces[funcInfo.name] = ( void delegate()f ){ f(); };
+			glDrawWrapper[actor.name] = ( void delegate()f ){ f(); };
 		}
 
 		void drawUi(GL gl) {
@@ -146,11 +144,15 @@ class GlUi : Ui
 
 		if( context.created ) {
 			use(context) in (GL gl) {
-				// Now inside the GL context we can draw the wrapped functions
-				// that we built upon the raw ones coming from Drawer. Those are
-				// passed to the wrapper function in-place:
-				foreach( funcInfo; drawFunctionInfos ) {
-					glDrawSurfaces[funcInfo.name]( funcInfo.func );
+				// TODO: update context handles of drawActors before executing actor functions!!!!
+
+
+
+				// Now inside the GL context we can executed the wrapped actor functions
+				// that we built upon the raw ones coming in DrawActors from Drawer. These
+				// are passed to the wrapper function in-place:
+				foreach( actor; drawActors ) {
+					glDrawWrapper[actor.name]( actor.func );
 				}
 				gl.drawUi();
 			};
@@ -161,8 +163,7 @@ class GlUi : Ui
 	/++
 	 + User interface main process
 	 +/
-	IJob getMainProcess()
-	{
+	IJob getMainProcess() {
 		return new MainProcess;
 	}
 }

@@ -15,7 +15,7 @@ class DummyUi : Ui {
 	}
 
 	void doUi( Driver driver
-			, DrawFunctionInfo[] drawFunctions ) {
+			, DrawActor[] drawActors ) {
 	}
 	
 	IJob getMainProcess() {

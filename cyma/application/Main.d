@@ -6,12 +6,12 @@ debug(trace) import tango.core.stacktrace.TraceExceptions;
 import xf.core.JobHub;
 
 import idna.tools.Compat;
+import idna.tools.AsyncMessageHub;
 import idna.cyma.controller.UiManager;
 import idna.cyma.view.Drawer;
 import idna.cyma.model.Model;
 import idna.cyma.engine.Driver;
 import idna.cyma.engine.commands.All;
-import idna.cyma.application.AsyncMessageHub;
 
 int main( string[] args ) {
 
@@ -21,7 +21,7 @@ int main( string[] args ) {
 	scope Model model = Model.create();
 
 	jobHub.addPostFrameJob( {
-		ui.doUi( driver, drawer.draw( model ) );
+		ui.doUi( driver, drawer.yield( model ) );
 	} );
 	jobHub.addPostFrameJob( {
 		driver.process( model );
