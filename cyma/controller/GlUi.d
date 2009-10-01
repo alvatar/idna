@@ -48,9 +48,11 @@ class GlUi : Ui {
 	 + Init function
 	 +/
 	void init() {
+		// Create OpenGl input and context
 		keyboard = new SimpleKeyboardReader( inputHub.mainChannel );
 		context = GLWindow();
 
+		// Configure OpenGl
 		context
 			.title(`opengl`)
 			.showCursor(true)
@@ -61,6 +63,7 @@ class GlUi : Ui {
 
 		jobHub.addRepeatableJob( &handleKeyboard, 200 );
 
+		// Set up input
 		version (NewDogInput) {
 			context.inputChannel = inputHub.mainChannel;
 		} else {
@@ -76,6 +79,7 @@ class GlUi : Ui {
 			}
 		} );
 
+		// Set up OpenGl
 		use(context) in (GL gl) {
 			version (Windows) {
 				gl.ext(WGL_EXT_swap_control, WGL_EXT_extensions_string, ARB_multitexture) in {
@@ -105,24 +109,8 @@ class GlUi : Ui {
 	/++
 	 + User interface loop
 	 +/
-	void doUi( Driver driver
-			, DrawActor[] drawActors ) {
-		// Wrap each draw function, in case it needs some preparation
-		//
-		// Store functions specific for each type of canvas that this UI
-		// is able to handle
-		// TODO: some cache mechanism. THIS IS CRAP
-		scope void delegate( void delegate() )[string] glDrawWrapper;
-		foreach( actor; drawActors ) {
-			// Simple wrapper for the draw function. Allows to create UI
-			// context to allow execution of the draw function
-			// TODO: some system for creating different wrapper depending
-			// on the function type
-			glDrawWrapper[actor.name] = ( void delegate()f ){ f(); };
-		}
-
+	void doUi( Driver driver, DrawActor[] drawActors ) {
 		void drawUi(GL gl) {
-			/*
 			gl.Clear(GL_COLOR_BUFFER_BIT);
 
 			gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
@@ -139,20 +127,18 @@ class GlUi : Ui {
 						gl.Vertex3f(0,    1,   -2);
 						});
 			};
-			*/
 		}
 
 		if( context.created ) {
 			use(context) in (GL gl) {
-				// TODO: update context handles of drawActors before executing actor functions!!!!
-
-
-
-				// Now inside the GL context we can executed the wrapped actor functions
+				// Now inside the GL environment we can executed the wrapped actor functions
 				// that we built upon the raw ones coming in DrawActors from Drawer. These
 				// are passed to the wrapper function in-place:
 				foreach( actor; drawActors ) {
-					glDrawWrapper[actor.name]( actor.func );
+					// Update actors environment with the GlUi's environment
+					actor.environment = gl;
+					// Execute actor
+					actor.execute();
 				}
 				gl.drawUi();
 			};

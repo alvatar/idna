@@ -5,7 +5,9 @@ private {
 
 	import idna.tools.Compat;
 	import idna.tools.Curry;
+
 	import idna.cyma.model.Model;
+	import idna.cyma.view.canvas.All;
 	import idna.cyma.view.DrawActor;
 }
 
@@ -15,9 +17,14 @@ class Drawer {
 	DrawActor[] drawActors;
 
 	/++
-	 + Iterate over each active and uninitalized canvas
+	 + Initialize Drawer and all DrawActors
 	 +/
 	 void init() {
+		 // Use alias from AllCanvas
+		 foreach( type; CanvasTypes ) {
+			addDrawActor( new type, type.stringof );
+			drawActors[$-1].canvas.init();
+		 }
 		 /*
 		 drawer.registerCanvas( new GlCanvas, "GlCanvas" );
 
@@ -62,29 +69,25 @@ class Drawer {
 		return( [ DrawFunctionInfo(
 				"GlCanvasFunc"
 				, Curry(&drawGlCanvas, model)
-				, DrawFunctionInfo.DrawContext( null )
 					) ] );
 		*/
 
-		// TODO: A clean system to generate draw functions depending
-		// on the actor. CURRENTLY ONLY GlCanvas
-		drawActors[0]
-			.context
-			.canvas.linkWithDrawActor( &drawActors[0] );
+		foreach( actor; drawActors ) {
+			auto canvas = cast(Canvas)actor.canvas;
+			canvas.linkWithDrawActor( actor );
 
-		void drawGlCanvas( Model injectModel ) {
-			if( drawActors[0].active ) {
-				// Traverse the model and draw it on each active canvas
-				foreach( drawable; drawables(injectModel) ) {
-					drawActors[0]
-						.context
-						.canvas.draw( drawable );
+			void drawCanvas( DrawActor injectActor, Model injectModel ) {
+				if( injectActor.active ) {
+					// Traverse the model and draw it on each active canvas
+					foreach( drawable; drawables(injectModel) ) {
+						injectActor.canvas.draw( drawable );
+					}
 				}
 			}
+
+			actor.execute = Curry( &drawCanvas, actor, model );
 		}
 
-		drawActors[0].func = Curry( &drawGlCanvas, model );
-		
 		return drawActors;
 	}
 
@@ -92,15 +95,14 @@ class Drawer {
 	 + Register canvas for use by the drawer. Mixed in by canvas classes's
 	 + constructors
 	 +/
-	 /*j
-	void registerCanvas( ICanvas canvas, string name ) {
-		CanvasInfo canvasInfo = { false, true, canvas };
-		canvasMap[name] = canvasInfo;
-		debug(verbose) {
-			stdout( "New registered Canvas: {}", name );
-		}
+	private void addDrawActor( Canvas canvas, string name ) {
+		DrawActor newDrawActor = new DrawActor;
+		newDrawActor.name = name;
+		newDrawActor.canvas = canvas;
+		drawActors ~= newDrawActor;
+
+		debug(verbose) stdout( "New registered Canvas: {}", name );
 	}
-	*/
 }
 
 alias Singleton!(Drawer) drawer;

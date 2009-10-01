@@ -1,4 +1,4 @@
-module idna.cyma.view.GlCanvas;
+module idna.cyma.view.canvas.GlCanvas;
 
 private {
 	import xf.dog.Dog;
@@ -21,7 +21,9 @@ class GlCanvas : Canvas {
 	 + Implementation of the draw() method for OpenGL backend
 	 +/
 	void draw( DrawableObject drawable ) {
-		/*
+		// Cast the DrawActor's environment to the right type for this canvas
+		GL gl = cast(GL)drawActor.environment;
+
 		gl.Clear(GL_COLOR_BUFFER_BIT);
 
 		gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
@@ -37,8 +39,7 @@ class GlCanvas : Canvas {
 				gl.Color4f (0,    0,    1, 0.5f);
 				gl.Vertex3f(0,    1,   -2);
 				} );
-		}
-		*/
+		};
 
 		switch( drawable.type ) {
 			case drawable.Types.Line:

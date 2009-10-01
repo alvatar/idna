@@ -1,7 +1,7 @@
 module idna.cyma.application.Main;
 
-debug = trace;
-debug(trace) import tango.core.stacktrace.TraceExceptions;
+debug = stacktrace;
+debug(stacktrace) import tango.core.stacktrace.TraceExceptions;
 
 import xf.core.JobHub;
 
