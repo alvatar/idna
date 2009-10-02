@@ -15,14 +15,15 @@ private {
 	}
 
 	import idna.tools.Curry;
-
 	import idna.tools.AsyncMessageHub;
+
 	import idna.cyma.controller.Ui;
+	import idna.cyma.engine.commands.All;
 }
 
-/+
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Basic user interface based on Dog (opengl)
- +/
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class GlUi : Ui {
 
 	private {
@@ -110,9 +111,17 @@ class GlUi : Ui {
 	 + User interface loop
 	 +/
 	void doUi( Driver driver, DrawActor[] drawActors ) {
+		debug {
+			Command com1 = new AddLine();
+			driver.injectCommands( 
+				[ com1.context( new CommandContext("0.01, 0.01") )
+				, com1
+				, com1 ]
+				);
+		}
+
 		void drawUi(GL gl) {
 			gl.Clear(GL_COLOR_BUFFER_BIT);
-
 			gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
 				gl.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				gl.Rotatef(.005f, 0, 0, 1);
@@ -131,16 +140,14 @@ class GlUi : Ui {
 
 		if( context.created ) {
 			use(context) in (GL gl) {
-				// Now inside the GL environment we can executed the wrapped actor functions
-				// that we built upon the raw ones coming in DrawActors from Drawer. These
-				// are passed to the wrapper function in-place:
+				gl.Clear(GL_COLOR_BUFFER_BIT);
 				foreach( actor; drawActors ) {
 					// Update actors environment with the GlUi's environment
 					actor.environment = gl;
 					// Execute actor
-					actor.execute();
+					actor.execute()();
 				}
-				gl.drawUi();
+				//gl.drawUi();
 			};
 			context.update().show();
 		}

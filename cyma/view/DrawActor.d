@@ -6,8 +6,12 @@ private {
 	import idna.cyma.view.IDrawActor;
 }
 
-
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Basic implementation of the DrawActor interface
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class DrawActor : IDrawActor {
+
+	alias void delegate() DrawFunction;
 
 	private {
 		string _name = "";
@@ -18,7 +22,7 @@ class DrawActor : IDrawActor {
 
 		bool _update = true;
 
-		void delegate() _execute = null;
+		DrawFunction _execute = null;
 
 		void[] _environment = null;
 	}
@@ -55,11 +59,11 @@ class DrawActor : IDrawActor {
 		return _update = update;
 	}
 
-	void delegate() execute() {
+	DrawFunction execute() {
 		return _execute;
 	}
 
-	void delegate() execute( void delegate() execute ) {
+	DrawFunction execute( DrawFunction execute ) {
 		return _execute = execute;
 	}
 

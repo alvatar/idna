@@ -11,9 +11,13 @@ private {
 	import idna.cyma.view.DrawActor;
 }
 
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + The Drawer manages canvases and takes care of generating the draw functios
+ + from the model and the actors
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class Drawer {
 	
-	/++ Draw functions information, everything needed to execute them +/
+	/++ DrawActors, everything needed to execute a group of draw functions +/
 	DrawActor[] drawActors;
 
 	/++
@@ -25,54 +29,13 @@ class Drawer {
 			addDrawActor( new type, type.stringof );
 			drawActors[$-1].canvas.init();
 		 }
-		 /*
-		 drawer.registerCanvas( new GlCanvas, "GlCanvas" );
-
-		 foreach( canvasInfo; drawer.canvasMap ) {
-			 if( !canvasInfo.initialized ) {
-				 canvasInfo.canvasInstance.init();
-				 canvasInfo.initialized = true;
-			 }
-		 }
-		 */
 	 }
 
 	/++
 	 + Iterate over each active canvas, traversing the model
 	 +/
 	DrawActor[] yield( Model model ) {
-		/*
-		void drawFunc(Model injectModel) {
-			// Check which canvas are currently active
-			foreach( canvasInfo; canvasMap ) {
-				if( canvasInfo.active ) {
-					// Traverse the model and draw it on each active canvas
-					foreach( drawable; drawables(injectModel) ) {
-						canvasInfo.canvasInstance.draw( drawable );
-					}
-				}
-			}
-		}
-		*/
-
-		/*
-		void drawGlCanvas( Model injectModel ) {
-			auto canvasInfo = canvasMap["GlCanvas"];
-			if( canvasInfo.active ) {
-				// Traverse the model and draw it on each active canvas
-				foreach( drawable; drawables(injectModel) ) {
-					canvasInfo.canvasInstance.draw( drawable );
-				}
-			}
-		}
-
-		return( [ DrawFunctionInfo(
-				"GlCanvasFunc"
-				, Curry(&drawGlCanvas, model)
-					) ] );
-		*/
-
-		foreach( actor; drawActors ) {
+		foreach( ref actor; drawActors ) {
 			auto canvas = cast(Canvas)actor.canvas;
 			canvas.linkWithDrawActor( actor );
 
@@ -87,7 +50,6 @@ class Drawer {
 
 			actor.execute = Curry( &drawCanvas, actor, model );
 		}
-
 		return drawActors;
 	}
 

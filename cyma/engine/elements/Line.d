@@ -7,10 +7,10 @@ private {
 	import idna.cyma.engine.Element;
 }
 
-/++
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A line is a geometric entity composed of 2 vectors
- +/
-class Line : Element {
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+final class Line : Element {
 
 	this( vec2 pointA, vec2 pointB ) {
 		data.pointA = pointA;

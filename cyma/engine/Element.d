@@ -4,7 +4,9 @@ private {
 	import idna.tools.Compat;
 }
 
-public import idna.cyma.view.DrawableObject;
+protected {
+	import idna.cyma.view.DrawableObject;
+}
 
 interface Element {
     protected DrawableObject generateDrawable();

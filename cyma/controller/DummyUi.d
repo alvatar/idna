@@ -4,10 +4,10 @@ private {
 	import idna.cyma.controller.Ui;
 }
 
-/+
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Class for issuing commands artificially and testing
  + drawer/canvas/model combinations
- +/
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class DummyUi : Ui {
 	
 	void init () {

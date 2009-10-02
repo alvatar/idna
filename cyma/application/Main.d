@@ -11,7 +11,6 @@ import idna.cyma.controller.UiManager;
 import idna.cyma.view.Drawer;
 import idna.cyma.model.Model;
 import idna.cyma.engine.Driver;
-import idna.cyma.engine.commands.All;
 
 int main( string[] args ) {
 
@@ -26,12 +25,6 @@ int main( string[] args ) {
 	jobHub.addPostFrameJob( {
 		driver.process( model );
 	} );
-
-	Command com1 = new AddLine();
-	debug injectCommands( model,
-			[ com1.context( new CommandContext("12, 200") )
-			, com1
-			, com1 ] );
 
 	jobHub.exec( ui.getMainProcess );
 

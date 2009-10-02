@@ -7,6 +7,10 @@ private {
 	import idna.cyma.view.IDrawActor;
 }
 
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + This abstract class takes care of linking Canvases with the DrawActor they
+ + belong to
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 abstract class Canvas : ICanvas {
 
 	/++ A link with a DrawActor that gives the Canvas all info needed +/

@@ -4,10 +4,10 @@ private {
 	import idna.tools.Compat;
 }
 
-/+
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A drawable object is basically an element with some information for its
  + processing in different backends
- +/
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 struct DrawableObject {
 	
 	enum Types {

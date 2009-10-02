@@ -4,19 +4,21 @@ private {
 	import idna.tools.Compat;
 }
 
-package {
+protected {
 	import idna.cyma.model.Model;
-	import idna.cyma.model.Node;
 }
 
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Interface for executable commands
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 interface ICommand {
 	void execute( Model );
 }
 
-/++
-+ Context of execution. Used for injecting arbitrary data needed
-+ for execution
-+/
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Context of execution. Used for injecting arbitrary data needed
+ + for execution
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class CommandContext {
 
 	private {

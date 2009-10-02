@@ -7,6 +7,7 @@ private {
 	import idna.tools.Compat;
 	import idna.cyma.model.Layer;
 	import idna.cyma.model.Node;
+	import idna.cyma.view.DrawableObject;
 }
 
 /++ Alias for the type of the layers structure +/
