@@ -133,34 +133,38 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +88 /data/projects/idna/cyma/model/Model.d
-badd +28 /data/projects/idna/cyma/application/Main.d
-badd +16 /data/projects/idna/cyma/view/Drawer.d
+badd +83 /data/projects/idna/cyma/model/Model.d
+badd +16 /data/projects/idna/cyma/application/Main.d
+badd +40 /data/projects/idna/cyma/view/Drawer.d
 badd +16 /data/projects/idna/cyma/model/Layer.d
-badd +24 /data/projects/idna/cyma/model/Substrate.d
+badd +19 /data/projects/idna/cyma/model/Substrate.d
 badd +7 /data/projects/idna/cyma/view/DrawableObject.d
-badd +12 /data/projects/idna/cyma/view/Canvas.d
+badd +21 /data/projects/idna/cyma/view/Canvas.d
 badd +7 /data/projects/idna/cyma/controller/DummyUi.d
 badd +10 /data/projects/idna/cyma/engine/Element.d
 badd +26 /data/projects/idna/cyma/controller/Ui.d
-badd +25 /data/projects/idna/cyma/engine/Driver.d
+badd +29 /data/projects/idna/cyma/engine/Driver.d
 badd +1 /data/projects/idna/cyma/controller/UiCreator.d
 badd +13 /data/projects/idna/cyma/controller/HybridGui.d
-badd +15 /data/projects/idna/cyma/controller/GlUi.d
+badd +20 /data/projects/idna/cyma/controller/GlUi.d
 badd +19 /data/projects/idna/cyma/controller/UiManager.d
-badd +23 /data/projects/idna/cyma/engine/Command.d
-badd +6 /data/projects/idna/cyma/engine/commands/DummyCommand.d
-badd +26 /data/projects/idna/cyma/engine/commands/AddLine.d
+badd +91 /data/projects/idna/cyma/engine/Command.d
+badd +8 /data/projects/idna/cyma/engine/commands/DummyCommand.d
+badd +24 /data/projects/idna/cyma/engine/commands/AddLine.d
 badd +1 /data/projects/idna/cyma/engine/commands/All.d
 badd +8 /data/projects/idna/cyma/model/RasterSubstrate.d
 badd +8 /data/projects/idna/cyma/model/StaticVectorSubstrate.d
 badd +8 /data/projects/idna/cyma/model/DynamicVectorSubstrate.d
-badd +36 /data/projects/idna/cyma/model/Node.d
+badd +11 /data/projects/idna/cyma/model/Node.d
 badd +70 /data/projects/idna/cyma/view/DrawActor.d
-badd +38 /data/projects/idna/cyma/view/canvas/GlCanvas.d
+badd +6 /data/projects/idna/cyma/view/canvas/GlCanvas.d
 badd +3 /data/projects/idna/cyma/view/IDrawActor.d
-badd +38 /data/projects/idna/cyma/engine/elements/Line.d
+badd +35 /data/projects/idna/cyma/engine/elements/Line.d
 badd +11 /data/projects/idna/tools/Compat.d
+badd +9 /data/projects/idna/cyma/model/NodeTree.d
+badd +50 /data/projects/idna/util/container/Tlink.d
+badd +52 /data/projects/idna/util/container/LinkedTree.d
+badd +10 /data/projects/idna/cyma/view/ICanvas.d
 silent! argdel *
 edit /data/projects/idna/cyma/controller/GlUi.d
 set splitbelow splitright
@@ -176,11 +180,11 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 1resize ' . ((&columns * 103 + 106) / 212)
 exe '2resize ' . ((&lines * 37 + 38) / 77)
-exe 'vert 2resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 108 + 106) / 212)
 exe '3resize ' . ((&lines * 37 + 38) / 77)
-exe 'vert 3resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 3resize ' . ((&columns * 108 + 106) / 212)
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
@@ -287,15 +291,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 24 - ((23 * winheight(0) + 37) / 75)
+let s:l = 115 - ((36 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-24
-normal! 04l
+115
+normal! 045l
 wincmd w
 argglobal
-edit /data/projects/idna/cyma/model/Node.d
+edit /data/projects/idna/cyma/engine/Command.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -401,15 +405,15 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 36 - ((19 * winheight(0) + 18) / 37)
+let s:l = 91 - ((27 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-36
-normal! 01l
+91
+normal! 034l
 wincmd w
 argglobal
-edit /data/projects/idna/cyma/model/Substrate.d
+edit /data/projects/idna/cyma/engine/commands/AddLine.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -515,19 +519,18 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 24 - ((23 * winheight(0) + 18) / 37)
+let s:l = 26 - ((25 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-24
-normal! 018l
+26
+normal! 05l
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 1resize ' . ((&columns * 103 + 106) / 212)
 exe '2resize ' . ((&lines * 37 + 38) / 77)
-exe 'vert 2resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 108 + 106) / 212)
 exe '3resize ' . ((&lines * 37 + 38) / 77)
-exe 'vert 3resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 3resize ' . ((&columns * 108 + 106) / 212)
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

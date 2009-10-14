@@ -28,11 +28,19 @@ final class Line : Element {
 	struct Data {
 		vec2 pointA;
 		vec2 pointB;
+		vec4 color;
 	} Data data;
+
+	/++
+	 + Set line color
+	 +/
+	void setColor( vec4 color ) {
+		data.color = color;
+	}
 
 	/++ Make sure struct is packed +/
 	invariant() {
-		assert( Data.sizeof == (vec2.sizeof * 2) );
+		assert( Data.sizeof == ((vec2.sizeof * 2) + vec4.sizeof ));
     }
 
 }

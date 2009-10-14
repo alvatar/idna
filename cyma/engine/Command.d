@@ -19,22 +19,48 @@ interface ICommand {
  + Context of execution. Used for injecting arbitrary data needed
  + for execution
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class CommandContext {
+abstract class CommandContext {
+}
 
-	private {
-		string _contextInfo;
+private {
+
+	class StringCommandContext : CommandContext {
+		private {
+			string _contextInfo;
+		}
+
+		this( string contextInfo ) {
+			_contextInfo = contextInfo;
+		}
 	}
 
-	this( string contextInfo )
-	{
-		_contextInfo = contextInfo;
+	class ArgsCommandContext(T...) : CommandContext {
+		T arguments;
+	}
+
+	template DefineContext(T...) {
+		static if( T.length == 1 && is(typeof(U[0] == string)) ) {
+			alias StringCommandContext DefineContext;
+		} else {
+			alias ArgsCommandContext!(T) DefineContext;
+		}
 	}
 }
 
-/++
+template MakeContext(T...) {
+	DefineContext!(T) MakeContext(T t) {
+		DefineContext!(T) context = new DefineContext!(T);
+		foreach( i, arg; t ) {
+			context.arguments[i] = arg;
+		}
+		return context;
+	}
+}
+
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Abstract class for common functionality of the commands
- +/
-abstract class Command : ICommand {
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+abstract class Command(T...) : ICommand {
 
 	enum State {
 		Created
@@ -60,9 +86,9 @@ abstract class Command : ICommand {
 		return _name;
 	}
 
-	CommandContext _context;
+	DefineContext!(T) _context;
 
-	Command context( CommandContext context ) {
+	Command context( DefineContext!(T) context ) {
 		_context = context;
 		return this;
 	}

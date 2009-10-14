@@ -5,7 +5,7 @@ private {
 	import idna.cyma.engine.Command;
 }
 
-class DummyCommand : Command {
+class DummyCommand(T...) : Command!(T) {
 
 	void execute( Model model )
 	{

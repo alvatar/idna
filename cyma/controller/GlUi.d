@@ -110,13 +110,15 @@ class GlUi : Ui {
 	/++
 	 + User interface loop
 	 +/
+	debug import xf.omg.core.LinearAlgebra;
+	debug import tango.math.random.Random;
 	void doUi( Driver driver, DrawActor[] drawActors ) {
 		debug {
-			Command com1 = new AddLine();
+			auto r = new Random;
+			auto com = new AddLine!(vec2, vec2);
 			driver.injectCommands( 
-				[ com1.context( new CommandContext("0.01, 0.01") )
-				, com1
-				, com1 ]
+				[ com.context( MakeContext( vec2(r.uniformR(1.0),r.uniformR(1.0)), vec2(r.uniformR(1.0),r.uniformR(1.0))) )
+ 				]
 				);
 		}
 

@@ -17,7 +17,7 @@ abstract class Canvas : ICanvas {
 	protected IDrawActor drawActor;
 
 	/++ Update the link with a DrawActor +/
-	void linkWithDrawActor( IDrawActor idrawActor ) {
-		drawActor = idrawActor;
+	void linkDrawActor( IDrawActor drawActor ) {
+		this.drawActor = drawActor;
 	}
 }

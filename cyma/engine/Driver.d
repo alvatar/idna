@@ -12,7 +12,7 @@ private{
 class Driver {
 
 	private {
-		Command[] commandQueue;
+		ICommand[] commandQueue;
 	}
 
 	void init() {
@@ -26,7 +26,7 @@ class Driver {
 		}
 	}
 
-	debug void injectCommands( Command[] commands ) {
+	debug void injectCommands( ICommand[] commands ) {
 		commandQueue ~= commands;
 	}
 }

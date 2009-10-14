@@ -4,8 +4,9 @@ module idna.cyma.model.Substrate;
 private {
 	import idna.tools.Compat;
 	import idna.cyma.model.Node;
-	import idna.cyma.model.Node;
+	import idna.cyma.model.NodeTree;
 }
+
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A Substrate manages the set of nodes that belong to a layer, depending on
@@ -13,20 +14,28 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class Substrate {
 
-	/++ A tree structure of nodes, for organizing groups +/
-	// TODO
-	Node[] nodesRoot;
-
-	/++
-	 + Add new node to the nodes tree of the substrate
-	 +/
-	void addNode( Element element ) {
-		nodesRoot ~= new Node( element );
+	private {
+		/++ A structure of nodes, for organizing groups +/
+		NodeTree _tree;
 	}
 
+	this() {
+		_tree = new NodeTree;
+	}
+
+	/++
+	 + Return the nodes structure of the model
+	 +/
+	NodeTree tree() {
+		return _tree;
+	}
+
+	/++
+	 + opApply
+	 +/
 	int opApply( int delegate (ref Node) dg ) {
 		int result;
-		foreach( node; nodesRoot ) {
+		foreach( ref node; tree ) {
 			result = dg( node );
 			if(result) break;
 		}

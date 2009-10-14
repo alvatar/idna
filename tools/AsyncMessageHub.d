@@ -23,6 +23,10 @@ class TaggedMessage : Message {
 	string tag() {
 		return _tag;
 	}
+
+	string tag( string tag ) {
+		return _tag = tag;
+	}
 }
 
 /++
@@ -68,7 +72,6 @@ class StringMessage : TaggedMessage {
 class AsyncMessageHub : MessageHub {
 
 	private {
-		// TODO: Should be a queue
 		LinkedList!(Message) pendingMessages;
 	}
 
@@ -76,7 +79,7 @@ class AsyncMessageHub : MessageHub {
 	 + Leave a message but do not consume it immediately
 	 +/
 	void leaveMessage( Message msg ) {
-		pendingMessages.add( msg );
+		pendingMessages.append( msg );
 	}
 
 	/+
@@ -87,8 +90,8 @@ class AsyncMessageHub : MessageHub {
 			foreach( mh; messageHandlers ) {
 				mh.handle( msg );
 			}
-			pendingMessages.remove( msg );
 		}
+		deleteAllMessages();
 	}
 
 	/+
@@ -119,9 +122,9 @@ class AsyncMessageHub : MessageHub {
 					if( tmsg.tag() == tag ) {
 						debug if( cast(T)msg !is null ) {
 							throw new Exception(
-									"Error casting TaggedMessage to" ~ T.stringof
-									, __FILE__, __LINE__
-									);
+								"Error casting TaggedMessage to" ~ T.stringof
+								, __FILE__, __LINE__
+								);
 						}
 						result ~= cast(T)msg;
 					}
@@ -133,17 +136,36 @@ class AsyncMessageHub : MessageHub {
 		/+
 		 + Get messages with a type, casted accordingly
 		 +/
-		 // TODO: classinfo doesn't work like this
 		 T[] fromType( string type ) {
 			T[] result;
 			TaggedMessage tmsg;
 			foreach( msg; pendingMessages ) {
-				if( msg.classinfo.name == type ) {
+				if( (cast(Object)msg).classinfo.name == type ) {
 					debug if( cast(T)msg !is null ) {
 						throw new Exception(
-								"Error casting TaggedMessage to" ~ T.stringof
-								, __FILE__, __LINE__
-								);
+							"Error casting TaggedMessage to" ~ T.stringof
+							, __FILE__, __LINE__
+							);
+					}
+					result ~= cast(T)msg;
+				}
+			}
+			return result;
+		 }
+
+		/+
+		 + Get messages with a type, casted accordingly
+		 +/
+		 T[] fromType(U)( void delegate(T msg) dg ) {
+			T[] result;
+			TaggedMessage tmsg;
+			foreach( msg; pendingMessages ) {
+				if( cast(U)msg ) {
+					debug if( cast(T)msg !is null ) {
+						throw new Exception(
+							"Error casting TaggedMessage to" ~ T.stringof
+							, __FILE__, __LINE__
+							);
 					}
 					result ~= cast(T)msg;
 				}
@@ -167,9 +189,9 @@ class AsyncMessageHub : MessageHub {
 					if( tmsg.tag() == tag ) {
 						debug if( cast(T)tmsg !is null ) {
 							throw new Exception(
-									"Error casting TaggedMessage to" ~ T.stringof
-									, __FILE__, __LINE__
-									);
+								"Error casting TaggedMessage to" ~ T.stringof
+								, __FILE__, __LINE__
+								);
 						}
 						dg( cast(T)msg );
 					}
@@ -180,7 +202,6 @@ class AsyncMessageHub : MessageHub {
 		/+
 		 + Get messages with a type, casted accordingly
 		 +/
-		 // TODO: classinfo doesn't work like this
 		 T[] fromType(U)( void delegate(T msg) dg ) {
 			T[] result;
 			TaggedMessage tmsg;
@@ -188,9 +209,29 @@ class AsyncMessageHub : MessageHub {
 				if( cast(U)msg ) {
 					debug if( cast(T)msg !is null ) {
 						throw new Exception(
-								"Error casting TaggedMessage to" ~ T.stringof
-								, __FILE__, __LINE__
-								);
+							"Error casting TaggedMessage to" ~ T.stringof
+							, __FILE__, __LINE__
+							);
+					}
+					dg( cast(T)msg );
+				}
+			}
+			return result;
+		 }
+
+		/+
+		 + Get messages with a type, casted accordingly
+		 +/
+		 T[] fromType( string type ) {
+			T[] result;
+			TaggedMessage tmsg;
+			foreach( msg; pendingMessages ) {
+				if( (cast(Object)msg).classinfo.name == type ) {
+					debug if( cast(T)msg !is null ) {
+						throw new Exception(
+							"Error casting TaggedMessage to" ~ T.stringof
+							, __FILE__, __LINE__
+							);
 					}
 					dg( cast(T)msg );
 				}

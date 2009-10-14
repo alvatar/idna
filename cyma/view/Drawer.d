@@ -37,7 +37,8 @@ class Drawer {
 	DrawActor[] yield( Model model ) {
 		foreach( ref actor; drawActors ) {
 			auto canvas = cast(Canvas)actor.canvas;
-			canvas.linkWithDrawActor( actor );
+			canvas.linkDrawActor( actor );
+			canvas.updateEnvironment();
 
 			void drawCanvas( DrawActor injectActor, Model injectModel ) {
 				if( injectActor.active ) {
