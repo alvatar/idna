@@ -2,3 +2,4 @@
 .objs
 xfbuild*
 *.swp
+*/bin/*

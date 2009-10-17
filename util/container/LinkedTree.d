@@ -1,13 +1,13 @@
-module idna.util.container.LinkedTree;
+module util.container.LinkedTree;
 
 private {
-	import tango.util.container.model.IContainer;
+	import util.container.model.IContainer;
 
-	import idna.util.container.Tlink;
-	import idna.tools.Compat;
+	import util.container.Tlink;
+	import io.Stdout;
 }
 
-public import tango.util.container.Container;
+public import util.container.Container;
 
 class LinkedTree (
 	V

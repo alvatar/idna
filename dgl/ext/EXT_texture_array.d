@@ -1,0 +1,93 @@
+module dgl.ext.EXT_texture_array;
+import dgl.OpenGL;
+import dgl.GLExt;
+
+version( D_Version2 ) {
+	import std.string : containsPattern = count;
+	import std.conv;
+} else {
+	import tango.text.Util : containsPattern;
+	import tango.stdc.stringz : fromStringz;
+	alias char[] string;
+}
+
+
+
+private ushort extensionId__ = 435;
+alias extensionId__ EXT_texture_array;
+
+	version (DogNoExtSupportAsserts) {
+	} else {
+		version = DogExtSupportAsserts;
+	}
+	
+	static this() {
+		if (__extSupportCheckingFuncs.length <= extensionId__) {
+			__extSupportCheckingFuncs.length = extensionId__ + 1;
+		}
+		__extSupportCheckingFuncs[extensionId__] = &__supported;
+	}
+
+version (all) {
+	public {
+			const GLenum GL_TEXTURE_1D_ARRAY_EXT = 0x8C18;
+			const GLenum GL_PROXY_TEXTURE_1D_ARRAY_EXT = 0x8C19;
+			const GLenum GL_TEXTURE_2D_ARRAY_EXT = 0x8C1A;
+			const GLenum GL_PROXY_TEXTURE_2D_ARRAY_EXT = 0x8C1B;
+			const GLenum GL_TEXTURE_BINDING_1D_ARRAY_EXT = 0x8C1C;
+			const GLenum GL_TEXTURE_BINDING_2D_ARRAY_EXT = 0x8C1D;
+			const GLenum GL_MAX_ARRAY_TEXTURE_LAYERS_EXT = 0x88FF;
+			const GLenum GL_COMPARE_REF_DEPTH_TO_TEXTURE_EXT = 0x884E;
+	}
+	private {
+		extern (System) {
+		}
+	}
+	public {
+	}
+	private final bool __supported(GL gl_) {
+		auto gl = _getGL(gl_);
+	
+		if (extensionId__ < cast(int)gl.extFuncs.length && gl.extFuncs[extensionId__] !is null) {
+			return gl.extFuncs[extensionId__][0] !is null;
+		}
+		
+		synchronized (gl) {
+			if (extensionId__ < cast(int)gl.extFuncs.length && gl.extFuncs[extensionId__] !is null) {
+				return gl.extFuncs[extensionId__][0] !is null;
+			}
+
+			if (gl.extFuncs.length <= extensionId__) {
+				gl.extFuncs.length = extensionId__ + 1;
+				
+				version (DogExtSupportAsserts) {
+					gl.extEnabled.length = extensionId__ + 1;
+				}
+			}
+			gl.extFuncs[extensionId__] = loadFunctions__(gl_);
+			
+			return gl.extFuncs[extensionId__][0] !is null;
+		}
+	}
+	private void*[] loadFunctions__(GL gl) {
+		void*[] funcAddr = new void*[1];
+		{
+			char* extP = gl.GetString(GL_EXTENSIONS);
+			version( D_Version2 ) {
+				string extStr = extP is null ? null : to!(string)(extP);
+			} else {
+				string extStr = extP is null ? null : fromStringz(extP);
+			}
+			if (!extStr.containsPattern("GL_EXT_texture_array")) { funcAddr[0] = null; return funcAddr; }
+		}
+		funcAddr[0] = cast(void*)&gl;
+		return funcAddr;
+	}
+}
+
+
+	else {
+		private final bool __supported(GL gl_) {
+			return false;
+		}
+	}

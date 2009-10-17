@@ -1,7 +1,7 @@
-module idna.util.container.Tlink;
+module util.container.Tlink;
 
 private {
-	import tango.util.container.LinkedList;
+	import util.container.LinkedList;
 }
 
 enum Threading {
