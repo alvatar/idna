@@ -1,23 +1,23 @@
-module idna.cyma.application.Main;
+module cyma.application.Main;
 
 debug = stacktrace;
-debug(stacktrace) import tango.core.stacktrace.TraceExceptions;
+//debug(stacktrace) import tango.core.stacktrace.TraceExceptions;
 
-import xf.core.JobHub;
+import core.JobHub;
 
-import idna.tools.Compat;
-import idna.tools.AsyncMessageHub;
-import idna.cyma.controller.UiManager;
-import idna.cyma.view.Drawer;
-import idna.cyma.model.Model;
-import idna.cyma.engine.Driver;
+import io.Stdout;
+import core.AsyncMessageHub;
+import cyma.controller.UiManager;
+import cyma.view.Drawer;
+import cyma.model.Model;
+import cyma.engine.Driver;
 
 int main( string[] args ) {
 
 	drawer.init();
 	driver.init();
-	scope Ui ui = UiManager.create( "GlUi" );
-	scope Model model = Model.create();
+	Ui ui = UiManager.create( "GlUi" );
+	Model model = Model.create();
 
 	jobHub.addPostFrameJob( {
 		ui.doUi( driver, drawer.yield( model ) );

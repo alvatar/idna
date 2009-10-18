@@ -1,11 +1,11 @@
-module idna.cyma.engine.Element;
+module cyma.engine.Element;
 
 private {
-	import idna.tools.Compat;
+	import io.Stdout;
 }
 
 protected {
-	import idna.cyma.view.DrawableObject;
+	import cyma.view.DrawableObject;
 }
 
 interface Element {

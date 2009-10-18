@@ -1,17 +1,18 @@
-module idna.cyma.controller.UiManager;
+module cyma.controller.UiManager;
 
-public import idna.cyma.controller.Ui;
+public import cyma.controller.Ui;
 
 private {
-	import xf.core.JobHub;
+	version( D_Version2 ) {
+	} else {
+		import tango.core.Exception;
+	}
 
-	import idna.tools.Compat;
-
-	import tango.core.Exception;
-
-	import idna.cyma.controller.DummyUi;
-	import idna.cyma.controller.HybridGui;
-	import idna.cyma.controller.GlUi;
+	import core.JobHub;
+	import io.Stdout;
+	import cyma.controller.DummyUi;
+	import cyma.controller.HybridGui;
+	import cyma.controller.GlUi;
 }
 
 class UiManager {

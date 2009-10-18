@@ -1,11 +1,11 @@
-module idna.cyma.engine.Command;
+module cyma.engine.Command;
 
 private {
-	import idna.tools.Compat;
+	import io.Stdout;
 }
 
 protected {
-	import idna.cyma.model.Model;
+	import cyma.model.Model;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

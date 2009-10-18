@@ -1,4 +1,4 @@
-module util.AsyncMessageHub;
+module core.AsyncMessageHub;
 
 private {
 	import util.container.LinkedList;

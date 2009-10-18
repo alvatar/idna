@@ -1,16 +1,20 @@
-module idna.cyma.view.canvas.All;
+module cyma.view.canvas.All;
 
 private {
-	import tango.core.Tuple;
+	version( D_Version2 ) {
+		import std.typetuple;
+	} else {
+		import tango.core.Tuple;
+	}
 }
 
 package {
-	import idna.cyma.view.Canvas;
-	import idna.cyma.view.DrawableObject;
+	import cyma.view.Canvas;
+	import cyma.view.DrawableObject;
 }
 
 private {
-	import idna.cyma.view.canvas.GlCanvas;
+	import cyma.view.canvas.GlCanvas;
 }
 
-alias Tuple!( GlCanvas ) CanvasTypes;
+alias TypeTuple!( GlCanvas ) CanvasTypes;

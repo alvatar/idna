@@ -1,7 +1,7 @@
-module idna.cyma.controller.DummyUi;
+module cyma.controller.DummyUi;
 
 private {
-	import idna.cyma.controller.Ui;
+	import cyma.controller.Ui;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

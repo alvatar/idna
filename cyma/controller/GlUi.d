@@ -1,24 +1,18 @@
-module idna.cyma.controller.GlUi;
+module cyma.controller.GlUi;
 
 private {
-	import xf.input.Input;
-	import xf.input.KeySym;
-	import xf.core.InputHub;
-	import xf.core.JobHub;
-	import xf.core.MessageHub;
-	import xf.core.Message;
-	import xf.dog.Dog;
-	import xf.game.MainProcess;
-	version (NewDogInput) {
-	} else {
-		import xf.input.Writer;
-	}
-
-	import idna.tools.Curry;
-	import idna.tools.AsyncMessageHub;
-
-	import idna.cyma.controller.Ui;
-	import idna.cyma.engine.commands.All;
+	import input.Input;
+	import input.Writer;
+	import input.InputHub;
+	import core.JobHub;
+	import core.MessageHub;
+	import core.Message;
+	import core.MainProcess;
+	import core.AsyncMessageHub;
+	import dgl.Dgl;
+	import util.Curry;
+	import cyma.controller.Ui;
+	import cyma.engine.commands.All;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -65,11 +59,7 @@ class GlUi : Ui {
 		jobHub.addRepeatableJob( &handleKeyboard, 200 );
 
 		// Set up input
-		version (NewDogInput) {
-			context.inputChannel = inputHub.mainChannel;
-		} else {
-			context.msgFilter = &(new OSInputWriter(inputHub.mainChannel)).filter;
-		}
+		context.msgFilter = &(new OSInputWriter(inputHub.mainChannel)).filter;
 		inputHub.mainChannel.addReader( new class InputReader {
 			void onInput(MouseInput* i) {
 				//if( i.buttons == MouseInput.Button.Left  && i.type == MouseInput.Type.ButtonDown )
@@ -110,9 +100,10 @@ class GlUi : Ui {
 	/++
 	 + User interface loop
 	 +/
-	debug import xf.omg.core.LinearAlgebra;
-	debug import tango.math.random.Random;
+	//debug import xf.omg.core.LinearAlgebra;
+	//debug import tango.math.random.Random;
 	void doUi( Driver driver, DrawActor[] drawActors ) {
+		/*
 		debug {
 			auto r = new Random;
 			auto com = new AddLine!(vec2, vec2);
@@ -121,6 +112,7 @@ class GlUi : Ui {
  				]
 				);
 		}
+		*/
 
 		void drawUi(GL gl) {
 			gl.Clear(GL_COLOR_BUFFER_BIT);
@@ -149,7 +141,7 @@ class GlUi : Ui {
 					// Execute actor
 					actor.execute()();
 				}
-				//gl.drawUi();
+				drawUi(gl);
 			};
 			context.update().show();
 		}

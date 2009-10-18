@@ -1,7 +1,7 @@
-module idna.cyma.view.ICanvas;
+module cyma.view.ICanvas;
 
 private {
-	import idna.cyma.view.DrawableObject;
+	import cyma.view.DrawableObject;
 }
 
 interface ICanvas {

@@ -1,7 +1,7 @@
-module idna.cyma.view.DrawableObject;
+module cyma.view.DrawableObject;
 
 private {
-	import idna.tools.Compat;
+	import io.Stdout;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

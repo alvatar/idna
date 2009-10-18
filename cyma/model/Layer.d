@@ -1,11 +1,11 @@
-module idna.cyma.model.Layer;
+module cyma.model.Layer;
 
 private {
-	import idna.tools.Compat;
-	import idna.cyma.model.RasterSubstrate;
-	import idna.cyma.model.StaticVectorSubstrate;
-	import idna.cyma.model.DynamicVectorSubstrate;
-	import idna.cyma.model.Node;
+	import io.Stdout;
+	import cyma.model.RasterSubstrate;
+	import cyma.model.StaticVectorSubstrate;
+	import cyma.model.DynamicVectorSubstrate;
+	import cyma.model.Node;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

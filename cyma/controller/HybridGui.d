@@ -1,7 +1,7 @@
-module idna.cyma.controller.HybridGui;
+module cyma.controller.HybridGui;
 
 private {
-	import idna.cyma.controller.Ui;
+	import cyma.controller.Ui;
 }
 
 class HybridGui : Ui {

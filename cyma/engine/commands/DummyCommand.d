@@ -1,8 +1,8 @@
-module idna.cyma.engine.commands.DummyCommand;
+module cyma.engine.commands.DummyCommand;
 
 private {
-	import idna.tools.Compat;
-	import idna.cyma.engine.Command;
+	import io.Stdout;
+	import cyma.engine.Command;
 }
 
 class DummyCommand(T...) : Command!(T) {

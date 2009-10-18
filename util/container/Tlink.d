@@ -42,7 +42,11 @@ struct Tlink( V, Threading threading = Threading.none ) {
 		next = n;
 		parent = p;
 		value = v;
-		return this;
+		version( D_Version2 ) {
+			return &this;
+		} else {
+			return this;
+		}
 	}
 
 	/++
@@ -53,7 +57,11 @@ struct Tlink( V, Threading threading = Threading.none ) {
 		next = n;
 		parent = p;
 		value = v;
-		return this;
+		version( D_Version2 ) {
+			return &this;
+		} else {
+			return this;
+		}
 	}
 
 	/++
@@ -172,7 +180,11 @@ struct Tlink( V, Threading threading = Threading.none ) {
 	 + alone or last sibling
 	 +/
 	final Ref lastSibling() {
-		auto p = this;
+		version( D_Version2 ) {
+			auto p = &this;
+		} else {
+			auto p = this;
+		}
 		static if(
 				threading == Threading.leaves
 				|| threading == Threading.inorder

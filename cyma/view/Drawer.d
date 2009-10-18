@@ -1,14 +1,12 @@
-module idna.cyma.view.Drawer;
+module cyma.view.Drawer;
 
 private {
-	import xf.utils.Singleton;
-
-	import idna.tools.Compat;
-	import idna.tools.Curry;
-
-	import idna.cyma.model.Model;
-	import idna.cyma.view.canvas.All;
-	import idna.cyma.view.DrawActor;
+	import util.Singleton;
+	import io.Stdout;
+	import util.Curry;
+	import cyma.model.Model;
+	import cyma.view.canvas.All;
+	import cyma.view.DrawActor;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

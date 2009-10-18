@@ -1,7 +1,7 @@
-module idna.cyma.model.DynamicVectorSubstrate;
+module cyma.model.DynamicVectorSubstrate;
 
 public {
-	import idna.cyma.model.Substrate;
+	import cyma.model.Substrate;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

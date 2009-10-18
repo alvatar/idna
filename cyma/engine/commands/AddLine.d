@@ -1,11 +1,9 @@
-module idna.cyma.engine.commands.AddLine;
+module cyma.engine.commands.AddLine;
 
 private {
-	import xf.omg.core.LinearAlgebra;
-
-	import idna.tools.Compat;
-	import idna.cyma.engine.Command;
-	import idna.cyma.engine.elements.Line;
+	import io.Stdout;
+	import cyma.engine.Command;
+	import cyma.engine.elements.Line;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

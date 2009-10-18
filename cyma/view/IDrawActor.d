@@ -1,4 +1,4 @@
-module idna.cyma.view.IDrawActor;
+module cyma.view.IDrawActor;
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Define the interface of a DrawActor, allowing to move draw environments

@@ -1,4 +1,4 @@
-module dnia.cyma.engine.elements.Polyline;
+module cyma.engine.elements.Polyline;
 
 class Polyline : Element
 {

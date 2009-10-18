@@ -331,7 +331,11 @@ Returns: a copy of this iterator for chaining.
 			//
 			mutation++;
 			*/
-			return *this;
+			version( D_Version2 ) {
+				return this;
+			} else {
+				return *this;
+			}
 		}
 
 		/***************************************************************
@@ -353,7 +357,11 @@ Returns: a copy of this iterator for chaining.
 					bump = &nextLevelOrder;
 				break;
 			}
-			return *this;
+			version( D_Version2 ) {
+				return this;
+			} else {
+				return *this;
+			}
 		}
 
 		private static Ref nextPreOrder(Ref p) {

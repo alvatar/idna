@@ -1,12 +1,10 @@
-module idna.cyma.engine.Driver;
+module cyma.engine.Driver;
 
 private{
-	import xf.utils.Singleton;
-
-	import idna.tools.Compat;
-
-	import idna.cyma.engine.Command;
-	import idna.cyma.model.Model;
+	import util.Singleton;
+	import io.Stdout;
+	import cyma.engine.Command;
+	import cyma.model.Model;
 }
 
 class Driver {

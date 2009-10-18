@@ -5,15 +5,13 @@ private {
 	import dgl.GLContext;
 	import dgl.Common;
 
-	import platform.osx.objc_class;
-	import platform.osx.objc_runtime;
-	import platform.osx.NSObject;
-	import platform.osx.NSEvent;
-	import platform.osx.NSGeometry;
-	import platform.osx.NSApplication;
-	import platform.osx.DogView;
-
-	import tango.io.Stdout: Stdout; //remove later
+	import sys.osx.objc_class;
+	import sys.osx.objc_runtime;
+	import sys.osx.NSObject;
+	import sys.osx.NSEvent;
+	import sys.osx.NSGeometry;
+	import sys.osx.NSApplication;
+	import sys.osx.DogView;
 }
 
 class GLWindow : GLContext, Window {

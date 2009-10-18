@@ -1064,12 +1064,23 @@ class LinkedList (V, alias Reap = Container.reap,
 
 debug (LinkedList)
 {
-        import tango.io.Stdout;
-        import tango.core.Thread;
-        import tango.time.StopWatch;
+        import io.Stdout;
+        //import tango.core.Thread;
+        //import sys.StopWatch;
 
         void main()
         {
+			auto list = new LinkedList!(int);
+			list.append(1);
+			list.append(2);
+			list.append(3);
+			list.removeHead();
+			list.removeHead();
+
+			foreach( a; list ) {
+				stdout(a);
+			}
+			/*
                 // usage examples ...
                 auto set = new LinkedList!(char[]);
                 set.add ("foo");
@@ -1161,6 +1172,7 @@ debug (LinkedList)
                 Stdout.formatln ("{} pointer iteration: {}/s", test.size, test.size/w.stop);
 
                 test.check;
+				*/
         }
 }
                 

@@ -1,12 +1,12 @@
-module idna.cyma.controller.Ui;
+module cyma.controller.Ui;
 
-package import xf.core.JobHub;
+package import core.JobHub;
 
 package {
-	import idna.tools.Compat;
-	import idna.cyma.engine.Driver;
-	import idna.cyma.view.DrawActor;
-	import idna.cyma.view.Drawer;
+	import io.Stdout;
+	import cyma.engine.Driver;
+	import cyma.view.DrawActor;
+	import cyma.view.Drawer;
 }
 
 interface Ui {

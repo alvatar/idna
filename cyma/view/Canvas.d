@@ -1,10 +1,10 @@
-module idna.cyma.view.Canvas;
+module cyma.view.Canvas;
 
 private {
-	import idna.tools.Compat;
-	import idna.cyma.view.DrawableObject;
-	import idna.cyma.view.ICanvas;
-	import idna.cyma.view.IDrawActor;
+	import io.Stdout;
+	import cyma.view.DrawableObject;
+	import cyma.view.ICanvas;
+	import cyma.view.IDrawActor;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

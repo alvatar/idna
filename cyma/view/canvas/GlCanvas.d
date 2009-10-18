@@ -1,12 +1,10 @@
-module idna.cyma.view.canvas.GlCanvas;
+module cyma.view.canvas.GlCanvas;
 
 private {
-	import xf.dog.Dog;
-	import xf.omg.core.LinearAlgebra;
-
-	import idna.tools.Compat;
-	import idna.cyma.view.Canvas;
-	import idna.cyma.view.DrawableObject;
+	import dgl.Dgl;
+	import io.Stdout;
+	import cyma.view.Canvas;
+	import cyma.view.DrawableObject;
 }
 
 
@@ -34,6 +32,19 @@ class GlCanvas : Canvas {
 	 + Implementation of the draw() method for OpenGL backend
 	 +/
 	void draw( DrawableObject drawable ) {
+
+		// TODO
+		struct vec2 {
+			float x;
+			float y;
+		}
+		struct vec4 {
+			float r;
+			float g;
+			float b;
+			float a;
+		}
+
 		switch( drawable.type ) {
 			case drawable.Types.Line:
 				struct Unpack {

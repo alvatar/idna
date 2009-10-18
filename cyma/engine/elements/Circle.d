@@ -1,8 +1,7 @@
-module idna.cyma.engine.elements.Circle;
+module cyma.engine.elements.Circle;
 
 private {
-	import xf.omg.core.LinearAlgebra;
-	import idna.cyma.engine.Element;
+	import cyma.engine.Element;
 }
 
 class Circle : Element {

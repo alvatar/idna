@@ -1,7 +1,7 @@
-module idna.cyma.engine.commands.All;
+module cyma.engine.commands.All;
 
 public {
-	import idna.cyma.engine.Command;
-	import idna.cyma.engine.commands.AddLine;
-	import idna.cyma.engine.commands.DummyCommand;
+	import cyma.engine.Command;
+	import cyma.engine.commands.AddLine;
+	import cyma.engine.commands.DummyCommand;
 }

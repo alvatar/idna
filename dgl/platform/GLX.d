@@ -6,7 +6,7 @@ public {
 }
 
 private {
-	import platform.x11.Xutil;
+	import sys.x11.Xutil;
 	version( D_Version2 ) {
 		import std.traits : ParameterTypeTuple;
 		template ParameterTupleOf(alias dg) {

@@ -1,4 +1,4 @@
-module xf.core.Message;
+module core.Message;
 
 
 class Message {

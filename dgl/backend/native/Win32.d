@@ -7,19 +7,19 @@ private {
 	import dgl.OpenGL;
 	import dgl.ext.WGL_ARB_pixel_format;
 	
-	import platform.win32.wingdi;
-	import platform.win32.winuser;
-	import platform.win32.winnt;
-	import platform.win32.windef;
-	import platform.win32.winbase;
+	import sys.win32.wingdi;
+	import sys.win32.winuser;
+	import sys.win32.winnt;
+	import sys.win32.windef;
+	import sys.win32.winbase;
 	
 	import tango.stdc.stringz : fromStringz;
 	
 	import tango.io.Stdout;
 	
-	alias platform.win32.wingdi.DM_BITSPERPEL DM_BITSPERPEL;
-	alias platform.win32.wingdi.DM_PELSWIDTH DM_PELSWIDTH;
-	alias platform.win32.wingdi.DM_PELSHEIGHT DM_PELSHEIGHT;
+	alias sys.win32.wingdi.DM_BITSPERPEL DM_BITSPERPEL;
+	alias sys.win32.wingdi.DM_PELSWIDTH DM_PELSWIDTH;
+	alias sys.win32.wingdi.DM_PELSHEIGHT DM_PELSHEIGHT;
 }
 
 

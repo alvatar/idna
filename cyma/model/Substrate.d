@@ -1,10 +1,9 @@
-
-module idna.cyma.model.Substrate;
+module cyma.model.Substrate;
 
 private {
-	import idna.tools.Compat;
-	import idna.cyma.model.Node;
-	import idna.cyma.model.NodeTree;
+	import io.Stdout;
+	import cyma.model.Node;
+	import cyma.model.NodeTree;
 }
 
 

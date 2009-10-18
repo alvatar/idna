@@ -1,16 +1,26 @@
-module idna.cyma.engine.elements.Line;
+module cyma.engine.elements.Line;
 
 private {
-	import xf.omg.core.LinearAlgebra;
-
-	import idna.tools.Compat;
-	import idna.cyma.engine.Element;
+	import io.Stdout;
+	import cyma.engine.Element;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A line is a geometric entity composed of 2 vectors
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 final class Line : Element {
+
+	struct vec2 {
+		float x;
+		float y;
+	}
+
+	struct vec4 {
+		float r;
+		float g;
+		float b;
+		float a;
+	}
 
 	this( vec2 pointA, vec2 pointB ) {
 		data.pointA = pointA;

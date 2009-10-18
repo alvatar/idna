@@ -1,13 +1,13 @@
-module idna.cyma.model.Model;
+module cyma.model.Model;
 
 private {
-	import tango.util.container.LinkedList;
-	import tango.math.random.Random;
+	import std.random;
 
-	import idna.tools.Compat;
-	import idna.cyma.model.Layer;
-	import idna.cyma.model.Node;
-	import idna.cyma.view.DrawableObject;
+	import util.container.LinkedList;
+	import io.Stdout;
+	import cyma.model.Layer;
+	import cyma.model.Node;
+	import cyma.view.DrawableObject;
 }
 
 /++ Alias for the type of the layers structure +/
@@ -40,10 +40,15 @@ class Model {
 	 + Get a random layer
 	 +/
 	 Layer randomLayer() {
-		auto r = new Random;
 		debug if(layers.isEmpty) throw new Exception( "No layers in the model"
 				, __FILE__, __LINE__ );
-	 	return layers.get( r.uniformR(layers.size) );
+		version( D_Version2 ) {
+			auto rnd = Random(unpredictableSeed);
+			return layers.get( uniform(0, layers.size, rnd) );
+		} else {
+			auto r = new Random;
+			return layers.get( r.uniformR(layers.size) );
+		}
 	 }
 
 	private {

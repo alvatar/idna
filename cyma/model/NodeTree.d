@@ -1,9 +1,9 @@
-module idna.cyma.model.NodeTree;
+module cyma.model.NodeTree;
 
 private {
-	import idna.util.container.LinkedTree;
+	import util.container.LinkedTree;
 
-	import idna.cyma.model.Node;
+	import cyma.model.Node;
 }
 
 alias LinkedTree!(Node) NodeTree;

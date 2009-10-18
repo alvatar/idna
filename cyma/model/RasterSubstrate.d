@@ -1,7 +1,7 @@
-module idna.cyma.model.RasterSubstrate;
+module cyma.model.RasterSubstrate;
 
 public {
-	import idna.cyma.model.Substrate;
+	import cyma.model.Substrate;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

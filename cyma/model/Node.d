@@ -1,7 +1,7 @@
-module idna.cyma.model.Node;
+module cyma.model.Node;
 
 protected {
-	import idna.cyma.engine.Element;
+	import cyma.engine.Element;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

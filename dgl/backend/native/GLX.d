@@ -15,18 +15,16 @@ private {
 	import dgl.OpenGL;
 	import dgl.GLUFunctions;
 	
-	//import xf.omg.core.LinearAlgebra : vec2i;
-	
-	import platform.x11.X;
-	import platform.x11.Xlib;
-	import platform.x11.randr;
-	import platform.x11.Xmd;
-	import platform.x11.Xutil;
+	import sys.x11.X;
+	import sys.x11.Xlib;
+	import sys.x11.randr;
+	import sys.x11.Xmd;
+	import sys.x11.Xutil;
 	import glx = dgl.platform.glx.glx;
 	import dgl.platform.glx.gl;
 	import dgl.platform.GLX;
 
-	alias platform.x11.X.Window Window;
+	alias sys.x11.X.Window Window;
 }
 
 class GLWindow : GLContext, DogWindow.Window {

@@ -15,7 +15,7 @@
 
 module util.container.Container;
 
-private import core.Memory;
+private import core.memory;
 
 private import std.c.stdlib;
 private import std.c.string;
