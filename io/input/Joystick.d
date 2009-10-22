@@ -1,4 +1,4 @@
-module input.Joystick;
+module io.input.Joystick;
 
 private {
 	version (Windows) {
@@ -15,19 +15,19 @@ private {
 
 struct JoyInfo {
 	private struct MinMax {
-		uint	min, max;
+		uint min, max;
 	}
 
-	uint			id;
-	char[]		name;
-	uint			numAxes;
-	uint			numButtons;
-	bool			hasPov;
-	bool			pov4Dir;
-	bool			povContinuous;
+	uint id;
+	char[] name;
+	uint numAxes;
+	uint numButtons;
+	bool hasPov;
+	bool pov4Dir;
+	bool povContinuous;
 
 	private {
-		MinMax[6]	axisLimits;
+		MinMax[6] axisLimits;
 	}
 }
 

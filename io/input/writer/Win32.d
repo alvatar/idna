@@ -1,8 +1,8 @@
-module input.writer.Win32;
+module io.input.writer.Win32;
 
 private {
-	import input.Input;
-	import input.KeySym;
+	import io.input.Input;
+	import io.input.KeySym;
 	
 	import std.c.ctype;
 	/*

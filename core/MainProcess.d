@@ -10,8 +10,8 @@ module core.MainProcess;
 
 private {
 	import io.Stdout;
-	import input.Input;
-	import input.InputHub;
+	import io.input.Input;
+	import io.input.InputHub;
 	import core.Message;
 	import core.MessageHandler;
 	import core.MessageHub;

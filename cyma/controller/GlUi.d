@@ -1,9 +1,9 @@
 module cyma.controller.GlUi;
 
 private {
-	import input.Input;
-	import input.Writer;
-	import input.InputHub;
+	import io.input.Input;
+	import io.input.Writer;
+	import io.input.InputHub;
 	import core.JobHub;
 	import core.MessageHub;
 	import core.Message;

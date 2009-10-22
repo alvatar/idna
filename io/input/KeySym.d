@@ -1,4 +1,4 @@
-module input.KeySym;
+module io.input.KeySym;
 
 
 /***********************************************************

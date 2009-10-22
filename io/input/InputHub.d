@@ -1,11 +1,11 @@
-module input.InputHub;
+module io.input.InputHub;
 
 
 private {
 	import io.Stdout;
 	import util.Singleton;
 	import core.JobHub;
-	import input.Input;
+	import io.input.Input;
 }
 
 

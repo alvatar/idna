@@ -1,7 +1,7 @@
-module input.Input;
+module io.input.Input;
 
 private {
-	import input.KeySym;
+	import io.input.KeySym;
 
 	struct vec2i {
 		int x;
@@ -13,7 +13,7 @@ private {
 }
 
 public {
-	alias input.KeySym.KeySym KeySym;
+	alias io.input.KeySym.KeySym KeySym;
 }
 
 

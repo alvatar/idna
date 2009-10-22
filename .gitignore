@@ -4,3 +4,4 @@ xfbuild*
 *.swp
 bin
 *.o
+*.moduleDeps

@@ -1,8 +1,8 @@
-module input.writer.X;
+module io.input.writer.X;
 
 private {
-	import input.Input;
-	import input.KeySym;
+	import io.input.Input;
+	import io.input.KeySym;
 
 	import sys.x11.X;
 	import sys.x11.Xlib;
@@ -18,7 +18,7 @@ class XInputWriter {
 		int _prevMouseX = 0, _prevMouseY = 0;
 		
 		bool _repeatSet = false;
-		input.KeySym.KeySym _lastDownKey = input.KeySym.KeySym.VoidSymbol;
+		io.input.KeySym.KeySym _lastDownKey = io.input.KeySym.KeySym.VoidSymbol;
 	}
 
 	this(InputChannel channel) {
@@ -88,7 +88,7 @@ class XInputWriter {
 			}
 			break;
 		case KeyRelease:
-			_lastDownKey = input.KeySym.KeySym.VoidSymbol;
+			_lastDownKey = io.input.KeySym.KeySym.VoidSymbol;
 			KeyboardInput kin;
 			kin.type = KeyboardInput.Type.Up;
 			kin.modifiers = getMods(ev.xkey.state);
