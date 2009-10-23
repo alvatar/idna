@@ -97,8 +97,6 @@ struct TVector( _type, uint _dim ) {
 		mixin( GArrayStatic!(type, "unitW")
 				.RepeatAndSpecifyOne(iscalar!(type,0), dim, iscalar!(type,1), 3) );
 
-	// TODO: More n-dimensional unit vectors
-
 	/++
 	 + Check the vector's integrity
 	 +/
@@ -122,6 +120,12 @@ struct TVector( _type, uint _dim ) {
 		string codegen() {
 			static assert( dim == v.dim );
 			string result;
+
+			// Generate assert in debug
+			debug {
+				result ~= "assert( v.check() );\n";
+			}
+
 			for( int i=0; i<this.array.length; i++ ) {
 				result ~= "this.array[" ~ ctToString(i) ~ "] = scalar!(type)(v.array[" ~ ctToString(i) ~ "]);\n";
 			}
@@ -135,18 +139,27 @@ struct TVector( _type, uint _dim ) {
 	/++
 	 + opCall: assign values
 	 +/
-	TVector opCall(R...)( R v ) {
+	TVector opCall(R...)( R values ) {
 		string codegen() {
 			string result;
 
 			// Use the minimum dimension among the two involved vectors
-			static if( dim < v.length )
+			static if( dim < values.length )
 				int mindim = dim;
 			else
-				int mindim = v.length;
+				int mindim = values.length;
+
+			// Generate assert in debug
+			debug {
+				result ~= "assert( ";
+				for( int i=0; i<(mindim-1); i++ ) {
+					result ~= "!isNaN(values[" ~ ctToString(i) ~ "]) && ";
+				}
+				result ~= "!isNaN(values[" ~ ctToString(mindim-1) ~ "]) );\n";
+			}
 
 			for( int i=0; i<mindim; i++ ) {
-				result ~= "array[" ~ ctToString(i) ~ "] = scalar!(type)(v[" ~ ctToString(i) ~ "]);\n";
+				result ~= "array[" ~ ctToString(i) ~ "] = scalar!(type)(values[" ~ ctToString(i) ~ "]);\n";
 			}
 			result ~= "return this;";
 			return result;
@@ -155,6 +168,37 @@ struct TVector( _type, uint _dim ) {
 
 		mixin(codegen());
 	}
+
+	/++
+	 + toString: conversion to string
+	 +/
+	string toString() {
+		string codegen() {
+			string result = `string result = "[" `;
+			for( int i=0; i<(dim-1); i++ ) {
+				result ~= `~ to!(string)(array[` ~ ctToString(i) ~ `]) ~ "," `;
+			}
+			result ~= `~ to!(string)(array[` ~ ctToString(dim-1) ~ `]) `;
+			result ~= `~ "]"; return result;`;
+			return result;
+
+		}
+
+		mixin(codegen());
+	}
+	
+}
+
+static T cross(T)(T a, T b) {
+	static assert( (a.dim == 3 && b.dim == 3) || (a.dim == 7 && b.dim == 7)
+		, "Cross product is only mathematically defined for
+		pairs of vectors of dimension 3 and 7" );
+	debug assert (a.check() && b.check());
+	T result;
+	result.x = a.y * b.z - b.y * a.z;
+	result.y = a.z * b.x - b.z * a.x;
+	result.z = a.x * b.y - b.x * a.y;
+	return result;
 }
 
 
@@ -176,12 +220,14 @@ unittest {
 	static assert( !__traits(compiles, i10.x = 1) );
 	TVector!(double,4) vec4i;
 	assert( vec4i.one == [1.0,1.0,1.0,1.0] );
-	auto inplace = Vector!(111,222,333,444);
+	auto inplace = Vector!(111,222,333);
 	auto inplace2 = Vector!(-11.1234567891,0.1,-0.1,999999.999999);
 	auto inplace3 = Vector!(double, 0.1,0.1,0.1,0.1);
 	auto inplace4 = Vector!(int, 0,0,0,0);
 
 	// Operations
 	inplace( 0,0 );
-	writeln(inplace.array);
+	inplace( 2,2,2,2,2,2,2,2,2,2,2 );
+	assert( inplace.toString == "[2,2,2]" );
+	assert ( cross(inplace,inplace) == Vector!(0,0,0) );
 }
