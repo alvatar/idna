@@ -4,7 +4,7 @@ private {
 	import std.conv;
 	import std.stdio;
 	import std.traits;
-	import std.math : isNaN;
+	import std.math : isNaN, sqrt, abs;
 
 	import math.Algebra;
 	import meta.typetuple;
@@ -18,7 +18,11 @@ private {
  +/
 TVector!(T,U[].length) Vector(T, U...)() {
 	ReturnType!(Vector) result;
-	result.array = [U];
+	static if( is(typeof([U]) == T[U[].length] ) ) {
+		result.array = [U];
+	} else {
+		result.array = cast(T[])[U];
+	}
 	return result;
 }
 
@@ -28,11 +32,11 @@ TVector!(T,U[].length) Vector(T, U...)() {
 template Vector(U...)
 	if( allSatisfy!( isIntegral, typeof(U)) && !is(U[0]==typeof(U)[0]) ) {
 
-        TVector!(int,U[].length) Vector() {
-                ReturnType!(Vector) result;
-                result.array = [U];
-                return result;
-        }
+	TVector!(int,U[].length) Vector() {
+			ReturnType!(Vector) result;
+			result.array = [U];
+			return result;
+	}
 }
 
 /++
@@ -41,20 +45,35 @@ template Vector(U...)
 template Vector(U...)
 	if( allSatisfy!( isFloatingPoint, typeof(U)) && !is(U[0]==typeof(U)[0]) ) {
 
-        TVector!(real,U[].length) Vector() {
-                ReturnType!(Vector) result;
-                result.array = [U];
-                return result;
-        }
+	TVector!(real,U[].length) Vector() {
+			ReturnType!(Vector) result;
+			result.array = [U];
+			return result;
+	}
+}
+
+/++
+ + Check whether is a vector or not
+ +/
+template isVectorType(T, int dim) {
+	static if (
+		is(typeof(T.dim)) &&
+		is(typeof(T.dim == dim)) &&
+		T.dim == dim
+	) {
+		immutable(bool) isVectorType = true;
+	} else {
+		immutable(bool) isVectorType = false;
+	}
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Template class for n-dimensional vectors
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-struct TVector( _type, uint _dim ) {
+struct TVector( _type, int _dim ) {
 
 	alias _type type;
-	static immutable(uint) dim = _dim;
+	static immutable(int) dim = _dim;
 
 	static assert( _dim > 1, "Vector dimension should be at least 2" );
 	static assert(
@@ -139,7 +158,47 @@ struct TVector( _type, uint _dim ) {
 	/++
 	 + opCall: assign values
 	 +/
-	TVector opCall(R...)( R values ) {
+	static TVector opCall(R...)( R values ) {
+		string codegen() {
+			string result;
+
+			// Use the minimum dimension among the two involved vectors
+			static if( dim < values.length ) {
+				int mindim = dim;
+			} else {
+				int mindim = values.length;
+				int zerofill = dim - mindim;
+			}
+
+			// Generate assert in debug
+			debug {
+				result ~= "assert( ";
+				for( int i=0; i<(mindim-1); i++ ) {
+					result ~= "!isNaN(values[" ~ ctToString(i) ~ "]) && ";
+				}
+				result ~= "!isNaN(values[" ~ ctToString(mindim-1) ~ "]) );\n";
+			}
+
+			result ~= "TVector v = void;\n";
+			for( int i=0; i<mindim; i++ ) {
+				result ~= "v.array[" ~ ctToString(i) ~ "] = scalar!(type)(values[" ~ ctToString(i) ~ "]);\n";
+			}
+			for( int i=0; i<zerofill; i++ ) {
+				result ~= "v.array[" ~ ctToString(i+mindim) ~ "] = scalar!(type)(0);\n";
+			}
+
+			result ~= "return v;";
+			return result;
+
+		}
+
+		mixin(codegen());
+	}
+
+	/++
+	 + opIndex: assign values
+	 +/
+	TVector opIndex(R...)( R values ) {
 		string codegen() {
 			string result;
 
@@ -187,12 +246,152 @@ struct TVector( _type, uint _dim ) {
 		mixin(codegen());
 	}
 	
+	/++
+	 + Basic arithmetic operators
+	 +/
+	private template opXAssign( string op ) {
+		void opXAssign(T)(T rhs) {
+
+			string codegen() {
+				string result;
+				debug result ~= "assert( check() );\n";
+				// If already defined from the other type
+				result ~= "static if( is(typeof(rhs.opVecMul_r(*this)) : Vector) ) {\n";
+				result ~= "    *this = rhs.opVecMul_r(*this);\n";
+				// If Vector type
+				result ~= "} else static if (isVectorType!(T, dim)) {\n";
+				debug result ~= "    debug assert( rhs.check() );\n";
+				for( int i=0; i<(dim-1); i++ ) {
+					result ~= "    array[" ~ ctToString(i) ~ "] = array[" ~ ctToString(i)
+						~ "] " ~ op ~ " rhs.array[" ~ ctToString(i) ~ "];\n";
+				}
+				result ~= "    array[" ~ ctToString(dim-1) ~ "] = array[" ~ ctToString(dim-1)
+					~ "] " ~ op ~ " rhs.array[" ~ ctToString(dim-1) ~ "];\n";
+				// If primitive type
+				result ~= "} else {\n";
+				debug result ~= "    debug assert( !isNaN(rhs) );\n";
+				for( int i=0; i<(dim-1); i++ ) {
+					result ~= "    array[" ~ ctToString(i) ~ "] = array[" ~ ctToString(i)
+						~ "] " ~ op ~ " rhs;\n";
+				}
+				result ~= "    array[" ~ ctToString(dim-1) ~ "] = array[" ~ ctToString(dim-1)
+					~ "] " ~ op ~ " rhs;\n";
+				result ~= "}";
+				return result;
+			}
+			mixin( codegen() );
+		}
+	}
+	
+	private template opX( alias op ) {
+		TVector opX(T)(T rhs) {
+			auto res = this;
+			res.opXAssign!(op)(rhs);
+			return res;
+		}
+	}
+
+	alias opXAssign!("+") opAddAssign;
+	alias opXAssign!("-") opSubAssign;
+	alias opXAssign!("*") opMulAssign;
+	alias opXAssign!("/") opDivAssign;
+
+	alias opX!("+") opAdd;
+	alias opX!("-") opSub;
+	alias opX!("*") opMul;
+	alias opX!("/") opDiv;
+
+	/+
+	 + Length of the vector
+	 +/
+	type length() {
+		string codegen() {
+			string result = `sqrt( scalar!(real)(`;
+			for( int i=0; i<(dim-1); i++ ) {
+				result ~= `array[` ~ ctToString(i) ~ `] * array[` ~ ctToString(i) ~ `] + `;
+			}
+			result ~= `array[` ~ ctToString(dim-1) ~ `] * array[` ~ ctToString(dim-1) ~ `]) )`;
+			result = `return scalar!(type)( ` ~ result ~ ` );`;
+			return result;
+
+		}
+
+		mixin(codegen());
+	}
+
+	/+
+	 + Squared length of the vector
+	 +/
+	type sqLength() {
+		string codegen() {
+			string result;
+			for( int i=0; i<(dim-1); i++ ) {
+				result ~= `array[` ~ ctToString(i) ~ `] * array[` ~ ctToString(i) ~ `] + `;
+			}
+			result ~= `array[` ~ ctToString(dim-1) ~ `] * array[` ~ ctToString(dim-1) ~ `]`;
+			result = `return ` ~ result ~ `;`;
+			return result;
+
+		}
+
+		mixin(codegen());
+	}
+
+	/++
+	 + Normalize the vector
+	 +/
+	TVector normalize(bool fast = false)() {
+		static if( fast ) {
+			float invSqrt(float x) {
+				float xhalf = 0.5f * x;
+				int i = *cast(int*)&x;
+				i = 0x5f375a86 - (i >> 1);
+				x = *cast(float*)&i;
+				x = x*(1.5f - xhalf * x * x);
+				return x;
+			}
+			type inv = scalar!(type)( invSqrt(scalar!(float)(sqLength)) );
+			this *= inv;
+		} else static if( isFloatingPoint!(type) ) {
+			immutable(type) len = length();
+			type inv = scalar!(type)(iscalar!(type, 1) / len);
+			this *= inv;
+		} else static if( isIntegral!(type) ) {
+			static assert( false, "Normalize is not defined for integral types" );
+		} else {
+			immutable(type) len = length();
+			this /= len;
+		}
+		return this;
+	}
+
+	/++
+	 + Check whether it is an unit vector
+	 +/
+	bool isUnit() {
+		return abs(scalar!(real)(sqLength()) - 1.0) < real.epsilon;
+	}
 }
 
+/+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Free functions
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+/++
+ + Create normalized vector from another one
+ +/
+T normalized( bool fast = true, T )(T v) {
+	Vector res = v;
+	v.normalize();
+	return res;
+}
+
+/++
+ + Cross product (defined for 3 and 7 dimensions)
+ +/
 static T cross(T)(T a, T b) {
 	static assert( (a.dim == 3 && b.dim == 3) || (a.dim == 7 && b.dim == 7)
 		, "Cross product is only mathematically defined for
-		pairs of vectors of dimension 3 and 7" );
+		pairs of Vectors of dimension 3 and 7" );
 	debug assert (a.check() && b.check());
 	T result;
 	result.x = a.y * b.z - b.y * a.z;
@@ -201,11 +400,56 @@ static T cross(T)(T a, T b) {
 	return result;
 }
 
+/++
+ + Dot product
+ +/
+static T.type dot(T)(T a, T b) {
+	alias T.dim dim;
+	string codegen() {
+		string result;
+		debug result ~= "assert( a.check() && b.check() );\nreturn ";
+		for( int i=0; i<(dim-1); i++ ) {
+			result ~= "a.array[" ~ ctToString(i) ~ "] * b.array[" ~ ctToString(i) ~ "] + ";
+		}
+		result ~= "a.array[" ~ ctToString(dim-1) ~ "] * b.array[" ~ ctToString(dim-1) ~ "]";
+		result ~= ";";
+		return result;
+	}
+
+	mixin(codegen());
+}
+
+/++
+ + Create a bidimensional vector rotated 90º
+ +/
+static T rotatedHalfPi(T)(T v) {
+	static assert( v.dim == 2 );
+	debug assert( v.check() );
+
+	T res = void;
+	res.x = -v.y;
+	res.y = v.x;
+	return res;
+}
+
+/++
+ + Create a bidimensional vector rotated -90º
+ +/
+static T rotatedMinusHalfPi(T)(T v) {
+	static assert( v.dim == 2 );
+	debug assert( v.check() );
+
+	T res = void;
+	res.x = v.y;
+	res.y = -v.x;
+	return res;
+}
+
 
 unittest {
 	// Correct creation tests
-	static assert( !__traits(compiles, TVector!(int,0)) );
 	alias TVector!(int, 3) i3;
+	static assert( !__traits(compiles, TVector!(int,0)) );
 	static assert( i3.sizeof == 3 * int.sizeof );
 	static assert( __traits(compiles, i3.r = 1) );
 	static assert( __traits(compiles, i3.g = 1) );
@@ -224,10 +468,26 @@ unittest {
 	auto inplace2 = Vector!(-11.1234567891,0.1,-0.1,999999.999999);
 	auto inplace3 = Vector!(double, 0.1,0.1,0.1,0.1);
 	auto inplace4 = Vector!(int, 0,0,0,0);
+	alias TVector!(double, 6) vec6d;
+	auto withopcall = vec6d(1,2,2,3);
+	writeln( withopcall );
 
 	// Operations
-	inplace( 0,0 );
-	inplace( 2,2,2,2,2,2,2,2,2,2,2 );
+	inplace[ 0,0 ];
+	inplace[ 2,2,2,2,2,2,2,2,2,2,2 ];
 	assert( inplace.toString == "[2,2,2]" );
-	assert ( cross(inplace,inplace) == Vector!(0,0,0) );
+	assert( Vector!(3,4).length == 5 );
+	assert( Vector!(3.0,4.0).length == 5.0 );
+	assert( cross(inplace,inplace) == Vector!(0,0,0) );
+	assert( dot(inplace,inplace) == inplace.sqLength );
+	assert( rotatedHalfPi(Vector!(2,1)) == Vector!(-1,2) );
+	assert( rotatedMinusHalfPi(Vector!(2,1)) == Vector!(1,-2) );
+	auto test = Vector!(1,2,3); test += 2; assert( test == Vector!(3,4,5) );
+	test = Vector!(3,4,5); test -= 2; assert( test == Vector!(1,2,3) );
+	test = Vector!(1,2,3); test *= 2; assert( test == Vector!(2,4,6) );
+	test = Vector!(2,4,6); test /= 2; assert( test == Vector!(1,2,3) );
+	assert( (Vector!(1,2,3) + 2) == Vector!(3,4,5) );
+	assert( (Vector!(3,4,5) - 2) == Vector!(1,2,3) );
+	assert( (Vector!(1,2,3) * 2) == Vector!(2,4,6) );
+	assert( (Vector!(2,4,6) / 2) == Vector!(1,2,3) );
 }

@@ -19,11 +19,11 @@ nmap <silent> \c <Plug>Traditionalj
 vmap ]% ]%m'gv``
 vmap a% [%v]%
 nmap gx <Plug>NetrwBrowseX
-nnoremap <F3> :vimgrep // **
-noremap <F9> :call RunProgram()
-noremap <F10> :call CleanProgram()
-noremap <F11> :call Compile(1)
 nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")
+noremap <F11> :call Compile(1)
+noremap <F10> :call CleanProgram()
+noremap <F9> :call RunProgram()
+nnoremap <F3> :vimgrep // **
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 noremap <Plug>VisualFirstLine :call EnhancedCommentify('', 'first',   line("'<"), line("'>"))
 noremap <Plug>VisualTraditional :call EnhancedCommentify('', 'guess',   line("'<"), line("'>"))
@@ -70,8 +70,6 @@ set guioptions=ac
 set helplang=en
 set hidden
 set hlsearch
-set iminsert=0
-set imsearch=0
 set makeprg=./build.sh
 set mouse=a
 set mousemodel=popup
@@ -134,8 +132,8 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +52 /data/projects/idna/math/Vector.d
-badd +29 /data/projects/idna/meta/tuplecons.d
+badd +51 /data/projects/idna/math/Vector.d
+badd +0 /data/projects/idna/math/Algebra.d
 silent! argdel *
 edit /data/projects/idna/math/Vector.d
 set splitbelow splitright
@@ -203,8 +201,8 @@ setlocal formatexpr=
 setlocal formatoptions=nroql2
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
+setlocal iminsert=2
+setlocal imsearch=2
 setlocal include=
 setlocal includeexpr=
 setlocal indentexpr=
@@ -255,15 +253,16 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 51 - ((37 * winheight(0) + 37) / 75)
+let s:l = 51 - ((34 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 51
-normal! 03l
+normal! 016l
+lcd /data/projects/idna/math/__test
 wincmd w
 argglobal
-edit /data/projects/idna/meta/tuplecons.d
+edit /data/projects/idna/math/Algebra.d
 let s:cpo_save=&cpo
 set cpo&vim
 map <buffer> \o <Plug>OrganizeImports
@@ -317,8 +316,8 @@ setlocal formatexpr=
 setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
+setlocal iminsert=2
+setlocal imsearch=2
 setlocal include=
 setlocal includeexpr=
 setlocal indentexpr=
@@ -369,12 +368,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 33 - ((32 * winheight(0) + 37) / 75)
+let s:l = 23 - ((22 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-33
-normal! 027l
+23
+normal! 01l
 lcd /data/projects/idna/math/__test
 wincmd w
 2wincmd w

@@ -34,7 +34,7 @@ template scalar(T) {
 unittest {
 	static assert( iscalar!(float,0) == 0 );
 	static assert( iscalar!(int,2) == 2 );
-	static assert( scalar!(int)(1.9) != 1.9 );
+	static assert( scalar!(int)(1.9) == 1.0 );
 	static assert( scalar!(float)(0.999) == 0.999 );
 }
 
