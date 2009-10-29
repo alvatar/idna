@@ -9,9 +9,9 @@ private {
 	import math.Algebra;
 	import meta.typetuple;
 	import meta.tuplecons;
-	import meta.string;
+	import meta.stringfuncs;
+	import meta.numeric;
 }
-
 
 /++
  + Create a vector specifying the type
@@ -119,7 +119,7 @@ struct TVector( _type, int _dim ) {
 	/++
 	 + Check the vector's integrity
 	 +/
-	bool check() {
+	immutable(bool) check() {
 		string codegen() {
 			string result;
 			for( int i=0; i<this.array.length; i++ ) {
@@ -304,7 +304,7 @@ struct TVector( _type, int _dim ) {
 	/+
 	 + Length of the vector
 	 +/
-	type length() {
+	immutable(type) length() {
 		string codegen() {
 			string result = `sqrt( scalar!(real)(`;
 			for( int i=0; i<(dim-1); i++ ) {
@@ -379,7 +379,7 @@ struct TVector( _type, int _dim ) {
 /++
  + Create normalized vector from another one
  +/
-T normalized( bool fast = true, T )(T v) {
+pure static T normalized( bool fast = true, T )(T v) {
 	Vector res = v;
 	v.normalize();
 	return res;
@@ -388,11 +388,11 @@ T normalized( bool fast = true, T )(T v) {
 /++
  + Cross product (defined for 3 and 7 dimensions)
  +/
-static T cross(T)(T a, T b) {
+pure static T cross(T)(T a, T b) {
 	static assert( (a.dim == 3 && b.dim == 3) || (a.dim == 7 && b.dim == 7)
 		, "Cross product is only mathematically defined for
 		pairs of Vectors of dimension 3 and 7" );
-	debug assert (a.check() && b.check());
+	//debug assert (a.check() && b.check());
 	T result;
 	result.x = a.y * b.z - b.y * a.z;
 	result.y = a.z * b.x - b.z * a.x;
@@ -403,11 +403,12 @@ static T cross(T)(T a, T b) {
 /++
  + Dot product
  +/
-static T.type dot(T)(T a, T b) {
+pure static T.type dot(T)(T a, T b) {
 	alias T.dim dim;
 	string codegen() {
 		string result;
-		debug result ~= "assert( a.check() && b.check() );\nreturn ";
+		//debug result ~= "assert( a.check() && b.check() );\nreturn ";
+		debug result ~= "return ";
 		for( int i=0; i<(dim-1); i++ ) {
 			result ~= "a.array[" ~ ctToString(i) ~ "] * b.array[" ~ ctToString(i) ~ "] + ";
 		}
@@ -468,11 +469,11 @@ unittest {
 	auto inplace2 = Vector!(-11.1234567891,0.1,-0.1,999999.999999);
 	auto inplace3 = Vector!(double, 0.1,0.1,0.1,0.1);
 	auto inplace4 = Vector!(int, 0,0,0,0);
-	alias TVector!(double, 6) vec6d;
-	auto withopcall = vec6d(1,2,2,3);
-	writeln( withopcall );
 
 	// Operations
+	alias TVector!(double, 6) vec6d;
+	auto withopcall = vec6d(1,2,2,3);
+	assert( withopcall.toString == Vector!(double, 1,2,2,3,0,0).toString );
 	inplace[ 0,0 ];
 	inplace[ 2,2,2,2,2,2,2,2,2,2,2 ];
 	assert( inplace.toString == "[2,2,2]" );
@@ -491,3 +492,13 @@ unittest {
 	assert( (Vector!(1,2,3) * 2) == Vector!(2,4,6) );
 	assert( (Vector!(2,4,6) / 2) == Vector!(1,2,3) );
 }
+
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Common vector types
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+alias TVector!(int,2) vec2i;
+alias TVector!(int,3) vec3i;
+alias TVector!(int,4) vec4i;
+alias TVector!(real,2) vec2r;
+alias TVector!(real,3) vec3r;
+alias TVector!(real,4) vec4r;

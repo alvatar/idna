@@ -1,9 +1,5 @@
 module cyma.view.DrawableObject;
 
-private {
-	import io.Stdout;
-}
-
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + A drawable object is basically an element with some information for its
  + processing in different backends
@@ -20,11 +16,14 @@ struct DrawableObject {
 	}
 
 	/++ The type of drawable object +/
-	Types type;
+	Types type = void;
+
+	/++ Flag to trigger update when necessary +/
+	bool modified = true;
 
 	/++ Size in bytes of the drawable object +/
 	size_t sizeInBytes = 0;
 
 	/++ The data of the drawable object +/
-	void* data;
+	void* data = void;
 }

@@ -2,9 +2,9 @@ module cyma.model.Model;
 
 private {
 	import std.random;
+	import std.stdio;
 
 	import util.container.LinkedList;
-	import io.Stdout;
 	import cyma.model.Layer;
 	import cyma.model.Node;
 	import cyma.view.DrawableObject;
@@ -25,7 +25,7 @@ class Model {
 		this() {
 			layers = new LayerStructure;
 			layers.add(new Layer);
-			debug(verbose) stdout( "Layer created" );
+			debug(verbose) writeln( "Layer created" );
 		}
 	}
 
@@ -42,13 +42,8 @@ class Model {
 	 Layer randomLayer() {
 		debug if(layers.isEmpty) throw new Exception( "No layers in the model"
 				, __FILE__, __LINE__ );
-		version( D_Version2 ) {
-			auto rnd = Random(unpredictableSeed);
-			return layers.get( uniform(0, layers.size, rnd) );
-		} else {
-			auto r = new Random;
-			return layers.get( r.uniformR(layers.size) );
-		}
+		auto rnd = Random(unpredictableSeed);
+		return layers.get( uniform(0, layers.size, rnd) );
 	 }
 
 	private {
@@ -85,21 +80,12 @@ private class ModelElements {
 	int opApply( int delegate (ref Element) dg ) {
 		int result;
 		foreach( node; model ) {
-			Element element = node.element;
+			auto element = node.element;
 			result = dg( element );
 			if(result) break;
 		}
 		return result;
 	}
-}
-
-/++
- + Helper function to get drawables from a model
- +/
-ModelElements elements (Model model) {
-	ModelElements modelElem = new ModelElements;
-	modelElem.model = model;
-	return modelElem;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -113,7 +99,7 @@ private class ModelDrawables {
 	int opApply( int delegate (ref DrawableObject) dg ) {
 		int result;
 		foreach( node; model ) {
-			DrawableObject drawable = drawable( node.element );
+			auto drawable = drawable(node.element);
 			result = dg( drawable );
 			if(result) break;
 		}
@@ -122,10 +108,12 @@ private class ModelDrawables {
 }
 
 /++
- + Helper function to get drawables from a model
+ + Helper functions to get parts from a model
  +/
-ModelDrawables drawables(Model model) {
-	ModelDrawables modelDrawables = new ModelDrawables;
-	modelDrawables.model = model;
-	return modelDrawables;
+T parts(T)( Model model ) {
+	T result = new T;
+	result.model = model;
+	return result;
 }
+alias parts!(ModelElements) elements;
+alias parts!(ModelDrawables) drawables;

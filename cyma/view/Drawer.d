@@ -1,9 +1,10 @@
 module cyma.view.Drawer;
 
 private {
+	import std.stdio;
+	import std.functional;
+
 	import util.Singleton;
-	import io.Stdout;
-	import util.Curry;
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.view.DrawActor;
@@ -21,8 +22,7 @@ class Drawer {
 	/++
 	 + Initialize Drawer and all DrawActors
 	 +/
-	 void init() {
-		 // Use alias from AllCanvas
+	 final void init() {
 		 foreach( type; CanvasTypes ) {
 			addDrawActor( new type, type.stringof );
 			drawActors[$-1].canvas.init();
@@ -32,37 +32,38 @@ class Drawer {
 	/++
 	 + Iterate over each active canvas, traversing the model
 	 +/
-	DrawActor[] yield( Model model ) {
+	final DrawActor[] yield( Model model ) {
 		foreach( ref actor; drawActors ) {
 			auto canvas = cast(Canvas)actor.canvas;
 			canvas.linkDrawActor( actor );
 			canvas.updateEnvironment();
 
-			void drawCanvas( DrawActor injectActor, Model injectModel ) {
-				if( injectActor.active ) {
+			auto actorRef = actor;
+			void drawCanvas() {
+				if( actorRef.active ) {
 					// Traverse the model and draw it on each active canvas
-					foreach( drawable; drawables(injectModel) ) {
-						injectActor.canvas.draw( drawable );
+					foreach( drawable; drawables(model) ) {
+						actorRef.canvas.draw( drawable );
 					}
 				}
 			}
 
-			actor.execute = Curry( &drawCanvas, actor, model );
+			// Note: this relies on D2 functionality. D1 must curry.
+			actor.execute = &drawCanvas;
 		}
 		return drawActors;
 	}
 
 	/++
-	 + Register canvas for use by the drawer. Mixed in by canvas classes's
-	 + constructors
+	 + Register canvas for use by the drawer.
 	 +/
-	private void addDrawActor( Canvas canvas, string name ) {
+	final private void addDrawActor( Canvas canvas, string name ) {
 		DrawActor newDrawActor = new DrawActor;
 		newDrawActor.name = name;
 		newDrawActor.canvas = canvas;
 		drawActors ~= newDrawActor;
 
-		debug(verbose) stdout( "New registered Canvas: {}", name );
+		debug(verbose) writeln( "New registered Canvas: ", name );
 	}
 }
 

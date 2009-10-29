@@ -2,7 +2,6 @@ module math.Algebra;
 
 private import std.traits;
 
-
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Create immutable scalar from value
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
@@ -94,14 +93,14 @@ template isVectorType(T, int dim) {
 }
 
 unittest {
-	static assert (isRingType!(int));
-	static assert (isRingType!(long));
+	static assert(isRingType!(int));
+	static assert(isRingType!(long));
 	static assert( !isRingType!(Object) );
 	// Is casted to int to perform operations:
 	// cast(int)cast(ubyte)0u * cast(int)cast(ubyte)0u
 	// static assert (isRingType!(ubyte));
 
-	static assert (isFieldType!(float));
-	static assert (isFieldType!(double));
-	static assert (isFieldType!(real));
+	static assert(isFieldType!(float));
+	static assert(isFieldType!(double));
+	static assert(isFieldType!(real));
 }

@@ -1,7 +1,8 @@
 module cyma.engine.commands.AddLine;
 
 private {
-	import io.Stdout;
+	import std.stdio;
+
 	import cyma.engine.Command;
 	import cyma.engine.elements.Line;
 }
@@ -24,6 +25,6 @@ class AddLine(T...) : Command!(T) {
 					)
 				)
 			);
-		debug(verbose) stdout("Addline executed");
+		debug(verbose) writeln("Addline executed");
 	}
 }

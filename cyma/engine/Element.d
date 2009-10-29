@@ -1,9 +1,5 @@
 module cyma.engine.Element;
 
-private {
-	import io.Stdout;
-}
-
 protected {
 	import cyma.view.DrawableObject;
 }
@@ -13,7 +9,6 @@ interface Element {
 }
 
 DrawableObject drawable( Element element ) {
-	//debug(verbose) stdout("drawable!");
 	return element.generateDrawable;
 }
 

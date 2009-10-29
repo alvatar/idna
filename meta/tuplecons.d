@@ -5,10 +5,10 @@ private {
 	import std.typetuple;
 	import std.traits;
 
-	import meta.string;
+	import meta.numeric;
+	import meta.stringfuncs;
 	alias TypeTuple Tuple;
 }
-
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Generate code for an array variable
@@ -18,7 +18,7 @@ template GArray(T, string name) {
 	/++
 	 + Create a list of equal values
 	 +/
-	string Repeat( T value, int count ) {
+	pure string Repeat( T value, int count ) {
 		string array = T.stringof ~ "[" ~ "] " ~ name ~ " = [";
 		for( int i=0; i<(count-1); ++i) {
 			array ~= (ctToString(value) ~ ",");
@@ -30,7 +30,7 @@ template GArray(T, string name) {
 	/++
 	 + Create a list of equal values with a specific position with a different value
 	 +/
-	string RepeatAndSpecifyOne( T value
+	pure string RepeatAndSpecifyOne( T value
 			, int count
 			, T spec_value
 			, int spec_index ) {
@@ -56,7 +56,7 @@ template GArrayStatic(T, string name) {
 	/++
 	 + Create a list of equal values
 	 +/
-	string Repeat( T value, int count ) {
+	pure string Repeat( T value, int count ) {
 		string array = "static " ~ T.stringof ~ "[" ~ "] " ~ name ~ " = [";
 		for( int i=0; i<(count-1); ++i) {
 			array ~= (ctToString(value) ~ ",");
@@ -68,7 +68,7 @@ template GArrayStatic(T, string name) {
 	/++
 	 + Create a list of equal values with a specific position with a different value
 	 +/
-	string RepeatAndSpecifyOne( T value
+	pure string RepeatAndSpecifyOne( T value
 			, int count
 			, T spec_value
 			, int spec_index ) {
@@ -90,7 +90,7 @@ unittest {
 }
 
 template TupleToArray(T...) {
-	const typeof(T[0])[T[].length] result = cast(typeof(T[0])[T[].length])([T]);
+	immutable typeof(T[0])[T[].length] result = cast(typeof(T[0])[T[].length])([T]);
 }
 
 template With(T) {

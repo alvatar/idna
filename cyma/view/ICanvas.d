@@ -8,6 +8,6 @@ interface ICanvas {
 
 	void init();
 	void updateEnvironment();
-	void draw( DrawableObject );
+	void draw( ref DrawableObject );
 }
 

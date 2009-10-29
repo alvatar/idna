@@ -1,10 +1,13 @@
 module cyma.view.canvas.GlCanvas;
 
 private {
+	import std.stdio;
+	
 	import dgl.Dgl;
-	import io.Stdout;
+	//import dgl.VERSION_2;
 	import cyma.view.Canvas;
 	import cyma.view.DrawableObject;
+	import math.Vector;
 }
 
 
@@ -31,26 +34,16 @@ class GlCanvas : Canvas {
 	/++
 	 + Implementation of the draw() method for OpenGL backend
 	 +/
-	void draw( DrawableObject drawable ) {
+	void draw( ref DrawableObject drawable ) {
 
-		// TODO
-		struct vec2 {
-			float x;
-			float y;
-		}
-		struct vec4 {
-			float r;
-			float g;
-			float b;
-			float a;
-		}
+		if( !drawable.modified ) return;
 
 		switch( drawable.type ) {
 			case drawable.Types.Line:
 				struct Unpack {
-					vec2 pointA;
-					vec2 pointB;
-					vec4 color;
+					vec2r pointA;
+					vec2r pointB;
+					vec4r color;
 				}
 				Unpack* unpacked = cast(Unpack*)drawable.data;
 
@@ -71,19 +64,19 @@ class GlCanvas : Canvas {
 				};
 			break;
 			case drawable.Types.Polyline:
-				stdout("POLYLINE");
+				writeln("POLYLINE");
 			break;
 			case drawable.Types.Circle:
-				stdout("CIRCLE");
+				writeln("CIRCLE");
 			break;
 			case drawable.Types.Arc:
-				stdout("ARC");
+				writeln("ARC");
 			break;
 			case drawable.Types.Rectangle:
-				stdout("RECTANGLE");
+				writeln("RECTANGLE");
 			break;
 			case drawable.Types.Image:
-				stdout("IMAGE");
+				writeln("IMAGE");
 			break;
 		}
 	}

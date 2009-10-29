@@ -80,9 +80,13 @@ struct Tlink( V, Threading threading = Threading.none ) {
 	 + Add a child to current cell. If last is set it will add it as the last
 	 + child of the parent
 	 +/
-	final void attachChild( bool last = false )( Ref p ) {
+	void attachChild( bool last = false )( Ref p ) {
 		if(p) {
-			p.parent = this;
+			version( D_Version2 ) {
+				p.parent = &this;
+			} else {
+				p.parent = this;
+			}
 			// If it is the first child
 			if( !fchild ) {
 				fchild = p;

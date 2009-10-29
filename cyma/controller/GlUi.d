@@ -1,6 +1,7 @@
 module cyma.controller.GlUi;
 
 private {
+	import dgl.Dgl;
 	import io.input.Input;
 	import io.input.Writer;
 	import io.input.InputHub;
@@ -9,10 +10,9 @@ private {
 	import core.Message;
 	import core.MainProcess;
 	import core.AsyncMessageHub;
-	import dgl.Dgl;
-	import util.Curry;
 	import cyma.controller.Ui;
 	import cyma.engine.commands.All;
+	import math.Vector;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -100,19 +100,21 @@ class GlUi : Ui {
 	/++
 	 + User interface loop
 	 +/
-	//debug import xf.omg.core.LinearAlgebra;
-	//debug import tango.math.random.Random;
+	debug import std.random;
 	void doUi( Driver driver, DrawActor[] drawActors ) {
-		/*
 		debug {
-			auto r = new Random;
-			auto com = new AddLine!(vec2, vec2);
+			auto rnd = Random(unpredictableSeed);
+			auto com = new AddLine!(vec2r, vec2r);
 			driver.injectCommands( 
-				[ com.context( MakeContext( vec2(r.uniformR(1.0),r.uniformR(1.0)), vec2(r.uniformR(1.0),r.uniformR(1.0))) )
+				[ com.context(
+					MakeContext( 
+						vec2r( uniform(0,1.0,rnd), uniform(0,1.0,rnd) )
+						, vec2r( uniform(0,1.0,rnd),uniform(0,1.0,rnd) )
+						)
+					)
  				]
 				);
 		}
-		*/
 
 		void drawUi(GL gl) {
 			gl.Clear(GL_COLOR_BUFFER_BIT);
@@ -141,7 +143,7 @@ class GlUi : Ui {
 					// Execute actor
 					actor.execute()();
 				}
-				drawUi(gl);
+				//drawUi(gl);
 			};
 			context.update().show();
 		}
