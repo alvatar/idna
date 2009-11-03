@@ -10,7 +10,7 @@ private {
 
 package {
 	import cyma.view.Canvas;
-	import cyma.view.DrawableObject;
+	import cyma.view.DrawableProxy;
 }
 
 private {

@@ -6,7 +6,6 @@ package {
 	import io.Stdout;
 	import cyma.engine.Driver;
 	import cyma.view.DrawActor;
-	import cyma.view.Drawer;
 }
 
 interface Ui {
@@ -15,7 +14,7 @@ interface Ui {
 	 + Init function, common to all user interfaces. Must be overriden,
 	 + even if no initialization is necessary
 	 +/
-	void init();
+	void initActors( DrawActor[] drawActors );
 
 	/++
 	 + Defines all actions to be taken in order to collect and process the

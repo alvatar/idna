@@ -17,14 +17,15 @@ class AddLine(T...) : Command!(T) {
 						.randomLayer
 						.staticVectorSubstrate
 						.tree;
-		tree.root
-			.attachChild(
-				tree.createNode(
-					new Line(
-						(cast(DefineContext!(T))context).arguments
-					)
-				)
-			);
-		debug(verbose) writeln("Addline executed");
+
+		auto newChild = tree.createNode(
+			new Line( (cast(DefineContext!(T))context).arguments)
+		);
+
+		tree.root.attachChild( newChild );
+
+		model.addDelta!(Model.Deltas.New)( &newChild.value );
+
+		model.updated;
 	}
 }

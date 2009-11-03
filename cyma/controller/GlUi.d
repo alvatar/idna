@@ -39,10 +39,13 @@ class GlUi : Ui {
 		}
 	}
 
+	/++ Flag: initialize actors? +/
+	bool callInitActors = true;
+
 	/++
-	 + Init function
+	 + Initialize Actors
 	 +/
-	void init() {
+	void initActors( DrawActor[] drawActors ) {
 		// Create OpenGl input and context
 		keyboard = new SimpleKeyboardReader( inputHub.mainChannel );
 		context = GLWindow();
@@ -54,7 +57,17 @@ class GlUi : Ui {
 			.fullscreen(false)
 			.width(1024)
 			.height(768)
-		.create();
+			.create();
+		if( context.created ) {
+			use(context) in (GL gl) {
+				foreach( actor; drawActors ) {
+					// Update actors environment with the GlUi's environment
+					actor.start(gl);
+				}
+			};
+		} else {
+			assert( false, "Something happened when creating OpenGL Context" );
+		}
 
 		jobHub.addRepeatableJob( &handleKeyboard, 200 );
 
@@ -114,6 +127,11 @@ class GlUi : Ui {
 					)
  				]
 				);
+		}
+
+		if(callInitActors) {
+			initActors(drawActors);
+			callInitActors = false;
 		}
 
 		void drawUi(GL gl) {

@@ -499,6 +499,9 @@ unittest {
 alias TVector!(int,2) vec2i;
 alias TVector!(int,3) vec3i;
 alias TVector!(int,4) vec4i;
+alias TVector!(float,2) vec2f;
+alias TVector!(float,3) vec3f;
+alias TVector!(float,4) vec4f;
 alias TVector!(real,2) vec2r;
 alias TVector!(real,3) vec3r;
 alias TVector!(real,4) vec4r;

@@ -1,11 +1,8 @@
 module cyma.application.Main;
 
-debug = stacktrace;
-//debug(stacktrace) import tango.core.stacktrace.TraceExceptions;
+import std.stdio;
 
 import core.JobHub;
-
-import io.Stdout;
 import core.AsyncMessageHub;
 import cyma.controller.UiManager;
 import cyma.view.Drawer;
@@ -16,13 +13,17 @@ int main( string[] args ) {
 
 	drawer.init();
 	driver.init();
-	Ui ui = UiManager.create( "GlUi" );
-	Model model = Model.create();
+	auto ui = UiManager.create( "GlUi" );
+	auto model = Model.create();
 
 	jobHub.addPostFrameJob( {
-		ui.doUi( driver, drawer.yield( model ) );
-	} );
-	jobHub.addPostFrameJob( {
+
+		if( model.updates > 0 ) {
+			ui.doUi( driver, drawer.update(model) );
+		} else {
+			ui.doUi( driver, drawer.redraw() );
+		}
+
 		driver.process( model );
 	} );
 

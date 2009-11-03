@@ -6,7 +6,7 @@ private {
 
 class HybridGui : Ui {
 
-	void init() {
+	void initActors( DrawActor[] drawActors ) {
 	}
 
 	void doUi( Driver driver

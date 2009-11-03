@@ -8,20 +8,13 @@ private {
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + A line is a geometric entity composed of 2 vectors
+ + A line is a geometric entity composed of 2 points
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 final class LineT( PointT, ColorT ) : Element {
 
 	this( PointT pointA, PointT pointB ) {
 		data.pointA = pointA;
 		data.pointB = pointB;
-	}
-
-	/++
-	 + Generate drawable representation on the fly
-	 +/
-	final protected DrawableObject generateDrawable() {
-		return DrawableObject(DrawableObject.Types.Line, true, Data.sizeof, &data);
 	}
 
 	/++ 2 Points define a line +/

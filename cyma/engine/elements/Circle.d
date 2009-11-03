@@ -5,11 +5,11 @@ private {
 }
 
 class Circle : Element {
-	protected DrawableObject generateDrawable() {
+	protected DrawableProxy generateDrawable() {
 		// TODO
 		//debug(verbose) stdout("line!");
-		DrawableObject drawable;
-		drawable.type = DrawableObject.Types.Line;
+		DrawableProxy drawable;
+		drawable.type = DrawableProxy.Types.Line;
 		drawable.sizeInBytes = 2 * vec2.sizeof;
 		return drawable;
 	}

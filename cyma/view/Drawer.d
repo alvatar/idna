@@ -16,54 +16,97 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class Drawer {
 	
-	/++ DrawActors, everything needed to execute a group of draw functions +/
+	/++ DrawActors: everything needed to execute a group of draw functions +/
 	DrawActor[] drawActors;
 
 	/++
 	 + Initialize Drawer and all DrawActors
 	 +/
 	 final void init() {
-		 foreach( type; CanvasTypes ) {
-			addDrawActor( new type, type.stringof );
-			drawActors[$-1].canvas.init();
+		 foreach( i, type; CanvasTypes ) {
+			auto actor = addDrawActor( new type, type.stringof );
 		 }
 	 }
 
 	/++
-	 + Iterate over each active canvas, traversing the model
+	 + Iterate over each active canvas, updating the proxy geometries
+	 + to the model current state (adds, deletes, modifications).
 	 +/
-	final DrawActor[] yield( Model model ) {
-		foreach( ref actor; drawActors ) {
-			auto canvas = cast(Canvas)actor.canvas;
-			canvas.linkDrawActor( actor );
-			canvas.updateEnvironment();
+	final DrawActor[] update( ref Model model ) {
 
+		foreach( ref actor; drawActors ) {
 			auto actorRef = actor;
-			void drawCanvas() {
+			void actorExecution() {
 				if( actorRef.active ) {
 					// Traverse the model and draw it on each active canvas
-					foreach( drawable; drawables(model) ) {
-						actorRef.canvas.draw( drawable );
+					foreach( ref e; elements!(Model.Deltas.New)(model) ) {
+						actorRef.canvas.add(e);
+					}
+					// Traverse the model and draw modified drawables
+					foreach( ref e; elements!(Model.Deltas.Modified)(model) ) {
+						actorRef.canvas.regenerate(e);
+					}
+					// Traverse the model and draw it on each active canvas
+					foreach( ref e; elements!(Model.Deltas.Removed)(model) ) {
+						actorRef.canvas.remove(e);
 					}
 				}
 			}
 
-			// Note: this relies on D2 functionality. D1 must curry.
-			actor.execute = &drawCanvas;
+			actor.execute = &actorExecution;
+		}
+		model.scheduleToClearDeltas;
+		return drawActors;
+	}
+
+	/++
+	 + Regenerate all the proxy geometry
+	 +/
+	final DrawActor[] regenerate() {
+		// TODO
+		// Note on implementation: could be done using a pointers-to-proxies list
+		// or iteration and acting on specific proxy types.
+		return drawActors;
+	}
+
+	/++
+	 + Redraw the current proxy geometry
+	 +/
+	final DrawActor[] redraw() {
+
+		foreach( ref actor; drawActors ) {
+			auto actorRef = actor;
+			void actorExecution() {
+				if( actorRef.active ) {
+					actorRef.canvas.draw();
+				}
+			}
+
+			actor.execute = &actorExecution;
 		}
 		return drawActors;
 	}
 
 	/++
-	 + Register canvas for use by the drawer.
+	 + Add canvas to the target list of the drawer
 	 +/
-	final private void addDrawActor( Canvas canvas, string name ) {
+	final private DrawActor addDrawActor( Canvas canvas, string name ) {
 		DrawActor newDrawActor = new DrawActor;
 		newDrawActor.name = name;
 		newDrawActor.canvas = canvas;
+		canvas.setParendDrawActor( newDrawActor );
 		drawActors ~= newDrawActor;
 
 		debug(verbose) writeln( "New registered Canvas: ", name );
+		return newDrawActor;
+	}
+
+	/++
+	 + Remove a canvas from the target list
+	 +/
+	final private DrawActor removeDrawActor( string name ) {
+		// TODO
+		return null;
 	}
 }
 

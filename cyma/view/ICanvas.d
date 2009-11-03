@@ -1,13 +1,16 @@
 module cyma.view.ICanvas;
 
 private {
-	import cyma.view.DrawableObject;
+	import cyma.engine.Element;
 }
 
 interface ICanvas {
 
 	void init();
 	void updateEnvironment();
-	void draw( ref DrawableObject );
+	void add( ref Element );
+	void regenerate( ref Element );
+	void remove( ref Element );
+	void draw();
 }
 

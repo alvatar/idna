@@ -2,9 +2,13 @@ module cyma.view.Canvas;
 
 private {
 	import io.Stdout;
-	import cyma.view.DrawableObject;
 	import cyma.view.ICanvas;
 	import cyma.view.IDrawActor;
+}
+
+protected {
+	import cyma.engine.Element;
+	import cyma.view.DrawableProxy;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -17,7 +21,13 @@ abstract class Canvas : ICanvas {
 	protected IDrawActor drawActor;
 
 	/++ Update the link with a DrawActor +/
-	void linkDrawActor( IDrawActor drawActor ) {
+	void setParendDrawActor( IDrawActor drawActor ) {
 		this.drawActor = drawActor;
 	}
+
+	/++
+	 + Structure for proxy drawable object. It needs to be ordered (for correct
+	 + z-depths) and indexable (to allow access knowing an element's id).
+	 +/
+	DrawableProxy[] proxies;
 }

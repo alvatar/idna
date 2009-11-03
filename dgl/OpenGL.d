@@ -272,7 +272,7 @@ bool isOpenGLVersionSupported(string versionStr, char delim) {
 	int chkMajor, chkMinor;
 	
 	version( D_Version2 ) {
-		writeln(to!(string)(fp_glGetString(dgl.Common.GL_VERSION)));
+		debug(verbose) writeln(to!(string)(fp_glGetString(dgl.Common.GL_VERSION)));
 		if	(	extractVersionNumbers(to!(string)(fp_glGetString(dgl.Common.GL_VERSION)), '.', &implMajor, &implMinor) &&
 				extractVersionNumbers(versionStr, delim, &chkMajor, &chkMinor))
 		{
@@ -280,7 +280,7 @@ bool isOpenGLVersionSupported(string versionStr, char delim) {
 			if (implMajor == chkMajor && implMinor >= chkMinor) return true;
 		}
 	} else {
-		Stdout.formatln(fromStringz(fp_glGetString(xf.dog.Common.GL_VERSION)));
+		debug(verbose) Stdout.formatln(fromStringz(fp_glGetString(xf.dog.Common.GL_VERSION)));
 		if	(	extractVersionNumbers(fromStringz(fp_glGetString(dgl.Common.GL_VERSION)), '.', &implMajor, &implMinor) &&
 				extractVersionNumbers(versionStr, delim, &chkMajor, &chkMinor))
 		{

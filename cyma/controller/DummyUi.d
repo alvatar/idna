@@ -10,7 +10,7 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class DummyUi : Ui {
 	
-	void init () {
+	void initActors( DrawActor[] drawActors ) {
 		//currentCommands
 	}
 

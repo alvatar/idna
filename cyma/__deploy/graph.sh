@@ -1,11 +1,13 @@
 #!/bin/sh
 
 declare -x CURRENTDIR=`pwd`
-declare -x VISPROG=""
+declare -x OUTPUTTYPE="pdf"
+declare -x GENPROG=""
+declare -x VISPROG="xpdf"
 
 cd /data/projects/idna
 
-if [[ $1 == "" ]]; then VISPROG="dot"; else VISPROG=$1; fi
-redimple cyma.application.Main -xdgl | $VISPROG -Tpdf -o$CURRENTDIR/Cyma.pdf && xpdf $CURRENTDIR/Cyma.pdf && rm $CURRENTDIR/Cyma.pdf
+if [[ $1 == "" ]]; then GENPROG="dot"; else GENPROG=$1; fi
+redimple cyma.application.Main -xdgl | $GENPROG -T$OUTPUTTYPE -o$CURRENTDIR/Cyma.$OUTPUTTYPE && $VISPROG $CURRENTDIR/Cyma.$OUTPUTTYPE && rm $CURRENTDIR/Cyma.$OUTPUTTYPE
 
 cd -

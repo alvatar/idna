@@ -74,4 +74,13 @@ class DrawActor : IDrawActor {
 	void[] environment( void[] environment ) {
 		return _environment = environment;
 	}
+
+	/++
+	 + Initialize actor and linked canvas.
+	 +/
+	 void start( void[] env) {
+		 this._environment = env;
+		 _canvas.updateEnvironment();
+		 _canvas.init();
+	 }
 }

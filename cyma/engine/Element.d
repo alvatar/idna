@@ -1,14 +1,13 @@
 module cyma.engine.Element;
 
 protected {
-	import cyma.view.DrawableObject;
+	import cyma.view.DrawableProxy;
 }
 
-interface Element {
-    protected DrawableObject generateDrawable();
-}
-
-DrawableObject drawable( Element element ) {
-	return element.generateDrawable;
+abstract class Element {
+	protected size_t _id;
+	public size_t id() {
+		return _id;
+	}
 }
 

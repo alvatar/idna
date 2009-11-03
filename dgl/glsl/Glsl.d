@@ -7,8 +7,7 @@ private import tango.io.device.File;
 private import xf.dog.OpenGL;
 public import xf.dog.ext.VERSION_2_0;
 
-void dogPrintShaderInfoLog(GL gl, GLuint obj)
-{
+void dogPrintShaderInfoLog(GL gl, GLuint obj) {
     int infologLength = 0;
     int charsWritten  = 0;
     char *infoLog;
@@ -26,8 +25,7 @@ void dogPrintShaderInfoLog(GL gl, GLuint obj)
 }
 
 
-void dogPrintProgramInfoLog(GL gl, GLuint obj)
-{
+void dogPrintProgramInfoLog(GL gl, GLuint obj) {
 	int infologLength = 0;
 	int charsWritten  = 0;
 	char *infoLog;
@@ -44,8 +42,7 @@ void dogPrintProgramInfoLog(GL gl, GLuint obj)
 	}
 }
 
-void dogCompileShaderFile(GL gl, char[] file, GLuint type, GLuint program)
-{
+void dogCompileShaderFile(GL gl, char[] file, GLuint type, GLuint program) {
 	GLuint v;
 	v = gl.CreateShader(type);
 	auto shaderFile = File.get(file);
@@ -57,8 +54,7 @@ void dogCompileShaderFile(GL gl, char[] file, GLuint type, GLuint program)
 	gl.AttachShader(program, v);
 }
 
-void dogCompileShaderSource(GL gl, char[] source, GLuint type, GLuint program)
-{
+void dogCompileShaderSource(GL gl, char[] source, GLuint type, GLuint program) {
 	GLuint v;
 	v = gl.CreateShader(type);
 	char* shaderSourcePtr = toStringz( source );

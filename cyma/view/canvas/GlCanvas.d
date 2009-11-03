@@ -4,9 +4,12 @@ private {
 	import std.stdio;
 	
 	import dgl.Dgl;
-	//import dgl.VERSION_2;
+	import dgl.GLConsts;
+	import dgl.ext.VERSION_1_5;
+	import dgl.ext.VERSION_2_0;
+	import dgl.Utils;
+	import cyma.engine.elements.all;
 	import cyma.view.Canvas;
-	import cyma.view.DrawableObject;
 	import math.Vector;
 }
 
@@ -16,68 +19,80 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class GlCanvas : Canvas {
 
-	/++
-	 + Implementation of the init() method for OpenGL backend
-	 +/
-	void init() {
-	}
-
+	/++ OpenGL context +/
 	private {
 		GL gl;
 	}
 
+	struct Vertex {
+		vec2f pointA;
+		vec2f pointB;
+		vec4f color;
+	}
+
+	/++ Indices VBO id +/
+	GLuint vertexVBOid;
+
+	/++ Initial VBOs size +/
+	immutable(GLsizei) initialBufSize = 0;
+
+	/++ Host-side vertex data +/
+	Vertex[] vertices;
+
+	/++ Implementation of interface +/
+	void init() {
+		gl.ext(VERSION_1_5, VERSION_2_0) in {
+			gl.createVBO (
+					vertexVBOid 
+					, vertices.ptr
+					, initialBufSize
+					, GL_ARRAY_BUFFER
+					, GL_DYNAMIC_DRAW
+					);
+		};
+	}
+
+	/++ Implementation of interface +/
 	void updateEnvironment() {
 		// Cast the DrawActor's environment to the right type for this canvas
 		gl = cast(GL)drawActor.environment;
 	}
 
-	/++
-	 + Implementation of the draw() method for OpenGL backend
-	 +/
-	void draw( ref DrawableObject drawable ) {
+	/++ Implementation of interface +/
+	void add( ref Element element ) {
 
-		if( !drawable.modified ) return;
+		// Drawing algorithms
+		if( auto line = cast(Line)element ) {
 
-		switch( drawable.type ) {
-			case drawable.Types.Line:
-				struct Unpack {
-					vec2r pointA;
-					vec2r pointB;
-					vec4r color;
-				}
-				Unpack* unpacked = cast(Unpack*)drawable.data;
+			gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
+				gl.BlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+				gl.immediate( GL_LINES, {
+					gl.Color4f( line.data.color.r
+						, line.data.color.g
+						, line.data.color.b
+						, line.data.color.a );
+					gl.Vertex3f( line.data.pointA.x, line.data.pointA.y, -1 );
+					gl.Color4f( line.data.color.r
+						, line.data.color.g
+						, line.data.color.b
+						, line.data.color.a );
+					gl.Vertex3f( line.data.pointB.x, line.data.pointB.y, -1 );
+				} );
+			};
 
-				gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
-					gl.BlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-					gl.immediate( GL_LINES, {
-						gl.Color4f( unpacked.color.r
-							, unpacked.color.g
-							, unpacked.color.b
-							, unpacked.color.a );
-						gl.Vertex3f(unpacked.pointA.x,  unpacked.pointA.y,   -1);
-						gl.Color4f( unpacked.color.r
-							, unpacked.color.g
-							, unpacked.color.b
-							, unpacked.color.a );
-						gl.Vertex3f(unpacked.pointB.x,  unpacked.pointB.y,   -1);
-					} );
-				};
-			break;
-			case drawable.Types.Polyline:
-				writeln("POLYLINE");
-			break;
-			case drawable.Types.Circle:
-				writeln("CIRCLE");
-			break;
-			case drawable.Types.Arc:
-				writeln("ARC");
-			break;
-			case drawable.Types.Rectangle:
-				writeln("RECTANGLE");
-			break;
-			case drawable.Types.Image:
-				writeln("IMAGE");
-			break;
+		} else if( cast(Polyline)element ) {
 		}
+	}
+	
+	void regenerate( ref Element element ) {
+		// TODO
+	}
+
+	void remove( ref Element element ) {
+		// TODO
+	}
+
+	void draw() {
+		// TODO
 	}
 }

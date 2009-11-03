@@ -4,8 +4,6 @@ private {
 	import dgl.Common;
 	import dgl.GLFunctions;
 	import dgl.OpenGL;
-	
-	//import xf.omg.core.LinearAlgebra;
 }
 
 
@@ -27,23 +25,14 @@ private struct StateUseProxy {
 	
 	StateUseProxy withState(GLenum[] states ...) {
 		_setStates(states, true);
-		version( D_Version2 ) {
-			return this;
-		} else {
-			return *this;
-		}
+		return this;
 	}
 	
 
 	StateUseProxy withoutState(GLenum[] states ...) {
 		_setStates(states, false);
-		version( D_Version2 ) {
-			return this;
-		} else {
-			return *this;
-		}
+		return this;
 	}
-
 
 	private {
 		struct Item {

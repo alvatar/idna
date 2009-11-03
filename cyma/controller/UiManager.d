@@ -32,7 +32,7 @@ class UiManager {
 				throw new Exception( "Ui type not defined" );
 			break;
 		}
-		ui.init();
+		//ui.init();
 		return ui;
 	}
 }
