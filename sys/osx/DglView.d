@@ -1,11 +1,11 @@
-module sys.osx.DogView;
+module sys.osx.DglView;
 
 import sys.osx.objc_class;
 import sys.osx.objc_runtime;
 import sys.osx.NSObject;
 import sys.osx.NSGeometry;
 
-import xf.dog.Common: GL;
+import dgl.Common: GL;
 
 class DogView {
 
