@@ -134,14 +134,9 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +143 /data/projects/idna/cyma/model/Model.d
-badd +68 /data/projects/idna/cyma/view/Drawer.d
-badd +19 /data/projects/idna/cyma/view/canvas/GlCanvas.d
-badd +30 /data/projects/idna/cyma/view/Canvas.d
-badd +82 /data/projects/idna/cyma/view/DrawActor.d
-badd +38 /data/projects/idna/cyma/view/DrawableProxy.d
+badd +98 /data/projects/idna/cyma/controller/GlUi.d
 args /data/projects/idna/cyma/controller/GlUi.d
-edit /data/projects/idna/cyma/view/canvas/GlCanvas.d
+edit /data/projects/idna/cyma/controller/GlUi.d
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -253,12 +248,13 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 134 - ((75 * winheight(0) + 38) / 76)
+let s:l = 98 - ((46 * winheight(0) + 46) / 93)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-134
-normal! 0
+98
+normal! 05l
+lcd /data/projects/idna/cyma/__deploy
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

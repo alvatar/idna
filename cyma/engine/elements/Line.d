@@ -35,7 +35,6 @@ final class LineT( PointT, ColorT ) : Element {
 	invariant() {
 		assert( Data.sizeof == ((PointT.sizeof * 2) + ColorT.sizeof ));
     }
-
 }
 
-alias LineT!(vec2r, vec4r) Line;
+alias LineT!(vec2r, vec4f) Line;

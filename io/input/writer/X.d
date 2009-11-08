@@ -10,7 +10,9 @@ private {
 	import sys.x11.XKBlib;
 }
 
+import std.stdio;
 class XInputWriter {
+
 	protected {
 		InputChannel _channel;
 		bool _interceptMouse;
@@ -70,18 +72,22 @@ class XInputWriter {
 			KeyboardInput kin;
 			kin.type = KeyboardInput.Type.Down;
 			kin.modifiers = getMods(ev.xkey.state);
-			char[4] str;
+			//char[4] str; // XF IMPLEMENTATION
+			dchar str;
 			// Our KeySyms are from X and thus should not need conversion
-			if (auto len = XLookupString(&ev.xkey, str.ptr, 4, cast(size_t*)&kin.keySym, cast(_XComposeStatus*)null)) {
+			if( auto len = XLookupString(&ev.xkey, cast(char*)&str, 4, cast(size_t*)&kin.keySym, cast(_XComposeStatus*)null) ) {
+				kin.unicode = str;
+				/* XF IMPLEMENTATION
 				foreach (dchar dc; str[0..len]) {
 					kin.unicode = dc;
 					break;
 				}
+				*/
 			}
-      // Don't pass on low-range non-printable characters (e.g. ESC)
-      if(cast(uint)kin.unicode < 32) {
-        kin.unicode = dchar.init;
-      }
+			// Don't pass on low-range non-printable characters (e.g. ESC)
+			if(cast(uint)kin.unicode < 32) {
+				kin.unicode = dchar.init;
+			}
 			if(kin.keySym != _lastDownKey) {
 				_lastDownKey = kin.keySym;
 				_channel << kin;
@@ -92,18 +98,22 @@ class XInputWriter {
 			KeyboardInput kin;
 			kin.type = KeyboardInput.Type.Up;
 			kin.modifiers = getMods(ev.xkey.state);
-			char[4] str;
+			//char[4] str; // XF IMPLEMENTATION
+			dchar str;
 			// Our KeySyms are from X and thus should not need conversion
-			if (auto len = XLookupString(&ev.xkey, str.ptr, 4, cast(size_t*)&kin.keySym, cast(_XComposeStatus*)null)) {
+			if (auto len = XLookupString(&ev.xkey, cast(char*)&str, 4, cast(size_t*)&kin.keySym, cast(_XComposeStatus*)null)) {
+				kin.unicode = str;
+				/* XF IMPLEMENTATION
 				foreach (dchar dc; str[0..len]) {
 					kin.unicode = dc;
 					break;
 				}
+				*/
 			}
-      // Don't pass on low-range non-printable characters (e.g. ESC)
-      if(cast(uint)kin.unicode < 32) {
-        kin.unicode = dchar.init;
-      }
+			// Don't pass on low-range non-printable characters (e.g. ESC)
+			if(cast(uint)kin.unicode < 32) {
+				kin.unicode = dchar.init;
+			}
 			_channel << kin;
 			break;
 		case ButtonPress:

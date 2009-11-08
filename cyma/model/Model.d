@@ -58,11 +58,14 @@ class Model {
 	/++
 	 + Types of changes from previous model states' elements
 	 +/
-	enum Deltas {
-		New
+	enum Access {
+		All
+		, New
 		, Modified
 		, Removed
 	}
+
+	enum All;
 
 	private {
 		/++ A model is a set of layers that can be rearranged +/
@@ -85,12 +88,12 @@ class Model {
 	/++
 	 + Informs the model of the new model added to the tree
 	 +/
-	void addDelta(Deltas type)( Node* node ) {
-		static if( type == Deltas.New ) {
+	void addDelta(Access type)( Node* node ) {
+		static if( type == Access.New ) {
 			_newNodes.add(node);
-		} else static if( type == Deltas.Modified ) {
+		} else static if( type == Access.Modified ) {
 			_modifiedNodes.add(node);
-		} else static if( type == Deltas.Removed ) {
+		} else static if( type == Access.Removed ) {
 			_removedNodes.add(node);
 		}
 	}
@@ -187,12 +190,14 @@ T getParts(T)( Model model ) {
 	return result;
 }
 
-template elements(Model.Deltas type) {
-	static if( type == Model.Deltas.New ) {
+template elements(Model.Access type) {
+	static if( type == Model.Access.All ) {
+		alias getParts!( ModelElements ) elements;
+	} else static if( type == Model.Access.New ) {
 		alias getParts!( ModelElementDeltas!("_newNodes") ) elements;
-	} else static if( type == Model.Deltas.Modified ) {
+	} else static if( type == Model.Access.Modified ) {
 		alias getParts!( ModelElementDeltas!("_modifiedNodes") ) elements;
-	} else static if( type == Model.Deltas.Removed ) {
+	} else static if( type == Model.Access.Removed ) {
 		alias getParts!( ModelElementDeltas!("_removedNodes") ) elements;
 	}
 }

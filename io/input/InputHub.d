@@ -1,14 +1,10 @@
 module io.input.InputHub;
 
-
 private {
-	import io.Stdout;
 	import util.Singleton;
-	import core.JobHub;
+	//import core.JobHub;
 	import io.input.Input;
 }
-
-
 
 class InputHub {
 

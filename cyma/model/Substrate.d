@@ -1,7 +1,6 @@
 module cyma.model.Substrate;
 
 private {
-	import io.Stdout;
 	import cyma.model.Node;
 	import cyma.model.NodeTree;
 }

@@ -7,9 +7,7 @@
 
 module core.MainProcess;
 
-
 private {
-	import io.Stdout;
 	import io.input.Input;
 	import io.input.InputHub;
 	import core.Message;
@@ -21,13 +19,13 @@ private {
 }
 
 private class TimeReader : InputReader {
-	void tick(TimeInput* i) {
-		jobHub.update(cast(double)i.micros * 0.000001);
-	}
-	
-	
+
 	this() {
 		registerReader!(TimeInput)(&this.tick);
+	}
+
+	void tick(TimeInput* i) {
+		jobHub.update(cast(double)i.micros * 0.000001);
 	}
 }
 
@@ -37,7 +35,8 @@ class MainProcess : Process {
 	void exec() {
 		HardwareTimer timer;
 
-		void delegate() tick; {
+		void delegate() tick;
+		{
 			timer = new HardwareTimer;
 			
 			tick = () {
@@ -61,9 +60,7 @@ class MainProcess : Process {
 		
 		while (!stopped) {
 			tick();
-				//stdout("TICK");
 			inputHub.dispatchAll();
-				//stdout("DISPATCHED");
 			/*
 			profile!(`jobHub`)({
 				tick();

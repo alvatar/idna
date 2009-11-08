@@ -29,8 +29,33 @@ class Drawer {
 	 }
 
 	/++
-	 + Iterate over each active canvas, updating the proxy geometries
-	 + to the model current state (adds, deletes, modifications).
+	 + Zero level: iterate over everything and recreate the representation
+	 +/
+	final DrawActor[] load( ref Model model ) {
+
+		foreach( ref actor; drawActors ) {
+			auto actorRef = actor;
+			void actorExecution() {
+				if( actorRef.active ) {
+					actorRef.canvas.clear();
+					// Traverse the model and draw it on each active canvas
+					foreach( ref e; elements!(Model.Access.All)(model) ) {
+						actorRef.canvas.add(e);
+					}
+					actorRef.canvas.changed();
+				}
+			}
+
+			actor.execute = &actorExecution;
+		}
+
+		model.scheduleToClearDeltas;
+		return drawActors;
+	}
+
+	/++
+	 + First level: Iterate over each active canvas, updating the proxy
+	 + geometries to the model current state (adds, deletes, modifications).
 	 +/
 	final DrawActor[] update( ref Model model ) {
 
@@ -39,17 +64,19 @@ class Drawer {
 			void actorExecution() {
 				if( actorRef.active ) {
 					// Traverse the model and draw it on each active canvas
-					foreach( ref e; elements!(Model.Deltas.New)(model) ) {
+					foreach( ref e; elements!(Model.Access.New)(model) ) {
 						actorRef.canvas.add(e);
 					}
 					// Traverse the model and draw modified drawables
-					foreach( ref e; elements!(Model.Deltas.Modified)(model) ) {
+					foreach( ref e; elements!(Model.Access.Modified)(model) ) {
 						actorRef.canvas.regenerate(e);
 					}
 					// Traverse the model and draw it on each active canvas
-					foreach( ref e; elements!(Model.Deltas.Removed)(model) ) {
+					foreach( ref e; elements!(Model.Access.Removed)(model) ) {
 						actorRef.canvas.remove(e);
 					}
+					// Tells the canvas that it has been changed
+					actorRef.canvas.changed();
 				}
 			}
 
@@ -60,19 +87,35 @@ class Drawer {
 	}
 
 	/++
-	 + Regenerate all the proxy geometry
+	 + Second level: Regenerate the proxy geometry that needs so
 	 +/
-	final DrawActor[] regenerate() {
-		// TODO
+	final DrawActor[] regenerate( ref Model model ) {
 		// Note on implementation: could be done using a pointers-to-proxies list
 		// or iteration and acting on specific proxy types.
+
+		foreach( ref actor; drawActors ) {
+			auto actorRef = actor;
+			void actorExecution() {
+				if( actorRef.active ) {
+					// Traverse the model and regenerate 
+					// TODO
+					/*
+					foreach( ref e; elements!(Model.Access.Modified)(model) ) {
+						actorRef.canvas.regenerate(e);
+					}
+					*/
+				}
+			}
+
+			actor.execute = &actorExecution;
+		}
 		return drawActors;
 	}
 
 	/++
-	 + Redraw the current proxy geometry
+	 + Third level: Redraw the current proxy geometry
 	 +/
-	final DrawActor[] redraw() {
+	final DrawActor[] draw() {
 
 		foreach( ref actor; drawActors ) {
 			auto actorRef = actor;

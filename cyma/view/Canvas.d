@@ -1,7 +1,8 @@
 module cyma.view.Canvas;
 
 private {
-	import io.Stdout;
+	import std.stdio;
+
 	import cyma.view.ICanvas;
 	import cyma.view.IDrawActor;
 }
@@ -9,6 +10,7 @@ private {
 protected {
 	import cyma.engine.Element;
 	import cyma.view.DrawableProxy;
+	import util.container.LinkedList;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -25,9 +27,24 @@ abstract class Canvas : ICanvas {
 		this.drawActor = drawActor;
 	}
 
-	/++
-	 + Structure for proxy drawable object. It needs to be ordered (for correct
-	 + z-depths) and indexable (to allow access knowing an element's id).
-	 +/
-	DrawableProxy[] proxies;
+	void changed() {
+		_isProxiesChanged = true;
+	}
+
+	protected {
+		alias LinkedList!(DrawableProxy) ProxiesList;
+		/++
+		 + Structure for proxy drawable object. It needs to be ordered (for correct
+		 + z-depths) and indexable (to allow access knowing an element's id).
+		 +/
+		 // TODO: SortedMap
+		protected ProxiesList _proxies;
+
+		/++ Flag: ¿has proxies changed? +/
+		protected bool _isProxiesChanged = false;
+
+		this() {
+			_proxies = new ProxiesList;
+		}
+	}
 }

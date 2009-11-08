@@ -9,20 +9,16 @@ private {
 	}
 
 	import util.container.LinkedList;
-	import io.Stdout;
 }
 
 public {
 	alias io.input.KeySym.KeySym KeySym;
 }
 
-
-
 class InputQueue {
    abstract void sendOne(InputReader);
    abstract void removeOne();
 }
-
 
 class InputQueueT(T) : InputQueue {
 	alias LinkedList!(T) Queue;
@@ -55,7 +51,6 @@ class InputQueueT(T) : InputQueue {
 }
 
 
-
 int lastInputId = 0;
 InputQueue function()[]	inputQueueFactories;
 
@@ -73,8 +68,8 @@ template MInput() {
    }
 }
 
-
 struct KeyboardInput {
+
 	enum Type {
 		Down,
 		Up
@@ -110,6 +105,7 @@ struct KeyboardInput {
 
 
 struct MouseInput {
+
 	enum Button {
 		Left = 1,
 		Middle = 2,
@@ -165,6 +161,7 @@ struct TimeInput {
 
 
 class InputReader {
+
 	this() {
 		typeReaders.length = lastInputId;
 	}
@@ -179,7 +176,9 @@ class InputReader {
    
 
 	bool handlesInput(int inputType) {
-		return inputType >= 0 && inputType < typeReaders.length && typeReaders[inputType] !is null;
+		return( inputType >= 0
+				&& inputType < typeReaders.length
+				&& typeReaders[inputType] !is null );
 	}
 
    
@@ -196,16 +195,28 @@ class InputReader {
 		void delegate(void*)[] typeReaders;
 		
 		final void registerReader(T)(void delegate(T*) rdr) {
-		assert (rdr !is null);
-		typeReaders[T.inputTypeId] = cast(void delegate(void*))rdr;
+			assert (rdr !is null);
+			typeReaders[T.inputTypeId] = cast(void delegate(void*))rdr;
 		}
 	}
 }
 
-
+/+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + SimpleKeyboardReader
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class SimpleKeyboardReader : InputReader {
+	
+	private {
+		bool[KeySym] keyState;
+	}
+
+	this(InputChannel channel) {
+		registerReader!(KeyboardInput)(&this.keyInput);
+		channel.addReader(this);
+	}
+
 	void keyInput(KeyboardInput* i) {
-		if (i.type.Down == i.type) {
+		if( i.type.Down == i.type ) {
 			keyState[i.keySym] = true;
 		} else {
 			keyState[i.keySym] = false;
@@ -226,14 +237,47 @@ class SimpleKeyboardReader : InputReader {
 			}
 		}
 	}
+}
+
+/+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + QueueKeyboardReader: keeps the keystrokes stored in order, so they can be
+ + extracted
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+class QueueKeyboardReader : InputReader {
 	
-	this(InputChannel chan) {
+	private {
+		alias KeyboardInput[] InputQueue;
+		InputQueue _inputQueue;
+	}
+
+	this( InputChannel chan ) {
 		registerReader!(KeyboardInput)(&this.keyInput);
 		chan.addReader(this);
 	}
 	
-	private {
-		bool[KeySym] keyState;
+	void keyInput( KeyboardInput* i ) {
+		if( i.type == KeyboardInput.Type.Down ) {
+			_inputQueue ~= *i;
+		}
+	}
+	
+	bool keyDown(KeySym sym) {
+		foreach( q; _inputQueue ) {
+			if( q.keySym == sym ) return true;
+		}
+		return false;
+	}
+
+	InputQueue getInputQueue() {
+		return _inputQueue;
+	}
+
+	uint queueLength() {
+		return _inputQueue.length;
+	}
+
+	void consume() {
+		_inputQueue.length = 0;
 	}
 }
 
@@ -265,22 +309,34 @@ class TimeReader : InputReader {
 
 
 class InputChannel {
+	
+	private {
+		InputQueue[] queues;
+		LinkedList!(int) queueIndices;
+		
+		InputReader[] readers;
+	}
+
+	this() {
+		queueIndices = new LinkedList!(int);
+		queues.length = lastInputId;
+		foreach (i, inout q; queues) {
+			q = inputQueueFactories[i]();
+		}
+	}
 
 	void addReader(InputReader r) {
 		readers ~= r;
 	}
-	
 	
 	void opShl(T)(T newInput) {
 		queueIndices.append(newInput.inputTypeId);
 		getQueue!(T)(newInput.inputTypeId).addOne(newInput);
 	}
 	
-	
 	bool empty() {
 		return queueIndices.isEmpty;
 	}
-	
 	
 	void dispatchOne() {
 		int qi = queueIndices.removeHead();
@@ -290,7 +346,6 @@ class InputChannel {
 		}
 		q.removeOne();
 	}
-	
 
 	void dispatchAll() {
 		while (!empty) {
@@ -298,30 +353,12 @@ class InputChannel {
 		}
 	}
 
-	
 	private InputQueueT!(T) getQueue(T)(int i) {
 		return cast(InputQueueT!(T))queues[i];
-	}
-	
-	this() {
-		queueIndices = new LinkedList!(int);
-		queues.length = lastInputId;
-		foreach (i, inout q; queues) {
-			q = inputQueueFactories[i]();
-		}
-	}
-
-
-	private {
-		InputQueue[] queues;
-		LinkedList!(int) queueIndices;
-		
-		InputReader[] readers;
 	}
 }
 
 
-// could e.g. convert from keyboard input to player input (player actions)
 class InputConverter {
 	InputChannel incoming;
 	InputChannel outgoing;

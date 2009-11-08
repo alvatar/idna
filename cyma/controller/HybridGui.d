@@ -6,11 +6,11 @@ private {
 
 class HybridGui : Ui {
 
-	void initActors( DrawActor[] drawActors ) {
+	Ui init( Driver driver ) {
+		return this;
 	}
 
-	void doUi( Driver driver
-			, DrawActor[] drawActors ) {
+	void doUi( DrawActor[] drawActors ) {
 	}
 
 	IJob getMainProcess() {

@@ -1,7 +1,8 @@
 module cyma.model.Layer;
 
 private {
-	import io.Stdout;
+	import std.stdio;
+
 	import cyma.model.RasterSubstrate;
 	import cyma.model.StaticVectorSubstrate;
 	import cyma.model.DynamicVectorSubstrate;
@@ -22,7 +23,7 @@ class Layer {
 		staticVectorSubstrate = cast(StaticVectorSubstrate)substrates[1];
 		substrates[2] = new DynamicVectorSubstrate;
 		dynamicVectorSubstrate = cast(DynamicVectorSubstrate)substrates[2];
-		debug(verbose) stdout( "Substrates created" );
+		debug(verbose) writeln( "Substrates created" );
 	}
 
 	public {

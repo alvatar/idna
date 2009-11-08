@@ -24,46 +24,66 @@ class GlCanvas : Canvas {
 		GL gl;
 	}
 
-	struct Vertex {
-		vec2f pointA;
-		vec2f pointB;
-		vec4f color;
-	}
+	/++ Vertex and Color for VBOs +/
+	struct Vertex { float x, y; }
+	struct Color { float r, g, b, a; }
 
 	/++ Indices VBO id +/
 	GLuint vertexVBOid;
 
-	/++ Initial VBOs size +/
-	immutable(GLsizei) initialBufSize = 0;
+	/++ Vertices VBOs size +/
+	GLsizei verticesBufSize = 0;
 
 	/++ Host-side vertex data +/
 	Vertex[] vertices;
 
-	/++ Implementation of interface +/
+	/+ Setup ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+
 	void init() {
-		gl.ext(VERSION_1_5, VERSION_2_0) in {
+		gl.ext(VERSION_1_5) in {
 			gl.createVBO (
-					vertexVBOid 
-					, vertices.ptr
-					, initialBufSize
-					, GL_ARRAY_BUFFER
-					, GL_DYNAMIC_DRAW
-					);
+				vertexVBOid 
+				, vertices.ptr
+				, verticesBufSize
+				, GL_ARRAY_BUFFER
+				, GL_DYNAMIC_DRAW
+				);
 		};
 	}
 
-	/++ Implementation of interface +/
+	~this() {
+		gl.ext(VERSION_1_5) in {
+			gl.DeleteBuffers(1, &vertexVBOid);
+		};
+
+	}
+
 	void updateEnvironment() {
 		// Cast the DrawActor's environment to the right type for this canvas
 		gl = cast(GL)drawActor.environment;
 	}
 
-	/++ Implementation of interface +/
+	void clear() {
+		_proxies.clear();
+		verticesBufSize = 0;
+		vertices = null;
+	}
+
+	/+ Operations over DrawableProxies ++++++++++++++++++++++++++++++++++++++++/
+
+	/++
+	 + Adds a new DrawableProxy associated to the element
+	 +/
 	void add( ref Element element ) {
-
-		// Drawing algorithms
 		if( auto line = cast(Line)element ) {
+			// Create new DrawableProxy
+			// TODO
 
+			//_proxies.add( DrawableProxy(&line, line.data.sizeof, &line.data) );
+
+
+
+			/*
 			gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
 				gl.BlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 				gl.immediate( GL_LINES, {
@@ -79,20 +99,60 @@ class GlCanvas : Canvas {
 					gl.Vertex3f( line.data.pointB.x, line.data.pointB.y, -1 );
 				} );
 			};
-
+			*/
 		} else if( cast(Polyline)element ) {
 		}
 	}
 	
+	/++
+	 + Regenerates the DrawableProxy associated to the element
+	 +/
 	void regenerate( ref Element element ) {
 		// TODO
+		_proxies.get(element.id);
 	}
 
+	/++
+	 + Removes the DrawableProxy associated to the element
+	 +/
 	void remove( ref Element element ) {
-		// TODO
+		//TODO
+		_proxies.removeAt(element.id);
 	}
 
+	/+ Operations over the internal drawable structure ++++++++++++++++++++++++/
+
+	/++
+	 + Draws the VBO
+	 +/
 	void draw() {
-		// TODO
+
+		gl.ext(VERSION_1_5) in {
+			if( _isProxiesChanged ) {
+				try {
+					updateVBO(gl);
+					_isProxiesChanged = false;
+				} catch( Exception e ) {
+					writeln(e);
+				}
+			}
+
+		};
+	}
+
+	import std.c.string;
+	import std.random;
+	private void updateVBO(GL gl) {
+		// OPTIMIZATION: dynamically growing local buffer that will be uploaded to VBO only
+		// up to the point it needs, using an accumulator of sizes that is updated in the same
+		// loop
+
+		// Sum drawable proxies' data sizes
+		size_t verticesBufSize = 0;
+		foreach( proxy; _proxies ) {
+			verticesBufSize += proxy.sizeOfData;
+		}
+
 	}
 }
+

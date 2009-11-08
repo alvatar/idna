@@ -9,13 +9,12 @@ private {
  + drawer/canvas/model combinations
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class DummyUi : Ui {
-	
-	void initActors( DrawActor[] drawActors ) {
-		//currentCommands
+
+	Ui init( Driver driver ) {
+		return this;
 	}
 
-	void doUi( Driver driver
-			, DrawActor[] drawActors ) {
+	void doUi( DrawActor[] drawActors ) {
 	}
 	
 	IJob getMainProcess() {

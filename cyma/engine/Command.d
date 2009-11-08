@@ -1,7 +1,7 @@
 module cyma.engine.Command;
 
 private {
-	import io.Stdout;
+	import std.stdio;
 }
 
 protected {
@@ -12,34 +12,34 @@ protected {
  + Interface for executable commands
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 interface ICommand {
+	/++ Context setup ++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+	ICommand context( CommandContext context );
+	CommandContext context();
+
+	/++ Execution entry point ++++++++++++++++++++++++++++++++++++++++++++++++/
 	void execute( Model );
+
+	/++ Execution sequence +++++++++++++++++++++++++++++++++++++++++++++++++++/
+	void interactiveSequence( Model );
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Context of execution. Used for injecting arbitrary data needed
  + for execution
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-abstract class CommandContext {
-}
+abstract class CommandContext {}
 
 private {
-
 	class StringCommandContext : CommandContext {
-		private {
-			string _contextInfo;
-		}
-
-		this( string contextInfo ) {
-			_contextInfo = contextInfo;
-		}
+		public string arguments;
 	}
 
 	class ArgsCommandContext(T...) : CommandContext {
-		T arguments;
+		public T arguments;
 	}
 
 	template DefineContext(T...) {
-		static if( T.length == 1 && is(typeof(U[0] == string)) ) {
+		static if( T.length == 1 && is(typeof(T[0] == string)) ) {
 			alias StringCommandContext DefineContext;
 		} else {
 			alias ArgsCommandContext!(T) DefineContext;
@@ -50,9 +50,16 @@ private {
 template MakeContext(T...) {
 	DefineContext!(T) MakeContext(T t) {
 		DefineContext!(T) context = new DefineContext!(T);
-		foreach( i, arg; t ) {
-			context.arguments[i] = arg;
+		context.tupleof = t;
+			/* TODO: Review
+		static if( is(typeof(context == StringCommandContext)) ) {
+			pragma( msg, "String" ~ context);
+			context.arguments[0] = t;
+		} else {
+			pragma( msg, context);
+			context.arguments = t;
 		}
+		*/
 		return context;
 	}
 }
@@ -88,8 +95,8 @@ abstract class Command(T...) : ICommand {
 
 	DefineContext!(T) _context;
 
-	Command context( DefineContext!(T) context ) {
-		_context = context;
+	Command context( CommandContext context ) {
+		_context = cast(DefineContext!(T))context;
 		return this;
 	}
 

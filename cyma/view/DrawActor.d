@@ -1,7 +1,6 @@
 module cyma.view.DrawActor;
 
 private {
-	import io.Stdout;
 	import cyma.view.ICanvas;
 	import cyma.view.IDrawActor;
 }

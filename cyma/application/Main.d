@@ -14,14 +14,17 @@ int main( string[] args ) {
 	drawer.init();
 	driver.init();
 	auto ui = UiManager.create( "GlUi" );
+	ui.init(driver);
+
 	auto model = Model.create();
 
 	jobHub.addPostFrameJob( {
 
 		if( model.updates > 0 ) {
-			ui.doUi( driver, drawer.update(model) );
+			ui.doUi( drawer.update(model) );
+			ui.doUi( drawer.draw() );
 		} else {
-			ui.doUi( driver, drawer.redraw() );
+			ui.doUi( drawer.draw() );
 		}
 
 		driver.process( model );

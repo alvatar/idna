@@ -9,10 +9,10 @@ private {
 	}
 
 	import core.JobHub;
-	import io.Stdout;
 	import cyma.controller.DummyUi;
 	import cyma.controller.HybridGui;
 	import cyma.controller.GlUi;
+	import cyma.engine.Driver;
 }
 
 class UiManager {
@@ -32,7 +32,6 @@ class UiManager {
 				throw new Exception( "Ui type not defined" );
 			break;
 		}
-		//ui.init();
 		return ui;
 	}
 }
