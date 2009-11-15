@@ -2,12 +2,12 @@
 
 module cgfxtest;
 
-import xf.dog.Dog;
-import xf.dog.Cg;
-import xf.dog.ext.VERSION_1_3;
+import dgl.dgl;
+import dgl.cg;
+import dgl.ext.VERSION_1_3;
 
-import xf.omg.core.Misc;
-import xf.utils.HardwareTimer;
+//import omg.core.Misc;
+import utils.hardwaretimer;
 
 import tango.stdc.stdio;
 import tango.stdc.stdlib;

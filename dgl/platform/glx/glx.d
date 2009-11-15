@@ -4,8 +4,8 @@ align(4):
 struct GLXHyperpipeConfigSGIX {}
 struct GLXHyperpipeNetworkSGIX {}
 private import dgl.platform.glx.gl;
-private import sys.x11.Xlib;
-public import sys.x11.Xutil;
+private import sys.x11.xlib;
+public import sys.x11.xutil;
 const int GLX_MESA_allocate_memory = 1;
 const int GLX_ARB_render_texture = 1;
 alias __GLXEvent GLXEvent;

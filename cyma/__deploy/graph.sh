@@ -8,6 +8,6 @@ declare -x VISPROG="xpdf"
 cd /data/projects/idna
 
 if [[ $1 == "" ]]; then GENPROG="dot"; else GENPROG=$1; fi
-redimple cyma.application.Main -xdgl | $GENPROG -T$OUTPUTTYPE -o$CURRENTDIR/Cyma.$OUTPUTTYPE && $VISPROG $CURRENTDIR/Cyma.$OUTPUTTYPE && rm $CURRENTDIR/Cyma.$OUTPUTTYPE
+redimple cyma.application.Main -xcore -xio -xsys -xutil -xmath -xdgl | $GENPROG -T$OUTPUTTYPE -o$CURRENTDIR/Cyma.$OUTPUTTYPE && $VISPROG $CURRENTDIR/Cyma.$OUTPUTTYPE && rm $CURRENTDIR/Cyma.$OUTPUTTYPE
 
 cd -

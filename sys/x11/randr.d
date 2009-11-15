@@ -5,9 +5,9 @@ version( D_Version2 ) {
 	import tango.stdc.config;
 }
 
-import sys.x11.X;
-import sys.x11.Xlib;
-alias sys.x11.X.Window Window;
+import sys.x11.x;
+import sys.x11.xlib;
+alias sys.x11.x.Window Window;
 
 version(build) pragma(link, "Xrandr");
 

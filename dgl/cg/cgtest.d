@@ -1,7 +1,7 @@
 module cgtest;
 
-import xf.dog.Dog;
-import xf.dog.Cg;
+import dgl.dgl;
+import dgl.cg;
 
 
 

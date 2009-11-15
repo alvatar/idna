@@ -1,6 +1,6 @@
 module dgl.ext.VERSION_1_5;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;

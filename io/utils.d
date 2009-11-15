@@ -4,7 +4,7 @@ private {
 	import std.stdio;
 	import std.utf;
 
-	import io.input.Input;
+	import io.input.input;
 }
 
 string getStringFromKeySym( KeyboardInput[] kinput ) {
