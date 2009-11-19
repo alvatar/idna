@@ -8,7 +8,7 @@ private {
 		import std.stdio : writeln;
 		import std.conv;
 
-		import sys.sharedlib;
+		import sys.SharedLib;
 	} else {
 		import tango.io.FileScan;
 ;

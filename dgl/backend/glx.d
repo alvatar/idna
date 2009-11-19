@@ -10,7 +10,7 @@ private {
 		alias char[] string;
 	}
 
-	import DogWindow = dgl.window;
+	import DogWindow = dgl.Window;
 	import dgl.glcontext;
 	import dgl.opengl;
 	import dgl.glufunctions;

@@ -1,18 +1,18 @@
 module io.input.input;
 
 private {
-	import io.input.keysym;
+	import io.input.KeySym;
 
 	struct vec2i {
 		int x;
 		int y;
 	}
 
-	import util.container.linkedlist;
+	import util.container.LinkedList;
 }
 
 public {
-	alias io.input.keysym.KeySym KeySym;
+	alias io.input.KeySym.KeySym KeySym;
 }
 
 class InputQueue {
