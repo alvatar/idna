@@ -19,11 +19,11 @@ nmap <silent> \c <Plug>Traditionalj
 vmap ]% ]%m'gv``
 vmap a% [%v]%
 nmap gx <Plug>NetrwBrowseX
-nnoremap <F3> :vimgrep // **
-noremap <F9> :call RunProgram()
-noremap <F10> :call CleanProgram()
-noremap <F11> :call Compile(1)
 nnoremap <F12> :call BuildCTagsAndCSCopeDatabase("d")
+noremap <F11> :call Compile(1)
+noremap <F10> :call CleanProgram()
+noremap <F9> :call RunProgram()
+nnoremap <F3> :vimgrep // **
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 noremap <Plug>VisualFirstLine :call EnhancedCommentify('', 'first',   line("'<"), line("'>"))
 noremap <Plug>VisualTraditional :call EnhancedCommentify('', 'guess',   line("'<"), line("'>"))
@@ -134,36 +134,27 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +98 /data/projects/idna/cyma/controller/GlUi.d
 args /data/projects/idna/cyma/controller/GlUi.d
-edit /data/projects/idna/cyma/controller/GlUi.d
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:cpo_save=&cpo
-set cpo&vim
-map <buffer> \o <Plug>OrganizeImports
-map <buffer> \i <Plug>Autoimport
-noremap <buffer> <Plug>OrganizeImports :OrganizeImports
-noremap <buffer> <Plug>Autoimport :Autoimport =expand("<cword>")
-let &cpo=s:cpo_save
-unlet s:cpo_save
+enew
 setlocal keymap=
 setlocal noarabic
-setlocal noautoindent
+setlocal autoindent
 setlocal balloonexpr=
 setlocal nobinary
 setlocal bufhidden=
 setlocal buflisted
 setlocal buftype=
-setlocal cindent
+setlocal nocindent
 setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
-setlocal comments=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal completefunc=
@@ -177,8 +168,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal noexpandtab
-if &filetype != 'd'
-setlocal filetype=d
+if &filetype != ''
+setlocal filetype=
 endif
 setlocal foldcolumn=0
 set nofoldenable
@@ -193,7 +184,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=nroql2
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=0
@@ -237,8 +228,8 @@ setlocal statusline=
 setlocal suffixesadd=
 setlocal swapfile
 setlocal synmaxcol=3000
-if &syntax != 'd'
-setlocal syntax=d
+if &syntax != ''
+setlocal syntax=
 endif
 setlocal tabstop=4
 setlocal tags=
@@ -248,13 +239,6 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 98 - ((46 * winheight(0) + 46) / 93)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-98
-normal! 05l
-lcd /data/projects/idna/cyma/__deploy
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

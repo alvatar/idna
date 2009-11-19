@@ -46,10 +46,9 @@ class Drawer {
 				}
 			}
 
-			actor.execute = &actorExecution;
+			actor.preprocess = &actorExecution;
 		}
 
-		model.scheduleToClearDeltas;
 		return drawActors;
 	}
 
@@ -78,11 +77,11 @@ class Drawer {
 					// Tells the canvas that it has been changed
 					actorRef.canvas.changed();
 				}
+				model.flatten();
 			}
 
-			actor.execute = &actorExecution;
+			actor.preprocess = &actorExecution;
 		}
-		model.scheduleToClearDeltas;
 		return drawActors;
 	}
 
@@ -105,9 +104,10 @@ class Drawer {
 					}
 					*/
 				}
+				model.flatten();
 			}
 
-			actor.execute = &actorExecution;
+			actor.preprocess = &actorExecution;
 		}
 		return drawActors;
 	}
@@ -125,7 +125,8 @@ class Drawer {
 				}
 			}
 
-			actor.execute = &actorExecution;
+			actor.preprocess = null;
+			actor.show = &actorExecution;
 		}
 		return drawActors;
 	}

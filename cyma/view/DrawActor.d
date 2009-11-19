@@ -21,7 +21,9 @@ class DrawActor : IDrawActor {
 
 		bool _update = true;
 
-		DrawFunction _execute = null;
+		DrawFunction _preprocess = null;
+
+		DrawFunction _show = null;
 
 		void[] _environment = null;
 	}
@@ -58,12 +60,20 @@ class DrawActor : IDrawActor {
 		return _update = update;
 	}
 
-	DrawFunction execute() {
-		return _execute;
+	DrawFunction preprocess() {
+		return _preprocess;
 	}
 
-	DrawFunction execute( DrawFunction execute ) {
-		return _execute = execute;
+	DrawFunction preprocess( DrawFunction preprocess ) {
+		return _preprocess = preprocess;
+	}
+
+	DrawFunction show() {
+		return _show;
+	}
+
+	DrawFunction show( DrawFunction show ) {
+		return _show = show;
 	}
 
 	void[] environment() {

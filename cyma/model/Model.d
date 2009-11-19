@@ -76,6 +76,9 @@ class Model {
 		return ++_updates;
 	}
 
+	/++
+	 + Return the next free Element Id
+	 +/
 	IdType nextId() {
 		return _idGenerator.getNextId();
 	}
@@ -104,19 +107,12 @@ class Model {
 	}
 
 	/++
-	 + Clear all delta elements references
-	 +/
-	void scheduleToClearDeltas() {
-		_updates = 0;
-		_clearDeltas = true;
-	}
-
-	/++
 	 + Flatten the model: makes all the necessary adjustments to allow the
 	 + model to be used by the Driver and cleans all left by the visualization
 	 + step by the Drawer
 	 +/
 	void flatten() {
+		_updates = 0;
 		_newNodes.clear();
 		_modifiedNodes.clear();
 		_removedNodes.clear();

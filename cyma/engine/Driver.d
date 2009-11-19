@@ -3,6 +3,7 @@ module cyma.engine.Driver;
 private{
 	import std.stdio;
 
+	import cyma.application.EnvironmentProbe;
 	import cyma.engine.commands.All;
 	import cyma.engine.Command;
 	import cyma.model.Model;
@@ -26,6 +27,10 @@ class Driver {
 		/++ Commands associated to codes +/
 		alias ICommand delegate() CommandCreator;
 		CommandCreator[string] _codeMap;
+
+		/++ Environment probe, if null the commands cannot extract environment
+			data, thus being non-interactive +/
+		EnvironmentProbe _probe;
 	}
 
 	this() {
@@ -35,8 +40,11 @@ class Driver {
 	void init() {
 	}
 
+	void makeInteractive( EnvironmentProbe probe ) {
+		_probe = probe;
+	}
+
 	void process( Model model ) {
-		model.flatten;
 		foreach( com; _commandQueue ) {
 			com.execute( model );
 			_stackedCommands ~= com;
@@ -45,7 +53,6 @@ class Driver {
 	}
 
 	void rollback( Model model, uint times ) {
-		model.flatten;
 		for( uint i = 0; i<times && i<_commandQueue.length; ++i ) {
 			_stackedCommands[$-1-i].revert( model );
 			_stackedCommands = _stackedCommands[0..$-1];
@@ -59,11 +66,11 @@ class Driver {
 	}
 
 	void pushCode( string code ) {
-		writeln( code, " ACCUMULATE CODE: TODO" );
+		assert( false, " ACCUMULATE CODE: TODO" );
 	}
 
 	void evaluateCode() {
-		writeln( "EVALUATE CODE: TODO" );
+		assert( false, "EVALUATE CODE: TODO" );
 	}
 
 	debug void injectCommands( ICommand[] commands ) {

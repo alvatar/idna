@@ -3,12 +3,14 @@ module cyma.controller.GlUi;
 private {
 	import std.stdio;
 
+	import core.AsyncMessageHub;
 	import core.JobHub;
 	import core.MessageHub;
 	import core.Message;
 	import core.MainProcess;
-	import core.AsyncMessageHub;
+	import cyma.application.EnvironmentProbe;
 	import cyma.controller.Ui;
+	import cyma.controller.GlWidget;
 	import cyma.engine.commands.All;
 	import cyma.view.DrawActor;
 	import dgl.dgl;
@@ -20,7 +22,7 @@ private {
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + Basic user interface based on Dog (opengl)
+ + Basic user interface based on Dgl (OpenGl)
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class GlUi : Ui {
 
@@ -36,6 +38,12 @@ class GlUi : Ui {
 
 		/++ Current mode of this Ui +/
 		Modes _currentMode;
+
+		/++ OpenGl Widgets: CLI and all the visual elements besied DrawActors +/
+		GlWidget _widgets[];
+
+		/++ Flag: initialize actors? +/
+		bool _callInitActors = true;
 	}
 
 	/++
@@ -43,11 +51,9 @@ class GlUi : Ui {
 	 +/
 	Ui init(Driver driver) {
 		_driver = driver;
+		_driver.makeInteractive( new EnvironmentProbe(this) );
 		return this;
 	}
-
-	/++ Flag: initialize actors? +/
-	bool callInitActors = true;
 
 	/++
 	 + Initialize Actors
@@ -197,19 +203,28 @@ class GlUi : Ui {
 		}
 		*/
 
-		if(callInitActors) {
+		if(_callInitActors) {
 			initActors(drawActors);
-			callInitActors = false;
+			_callInitActors = false;
 		}
 
 		if( _context.created ) {
 			use(_context) in (GL gl) {
-				gl.Clear(GL_COLOR_BUFFER_BIT);
-				foreach( actor; drawActors ) {
+				foreach( ref a; drawActors ) {
 					// Update actors environment with the GlUi's environment
-					actor.environment = gl;
+					a.environment = gl;
+					// Preprocess actor
+					if( a.preprocess )
+						a.preprocess()();
+				}
+				gl.Clear(GL_COLOR_BUFFER_BIT);
+				foreach( w; _widgets ) {
+					w.doWidget(gl);
+				}
+				foreach( ref a; drawActors ) {
 					// Execute actor
-					actor.execute()();
+					if( a.show )
+						a.show()();
 				}
 				//drawUi(gl);
 			};
