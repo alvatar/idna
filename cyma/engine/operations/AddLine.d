@@ -9,6 +9,13 @@ private {
 	import cyma.model.NodeTree;
 }
 
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + addline: add a line to the given model
+ + arguments:
+ + [0] uint - layer id
+ + [1] vec3r - pointA
+ + [2] vec3r - pointB
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 bool addline(T...)( ref Model model, ref T arguments )
 in {
 	static assert( arguments.length == 3

@@ -1,9 +1,9 @@
 #!/bin/sh
 
 declare -x CURRENTDIR=`pwd`
-declare -x OUTPUTTYPE="pdf"
+declare -x OUTPUTTYPE="ps"
 declare -x GENPROG=""
-declare -x VISPROG="xpdf"
+declare -x VISPROG="gv"
 
 cd /data/projects/idna
 

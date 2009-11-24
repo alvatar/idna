@@ -11,7 +11,7 @@ private {
 	import cyma.application.EnvironmentProbe;
 	import cyma.controller.Ui;
 	import cyma.controller.GlWidget;
-	import cyma.engine.commands.All;
+	import cyma.controller.commands.All;
 	import cyma.view.DrawActor;
 	import dgl.dgl;
 	import io.input.input;

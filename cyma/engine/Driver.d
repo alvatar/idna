@@ -4,8 +4,9 @@ private{
 	import std.stdio;
 
 	import cyma.application.EnvironmentProbe;
-	import cyma.engine.commands.All;
-	import cyma.engine.Command;
+	// MARL TODO!!!!!!!!!!
+	import cyma.controller.commands.All;
+
 	import cyma.model.Model;
 	import math.Vector;
 	import util.Singleton;
@@ -19,13 +20,13 @@ class Driver {
 
 	private {
 		/++ Queue of commands to be executed +/
-		ICommand[] _commandQueue;
+		Command[] _commandQueue;
 
 		/++ Stack of executed commands, for undo +/
-		ICommand[] _stackedCommands;
+		Command[] _stackedCommands;
 
 		/++ Commands associated to codes +/
-		alias ICommand delegate() CommandCreator;
+		alias Command delegate() CommandCreator;
 		CommandCreator[string] _codeMap;
 
 		/++ Environment probe, if null the commands cannot extract environment
@@ -34,7 +35,7 @@ class Driver {
 	}
 
 	this() {
-		_codeMap["a"] = { return cast(ICommand)(new CreateLine); };
+		_codeMap["a"] = { return cast(Command)(new CreateLine); };
 	}
 
 	void init() {
@@ -73,7 +74,7 @@ class Driver {
 		assert( false, "EVALUATE CODE: TODO" );
 	}
 
-	debug void injectCommands( ICommand[] commands ) {
+	debug void injectCommands( Command[] commands ) {
 		_commandQueue ~= commands;
 	}
 }

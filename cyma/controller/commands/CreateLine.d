@@ -1,17 +1,17 @@
-module cyma.engine.commands.CreateLine;
+module cyma.controller.commands.CreateLine;
 
 private {
 	import std.stdio;
 
-	import cyma.engine.Command;
-	import cyma.engine.operations.All;
+	import cyma.controller.InteractiveCommand;
+	import cyma.engine.operations.AddLine;
 	import math.Vector;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Create a single line
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class TCreateLine(T...) : Command!(T) {
+class TCreateLine(T...) : InteractiveCommand!(T) {
 
 	void execute( ref Model model ) {
 
