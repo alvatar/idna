@@ -44,6 +44,10 @@ class GlUi : Ui {
 
 		/++ Flag: initialize actors? +/
 		bool _callInitActors = true;
+
+		/++ Environment probe, if null the commands cannot extract environment
+			data, thus being non-interactive +/
+		EnvironmentProbe _probe;
 	}
 
 	/++
@@ -51,7 +55,10 @@ class GlUi : Ui {
 	 +/
 	Ui init(Driver driver) {
 		_driver = driver;
-		_driver.makeInteractive( new EnvironmentProbe(this) );
+
+		// Populate command codes
+		_driver.registerCommand( "a", { return cast(Command)(new CreateLine); } );
+
 		return this;
 	}
 

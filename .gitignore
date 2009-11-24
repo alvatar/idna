@@ -2,6 +2,7 @@
 .objs
 xfbuild*
 *.swp
+*.swo
 bin
 *.o
 *.moduleDeps

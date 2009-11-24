@@ -15,7 +15,7 @@ class TCreateLine(T...) : InteractiveCommand!(T) {
 
 	void execute( ref Model model ) {
 
-		if( !context ) {
+		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");
 			interactiveSequence( model );
 		}

@@ -8,6 +8,7 @@ private {
 	import cyma.model.Node;
 	import util.container.LinkedList;
 	import util.container.Vector;
+	import util.creation;
 }
 
 alias LinkedList!( Layer ) LayerStructure;
@@ -56,11 +57,9 @@ class Model {
 	}
 
 	/++
-	 + Static function to create a Model
+	 + Static creation
 	 +/
-	static Model create() {
-		return new Model;
-	}
+	mixin StaticCreation;
 
 	/++
 	 + Returns the number of updates that have been done to the model

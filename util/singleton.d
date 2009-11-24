@@ -1,4 +1,4 @@
-module util.Singleton;
+module util.singleton;
 
 
 

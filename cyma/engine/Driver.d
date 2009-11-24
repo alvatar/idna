@@ -3,14 +3,13 @@ module cyma.engine.Driver;
 private{
 	import std.stdio;
 
-	import cyma.application.EnvironmentProbe;
-	// MARL TODO!!!!!!!!!!
-	import cyma.controller.commands.All;
-
+	import cyma.engine.Command;
 	import cyma.model.Model;
 	import math.Vector;
-	import util.Singleton;
+	import util.creation;
 }
+
+alias Command delegate() CommandCreator;
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Drive commands: interpret issued commands and code, execute them, revert
@@ -26,36 +25,51 @@ class Driver {
 		Command[] _stackedCommands;
 
 		/++ Commands associated to codes +/
-		alias Command delegate() CommandCreator;
 		CommandCreator[string] _codeMap;
 
-		/++ Environment probe, if null the commands cannot extract environment
-			data, thus being non-interactive +/
-		EnvironmentProbe _probe;
+		/++ The model that is going to be processed +/
+		Model _model;
 	}
 
-	this() {
-		_codeMap["a"] = { return cast(Command)(new CreateLine); };
+	private {
+		this() {
+		}
 	}
 
-	void init() {
+	void init( Model model ) {
+		_model = model;
 	}
 
-	void makeInteractive( EnvironmentProbe probe ) {
-		_probe = probe;
+	/++
+	 + Static Creation
+	 +/
+	mixin StaticCreation;
+
+	/++
+	 + Register commands with an associated code
+	 +/
+	void registerCommand( string code, CommandCreator func ) {
+		_codeMap[code] = func;
 	}
 
-	void process( Model model ) {
+	/++
+	 + Unregister commands
+	 +/
+	void unregisterCommand( string code ) {
+		// TODO
+	}
+
+	void process() {
 		foreach( com; _commandQueue ) {
-			com.execute( model );
+			com.execute( _model );
 			_stackedCommands ~= com;
 			_commandQueue = _commandQueue[1..$];
 		}
 	}
 
-	void rollback( Model model, uint times ) {
+	void rollback( uint times ) {
 		for( uint i = 0; i<times && i<_commandQueue.length; ++i ) {
-			_stackedCommands[$-1-i].revert( model );
+			_stackedCommands[$-1-i].revert( _model );
 			_stackedCommands = _stackedCommands[0..$-1];
 		}
 	}
@@ -78,5 +92,3 @@ class Driver {
 		_commandQueue ~= commands;
 	}
 }
-
-alias Singleton!(Driver) driver;

@@ -4,10 +4,10 @@ private {
 	import std.stdio;
 	import std.functional;
 
-	import util.Singleton;
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.view.DrawActor;
+	import util.creation;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -16,15 +16,28 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class Drawer {
 	
-	/++ DrawActors: everything needed to execute a group of draw functions +/
-	DrawActor[] drawActors;
+	private {
+		/++ DrawActors: everything needed to execute a group of draw functions +/
+		DrawActor[] _drawActors;
+	}
+
+	private {
+		this() {
+			init();
+		}
+	}
+
+	/++
+	 + Static Creation
+	 +/
+	mixin StaticCreation;
 
 	/++
 	 + Initialize Drawer and all DrawActors
 	 +/
 	 final void init() {
 		 foreach( i, type; CanvasTypes ) {
-			auto actor = addDrawActor( new type, type.stringof );
+			 auto actor = addDrawActor( new type, type.stringof );
 		 }
 	 }
 
@@ -33,7 +46,7 @@ class Drawer {
 	 +/
 	final DrawActor[] load( ref Model model ) {
 
-		foreach( ref actor; drawActors ) {
+		foreach( ref actor; _drawActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -49,7 +62,7 @@ class Drawer {
 			actor.preprocess = &actorExecution;
 		}
 
-		return drawActors;
+		return _drawActors;
 	}
 
 	/++
@@ -58,7 +71,7 @@ class Drawer {
 	 +/
 	final DrawActor[] update( ref Model model ) {
 
-		foreach( ref actor; drawActors ) {
+		foreach( ref actor; _drawActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -82,7 +95,7 @@ class Drawer {
 
 			actor.preprocess = &actorExecution;
 		}
-		return drawActors;
+		return _drawActors;
 	}
 
 	/++
@@ -92,7 +105,7 @@ class Drawer {
 		// Note on implementation: could be done using a pointers-to-proxies list
 		// or iteration and acting on specific proxy types.
 
-		foreach( ref actor; drawActors ) {
+		foreach( ref actor; _drawActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -109,7 +122,7 @@ class Drawer {
 
 			actor.preprocess = &actorExecution;
 		}
-		return drawActors;
+		return _drawActors;
 	}
 
 	/++
@@ -117,7 +130,7 @@ class Drawer {
 	 +/
 	final DrawActor[] draw() {
 
-		foreach( ref actor; drawActors ) {
+		foreach( ref actor; _drawActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -128,7 +141,7 @@ class Drawer {
 			actor.preprocess = null;
 			actor.show = &actorExecution;
 		}
-		return drawActors;
+		return _drawActors;
 	}
 
 	/++
@@ -139,7 +152,7 @@ class Drawer {
 		newDrawActor.name = name;
 		newDrawActor.canvas = canvas;
 		canvas.setParendDrawActor( newDrawActor );
-		drawActors ~= newDrawActor;
+		_drawActors ~= newDrawActor;
 
 		debug(verbose) writeln( "New registered Canvas: ", name );
 		return newDrawActor;
@@ -153,5 +166,3 @@ class Drawer {
 		return null;
 	}
 }
-
-alias Singleton!(Drawer) drawer;

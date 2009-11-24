@@ -2,7 +2,7 @@ module core.AsyncMessageHub;
 
 private {
 	import util.container.LinkedList;
-	import util.Singleton;
+	import util.singleton;
 }
 
 public {

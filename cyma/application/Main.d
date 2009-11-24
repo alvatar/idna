@@ -11,12 +11,13 @@ import cyma.engine.Driver;
 
 int main( string[] args ) {
 
-	drawer.init();
-	driver.init();
-	auto ui = UiManager.create( "GlUi" );
-	ui.init(driver);
-
+	auto drawer = Drawer.create();
+	auto driver = Driver.create();
 	auto model = Model.create();
+	auto ui = UiManager.create( "GlUi" );
+
+	ui.init( driver );
+	driver.init( model );
 
 	jobHub.addPostFrameJob( {
 
@@ -26,7 +27,7 @@ int main( string[] args ) {
 		
 		ui.doUi( drawer.draw() );
 
-		driver.process( model );
+		driver.process();
 	} );
 
 	jobHub.exec( ui.getMainProcess );

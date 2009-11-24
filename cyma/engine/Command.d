@@ -14,9 +14,6 @@ protected {
 abstract class Command {
 
 	protected {
-		/++ Name of the command +/
-		string _name;
-
 		/++ Command's context, info for executing the operations +/
 		CommandContext _context;
 		//DefineContext!(T) _context;
@@ -33,13 +30,9 @@ abstract class Command {
 
 	CommandContext context();
 
-	/++ Command name set/get +/
-	string name( string name ) {
-		return _name = name;
-	}
-
+	/++ A function to retrieve name must be implemented +/
 	string name() {
-		return _name;
+		return typeof(this).toString;
 	}
 }
 
