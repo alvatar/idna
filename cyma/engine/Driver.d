@@ -59,6 +59,9 @@ class Driver {
 		// TODO
 	}
 
+	/++
+	 + Execute all queued commands
+	 +/
 	void process() {
 		foreach( com; _commandQueue ) {
 			com.execute( _model );
@@ -67,6 +70,10 @@ class Driver {
 		}
 	}
 
+	/++
+	 + Undo previously executed commands reverting their actions with
+	 + the implemented "revert" methods
+	 +/
 	void rollback( uint times ) {
 		for( uint i = 0; i<times && i<_commandQueue.length; ++i ) {
 			_stackedCommands[$-1-i].revert( _model );
@@ -74,20 +81,32 @@ class Driver {
 		}
 	}
 
+	/++
+	 + Evaluate the given string as immediate commands
+	 +/
 	void evaluateNow( string code ) {
 		if( code in _codeMap ) {
 			_commandQueue ~= _codeMap[code]();
 		}
 	}
 
+	/++
+	 + Push code for the language interpreter
+	 +/
 	void pushCode( string code ) {
 		assert( false, " ACCUMULATE CODE: TODO" );
 	}
 
+	/++
+	 + Run the interpreter and evaluate the code listing
+	 +/
 	void evaluateCode() {
 		assert( false, "EVALUATE CODE: TODO" );
 	}
 
+	/++
+	 + Debug utility to directly inject a command in the queue
+	 +/
 	debug void injectCommands( Command[] commands ) {
 		_commandQueue ~= commands;
 	}

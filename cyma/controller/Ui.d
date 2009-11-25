@@ -4,14 +4,36 @@ package import core.JobHub;
 
 package {
 	import cyma.engine.Driver;
+	import cyma.controller.EnvironmentProbe;
+	import cyma.controller.OutProbe;
 	import cyma.view.DrawActor;
 }
 
-interface Ui {
+abstract class Ui {
 
-	enum Modes {
-		Interactive
-		, Console
+	protected {
+		/++ The driver that this Ui will use +/
+		Driver _driver;
+
+		/++ Environment probe, for retrieving environment data +/
+		EnvironmentProbe _environmentProbe;
+
+		/++ OutProbe, for graphical, text, or any kind of output +/
+		OutProbe _outProbe;
+	}
+
+	/++
+	 + Gives access to the environment where this Ui is
+	 +/
+	ref EnvironmentProbe environment() {
+		return _environmentProbe;
+	}
+
+	/++
+	 + Allows for output through the ui
+	 +/
+	ref OutProbe output() {
+		return _outProbe;
 	}
 
 	/++
@@ -19,7 +41,6 @@ interface Ui {
 	 + even if no initialization is necessary
 	 +/
 	Ui init( Driver driver );
-	//void initActors( DrawActor[] drawActors );
 
 	/++
 	 + Defines all actions to be taken in order to collect and process the
@@ -35,4 +56,3 @@ interface Ui {
 	 IJob getMainProcess();
 	 
 }
-

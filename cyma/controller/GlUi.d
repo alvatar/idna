@@ -8,11 +8,11 @@ private {
 	import core.MessageHub;
 	import core.Message;
 	import core.MainProcess;
-	import cyma.application.EnvironmentProbe;
-	import cyma.controller.Ui;
-	import cyma.controller.GlWidget;
 	import cyma.controller.commands.All;
-	import cyma.view.DrawActor;
+	import cyma.controller.EnvironmentProbe;
+	import cyma.controller.GlWidget;
+	import cyma.controller.OutProbe;
+	import cyma.controller.Ui;
 	import dgl.dgl;
 	import io.input.input;
 	import io.input.Writer;
@@ -26,10 +26,12 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class GlUi : Ui {
 
-	private {
-		/++ The driver that this Ui will use +/
-		Driver _driver;
+	enum Modes {
+		Interactive
+		, Console
+	}
 
+	private {
 		/++ The main opengl context +/
 		GLWindow _context;
 
@@ -44,20 +46,22 @@ class GlUi : Ui {
 
 		/++ Flag: initialize actors? +/
 		bool _callInitActors = true;
+	}
 
-		/++ Environment probe, if null the commands cannot extract environment
-			data, thus being non-interactive +/
-		EnvironmentProbe _probe;
+	this() {
+ 		_environmentProbe = new EnvironmentProbe( this );
 	}
 
 	/++
 	 + Initialize with a driver
 	 +/
-	Ui init(Driver driver) {
+	Ui init( Driver driver ) {
 		_driver = driver;
 
 		// Populate command codes
-		_driver.registerCommand( "a", { return cast(Command)(new CreateLine); } );
+		_driver.registerCommand( "a", {
+				return cast(Command)( new CreateLine(this) );
+			} );
 
 		return this;
 	}

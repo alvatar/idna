@@ -4,6 +4,7 @@ private {
 	import std.stdio;
 
 	import cyma.controller.InteractiveCommand;
+	import cyma.controller.OutProbe;
 	import cyma.engine.operations.AddLine;
 	import math.Vector;
 }
@@ -13,7 +14,12 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class TCreateLine(T...) : InteractiveCommand!(T) {
 
+	this( Ui ui ) {
+		super(ui);
+	}
+
 	void execute( ref Model model ) {
+		writeln(_ui.output);
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");

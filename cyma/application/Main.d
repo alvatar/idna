@@ -16,8 +16,10 @@ int main( string[] args ) {
 	auto model = Model.create();
 	auto ui = UiManager.create( "GlUi" );
 
-	ui.init( driver );
 	driver.init( model );
+	ui.init( driver );
+
+	drawer.plug( ui.output() );
 
 	jobHub.addPostFrameJob( {
 

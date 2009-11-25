@@ -1,4 +1,4 @@
-module cyma.application.EnvironmentProbe;
+module cyma.controller.EnvironmentProbe;
 
 private {
 	import cyma.controller.Ui;

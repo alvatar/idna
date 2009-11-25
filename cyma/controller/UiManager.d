@@ -5,7 +5,6 @@ public import cyma.controller.Ui;
 private {
 	import core.JobHub;
 	import cyma.controller.GlUi;
-	import cyma.engine.Driver;
 }
 
 class UiManager {

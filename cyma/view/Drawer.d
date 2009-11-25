@@ -4,6 +4,7 @@ private {
 	import std.stdio;
 	import std.functional;
 
+	import cyma.controller.OutProbe;
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.view.DrawActor;
@@ -35,11 +36,11 @@ class Drawer {
 	/++
 	 + Initialize Drawer and all DrawActors
 	 +/
-	 final void init() {
-		 foreach( i, type; CanvasTypes ) {
-			 auto actor = addDrawActor( new type, type.stringof );
-		 }
-	 }
+	final void init() {
+		foreach( i, type; CanvasTypes ) {
+			auto actor = addDrawActor( new type, type.stringof );
+		}
+	}
 
 	/++
 	 + Zero level: iterate over everything and recreate the representation
@@ -142,6 +143,14 @@ class Drawer {
 			actor.show = &actorExecution;
 		}
 		return _drawActors;
+	}
+
+	/++
+	 + Set a probe immediate mode drawing capabilities
+	 +/
+	final void plug( ref OutProbe probe ) {
+		probe = new OutProbe;
+		//TODO
 	}
 
 	/++

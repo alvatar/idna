@@ -5,6 +5,7 @@ private {
 }
 
 protected {
+	import cyma.controller.Ui;
 	import cyma.engine.Command;
 }
 
@@ -26,6 +27,13 @@ abstract class InteractiveCommand(T...) : Command {
 
 		/++ Holds previous state +/
 		State _previousState;
+
+		/++ Ui link +/
+		Ui _ui;
+	}
+
+	this( Ui ui ) {
+		_ui = ui;
 	}
 
 	/++ Execution sequence +/
