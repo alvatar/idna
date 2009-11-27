@@ -4,8 +4,8 @@ private {
 	import std.stdio;
 	import std.traits;
 
-	import cyma.view.ICanvas;
-	import cyma.view.IDrawActor;
+	import cyma.controller.OutputActor;
+	import cyma.controller.ICanvas;
 }
 
 protected {
@@ -22,10 +22,10 @@ protected {
 abstract class Canvas : ICanvas {
 
 	/++ A link with a DrawActor that gives the Canvas all info needed +/
-	protected IDrawActor drawActor;
+	protected OutputActor drawActor;
 
 	/++ Update the link with a DrawActor +/
-	void setParendDrawActor( IDrawActor drawActor ) {
+	void setParendDrawActor( OutputActor drawActor ) {
 		this.drawActor = drawActor;
 	}
 

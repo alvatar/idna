@@ -1,21 +1,19 @@
-module cyma.view.DrawActor;
+module cyma.controller.OutputActor;
 
 private {
-	import cyma.view.ICanvas;
-	import cyma.view.IDrawActor;
+	import cyma.controller.ICanvas;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + Basic implementation of the DrawActor interface
+ + Define the interface of a DrawActor, allowing to move draw environments
+ + around avoiding cyclic dependencies
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class DrawActor : IDrawActor {
+abstract class OutputActor {
 
 	alias void delegate() DrawFunction;
 
 	private {
 		string _name = "";
-
-		ICanvas _canvas = null;
 
 		bool _active = true;
 
@@ -24,6 +22,10 @@ class DrawActor : IDrawActor {
 		DrawFunction _preprocess = null;
 
 		DrawFunction _show = null;
+	}
+
+	protected {
+		ICanvas _canvas = null;
 
 		void[] _environment = null;
 	}
@@ -84,12 +86,5 @@ class DrawActor : IDrawActor {
 		return _environment = environment;
 	}
 
-	/++
-	 + Initialize actor and linked canvas.
-	 +/
-	 void start( void[] env) {
-		 this._environment = env;
-		 _canvas.updateEnvironment();
-		 _canvas.init();
-	 }
+	void start( void[] env);
 }

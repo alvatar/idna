@@ -4,7 +4,6 @@ private {
 	import std.stdio;
 
 	import cyma.controller.InteractiveCommand;
-	import cyma.controller.OutProbe;
 	import cyma.engine.operations.AddLine;
 	import math.Vector;
 }

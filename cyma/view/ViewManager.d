@@ -1,25 +1,24 @@
-module cyma.view.Drawer;
+module cyma.view.ViewManager;
 
 private {
 	import std.stdio;
 	import std.functional;
 
-	import cyma.controller.OutProbe;
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
-	import cyma.view.DrawActor;
+	import cyma.view.ViewOutputActor;
 	import util.creation;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- + The Drawer manages canvases and takes care of generating the draw functios
- + from the model and the actors
+ + The ViewManager manages canvases and takes care of generating the draw
+ + functions from the model and the actors
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class Drawer {
+class ViewManager {
 	
 	private {
 		/++ DrawActors: everything needed to execute a group of draw functions +/
-		DrawActor[] _drawActors;
+		ViewOutputActor[] _viewActors;
 	}
 
 	private {
@@ -45,9 +44,9 @@ class Drawer {
 	/++
 	 + Zero level: iterate over everything and recreate the representation
 	 +/
-	final DrawActor[] load( ref Model model ) {
+	final ViewOutputActor[] load( ref Model model ) {
 
-		foreach( ref actor; _drawActors ) {
+		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -63,16 +62,16 @@ class Drawer {
 			actor.preprocess = &actorExecution;
 		}
 
-		return _drawActors;
+		return _viewActors;
 	}
 
 	/++
 	 + First level: Iterate over each active canvas, updating the proxy
 	 + geometries to the model current state (adds, deletes, modifications).
 	 +/
-	final DrawActor[] update( ref Model model ) {
+	final ViewOutputActor[] update( ref Model model ) {
 
-		foreach( ref actor; _drawActors ) {
+		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -96,17 +95,17 @@ class Drawer {
 
 			actor.preprocess = &actorExecution;
 		}
-		return _drawActors;
+		return _viewActors;
 	}
 
 	/++
 	 + Second level: Regenerate the proxy geometry that needs so
 	 +/
-	final DrawActor[] regenerate( ref Model model ) {
+	final ViewOutputActor[] regenerate( ref Model model ) {
 		// Note on implementation: could be done using a pointers-to-proxies list
 		// or iteration and acting on specific proxy types.
 
-		foreach( ref actor; _drawActors ) {
+		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -123,15 +122,15 @@ class Drawer {
 
 			actor.preprocess = &actorExecution;
 		}
-		return _drawActors;
+		return _viewActors;
 	}
 
 	/++
 	 + Third level: Redraw the current proxy geometry
 	 +/
-	final DrawActor[] draw() {
+	final ViewOutputActor[] draw() {
 
-		foreach( ref actor; _drawActors ) {
+		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
 			void actorExecution() {
 				if( actorRef.active ) {
@@ -142,26 +141,26 @@ class Drawer {
 			actor.preprocess = null;
 			actor.show = &actorExecution;
 		}
-		return _drawActors;
+		return _viewActors;
 	}
 
 	/++
 	 + Set a probe immediate mode drawing capabilities
 	 +/
-	final void plug( ref OutProbe probe ) {
-		probe = new OutProbe;
+	final ViewOutputActor functions() {
 		//TODO
+		return new ViewOutputActor;
 	}
 
 	/++
 	 + Add canvas to the target list of the drawer
 	 +/
-	final private DrawActor addDrawActor( Canvas canvas, string name ) {
-		DrawActor newDrawActor = new DrawActor;
+	final private ViewOutputActor addDrawActor( Canvas canvas, string name ) {
+		ViewOutputActor newDrawActor = new ViewOutputActor;
 		newDrawActor.name = name;
 		newDrawActor.canvas = canvas;
 		canvas.setParendDrawActor( newDrawActor );
-		_drawActors ~= newDrawActor;
+		_viewActors ~= newDrawActor;
 
 		debug(verbose) writeln( "New registered Canvas: ", name );
 		return newDrawActor;
@@ -170,7 +169,7 @@ class Drawer {
 	/++
 	 + Remove a canvas from the target list
 	 +/
-	final private DrawActor removeDrawActor( string name ) {
+	final private ViewOutputActor removeDrawActor( string name ) {
 		// TODO
 		return null;
 	}

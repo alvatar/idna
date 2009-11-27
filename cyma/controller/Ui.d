@@ -5,8 +5,7 @@ package import core.JobHub;
 package {
 	import cyma.engine.Driver;
 	import cyma.controller.EnvironmentProbe;
-	import cyma.controller.OutProbe;
-	import cyma.view.DrawActor;
+	import cyma.controller.OutputActor;
 }
 
 abstract class Ui {
@@ -18,23 +17,28 @@ abstract class Ui {
 		/++ Environment probe, for retrieving environment data +/
 		EnvironmentProbe _environmentProbe;
 
-		/++ OutProbe, for graphical, text, or any kind of output +/
-		OutProbe _outProbe;
+		/++ Immediate output is done through an OutputActor +/
+		OutputActor _output;
 	}
 
 	/++
 	 + Gives access to the environment where this Ui is
 	 +/
-	ref EnvironmentProbe environment() {
+	EnvironmentProbe environment() {
 		return _environmentProbe;
 	}
 
 	/++
 	 + Allows for output through the ui
 	 +/
-	ref OutProbe output() {
-		return _outProbe;
+	OutputActor output() {
+		return _output;
 	}
+
+	/++
+	 + Plugs an OutProbe to the Ui for allowing visual output to the Ui
+	 +/
+	void outplug( OutputActor actor );
 
 	/++
 	 + Init function, common to all user interfaces. Must be overriden,
@@ -48,11 +52,11 @@ abstract class Ui {
 	 + inside the Ui itself. Defines the process of building commands
 	 + through a IDriver
 	 +/
-	void doUi( DrawActor[] drawActor );
+	void doUi( OutputActor[] outpuActors );
 
 	/++
 	 + Get the process that executes the user interface
 	 +/
-	 IJob getMainProcess();
+	 IJob main();
 	 
 }

@@ -9,9 +9,7 @@ private {
 	import core.Message;
 	import core.MainProcess;
 	import cyma.controller.commands.All;
-	import cyma.controller.EnvironmentProbe;
 	import cyma.controller.GlWidget;
-	import cyma.controller.OutProbe;
 	import cyma.controller.Ui;
 	import dgl.dgl;
 	import io.input.input;
@@ -69,7 +67,7 @@ class GlUi : Ui {
 	/++
 	 + Initialize Actors
 	 +/
-	void initActors( DrawActor[] drawActors ) {
+	void initActors( OutputActor[] drawActors ) {
 		// Create OpenGl input and context
 		_keyboard = new QueueKeyboardReader( inputHub.mainChannel );
 		_context = GLWindow();
@@ -176,7 +174,7 @@ class GlUi : Ui {
 	 + User interface loop
 	 +/
 	//debug import std.random;
-	void doUi(DrawActor[] drawActors) {
+	void doUi( OutputActor[] outputActors ) {
 		/*
 		debug {
 			auto rnd = Random(unpredictableSeed);
@@ -215,13 +213,13 @@ class GlUi : Ui {
 		*/
 
 		if(_callInitActors) {
-			initActors(drawActors);
+			initActors(outputActors);
 			_callInitActors = false;
 		}
 
 		if( _context.created ) {
 			use(_context) in (GL gl) {
-				foreach( ref a; drawActors ) {
+				foreach( ref a; outputActors ) {
 					// Update actors environment with the GlUi's environment
 					a.environment = gl;
 					// Preprocess actor
@@ -232,7 +230,7 @@ class GlUi : Ui {
 				foreach( w; _widgets ) {
 					w.doWidget(gl);
 				}
-				foreach( ref a; drawActors ) {
+				foreach( ref a; outputActors ) {
 					// Execute actor
 					if( a.show )
 						a.show()();
@@ -245,9 +243,17 @@ class GlUi : Ui {
 	}
 
 	/++
+	 + Plugs an OutProbe to the Ui for allowing visual output to the Ui
+	 +/
+	void outplug( OutputActor outputActor ) {
+		_output = outputActor;
+		// TODO
+	}
+
+	/++
 	 + User interface main process
 	 +/
-	IJob getMainProcess() {
+	IJob main() {
 		return new MainProcess;
 	}
 }
