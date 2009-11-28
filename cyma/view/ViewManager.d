@@ -145,11 +145,19 @@ class ViewManager {
 	}
 
 	/++
-	 + Set a probe immediate mode drawing capabilities
+	 + Make an actor with immediate mode drawing capabilities with dynamically
+	 + dispatched delegates (used for high-level drawing functions, as they
+	 + have a high overhead)
 	 +/
-	final ViewOutputActor functions() {
-		//TODO
-		return new ViewOutputActor;
+	final ViewOutputActor immediate() {
+		ViewOutputActor result = new ViewOutputActor;
+		result.addDynamicFunction( "test"
+				, delegate int(int a){ writeln(a); return 0; } );
+		result.addDynamicFunction( "test2"
+				, delegate int(int a){ writeln(a); return 0; } );
+		result.addDynamicFunction( "test3"
+				, delegate int(int a){ writeln(a); return 0; } );
+		return result;
 	}
 
 	/++

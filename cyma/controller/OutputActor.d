@@ -1,6 +1,7 @@
 module cyma.controller.OutputActor;
 
 private {
+	import util.dynamicdispatch;
 	import cyma.controller.ICanvas;
 }
 
@@ -24,6 +25,10 @@ abstract class OutputActor {
 		DrawFunction _show = null;
 	}
 
+	void start( void[] env);
+
+	mixin MakeDynamicDispatch;
+
 	protected {
 		ICanvas _canvas = null;
 
@@ -32,6 +37,10 @@ abstract class OutputActor {
 
 	string name() {
 		return _name;
+	}
+
+	int testf(int a) {
+		return 0;
 	}
 
 	string name( string name) {
@@ -85,6 +94,4 @@ abstract class OutputActor {
 	void[] environment( void[] environment ) {
 		return _environment = environment;
 	}
-
-	void start( void[] env);
 }

@@ -18,7 +18,8 @@ class TCreateLine(T...) : InteractiveCommand!(T) {
 	}
 
 	void execute( ref Model model ) {
-		writeln(_ui.output);
+		writeln(_ui.output());
+		_ui.output("test",4);
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");

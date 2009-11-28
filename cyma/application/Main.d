@@ -19,7 +19,7 @@ int main( string[] args ) {
 	driver.init( model );
 	ui.init( driver );
 
-	ui.outplug( viewers.functions );
+	ui.outplug( viewers.immediate );
 
 	jobHub.addPostFrameJob( {
 

@@ -246,8 +246,12 @@ class GlUi : Ui {
 	 + Plugs an OutProbe to the Ui for allowing visual output to the Ui
 	 +/
 	void outplug( OutputActor outputActor ) {
-		_output = outputActor;
-		// TODO
+		if( _output is null ) {
+			_output = outputActor;
+		} else {
+			_output.setDynamicFunctions( outputActor.getDynamicFunctions );
+		}
+		debug writeln(_output.getDynamicFunctionsNames);
 	}
 
 	/++
