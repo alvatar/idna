@@ -134,11 +134,16 @@ final class GlCanvas : Canvas {
 
 		gl.ext(VERSION_1_5) in {
 			if( _isProxiesChanged ) {
-				try {
+				debug {
+					try {
+						_isProxiesChanged = false;
+						_updateVBO(gl);
+					} catch( Exception e ) {
+						writeln(e);
+					}
+				} else {
 					_isProxiesChanged = false;
 					_updateVBO(gl);
-				} catch( Exception e ) {
-					writeln(e);
 				}
 			}
 			_drawVBO(gl);

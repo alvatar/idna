@@ -149,14 +149,17 @@ class ViewManager {
 	 + dispatched delegates (used for high-level drawing functions, as they
 	 + have a high overhead)
 	 +/
+	 import std.variant;
 	final ViewOutputActor immediate() {
 		ViewOutputActor result = new ViewOutputActor;
-		result.addDynamicFunction( "test"
-				, delegate int(int a){ writeln(a); return 0; } );
-		result.addDynamicFunction( "test2"
-				, delegate int(int a){ writeln(a); return 0; } );
-		result.addDynamicFunction( "test3"
-				, delegate int(int a){ writeln(a); return 0; } );
+		result.attachDynamicFunction( "test"
+				, delegate int(){ writeln("NO ARGS"); return 99; } );
+		result.attachDynamicFunction( "test2"
+				, delegate int(int a){ writeln(a); return 99; } );
+		result.attachDynamicFunction( "test3"
+				, delegate int(int a,int b){ writeln(a); writeln(b); return 99; } );
+		result.attachDynamicFunction( "test4"
+				, delegate Variant(Variant[] a){ writeln(a); return Variant(77); } );
 		return result;
 	}
 

@@ -33,15 +33,20 @@ abstract class Ui {
 	 + Note: work-around to avoid need of calling output's dynamic functions
 	 + with an extra parenthesis pair
 	 +/
+	 /*
 	template output(T...) {
 		void output(T t) {
-			_output(t);
+			return _output(t);
 		}
 	}
 	template output() {
 		OutputActor output() {
 			return _output;
 		}
+	}
+	*/
+	OutputActor output() {
+		return _output;
 	}
 
 	/++

@@ -1,66 +1,106 @@
 module util.dynamicdispatch;
 
-private{
-	import std.variant;
-
-	import util.container.HashMap;
-}
-	
-alias Variant delegate(Variant[]) VariantDelegate;
-alias HashMap!(string,VariantDelegate) FunctionsMap;
-//alias VariantDelegate[string] FunctionsMap;
-
 template MakeDynamicDispatch() {
 
-	private import std.variant;
+	private {
+		import std.variant;
+		import util.container.HashMap;
+	}
 
-	private FunctionsMap _dynamicFunctions;
+	alias Variant delegate(Variant[]) VariantDelegate;
+	alias HashMap!(string,VariantDelegate) FunctionsMap;
+	//alias VariantDelegate[string] FunctionsMap;
+
+	private FunctionsMap __dynamicFunctions;
 
 	FunctionsMap getDynamicFunctions() {
-		return _dynamicFunctions;
+		return __dynamicFunctions;
 	}
 
 	FunctionsMap setDynamicFunctions( FunctionsMap funcs ) {
-		return _dynamicFunctions = funcs;
+		return __dynamicFunctions = funcs;
 	}
 
 	string[] getDynamicFunctionsNames() {
 		// Note: terrible implementation, extend Hashmap
 		string[] result;
-		foreach( f; _dynamicFunctions ) {
+		foreach( f; __dynamicFunctions ) {
 			string key;
-			if( _dynamicFunctions.keyOf(f,key) )
+			if( __dynamicFunctions.keyOf(f,key) )
 				result ~= key;
 		}
 		return result;
 	}
 
-	void opCall(T...)(string fname, T args) {
-		try {
-			_dynamicFunctions[fname]( variantArray(args[0..$]) );
-		} catch( Throwable e ) {
-			assert( false,
-					"Function "
-					~ fname
-					~ " has not been attached to "
-					~ typeof(this).stringof );
+	Variant opDispatch(string fname)(Variant[] args...) {
+		return __dynamicFunctions[fname]( args );
+	}
+
+	Variant opCall(
+			Args...
+			)(string fname, Args args) {
+		debug {
+			if( __dynamicFunctions.containsKey( fname ) )
+				return __dynamicFunctions[fname]( variantArray(args[0..$]) );
+			else
+				assert( false,
+						"Function "
+						~ fname
+						~ " has not been attached to "
+						~ typeof(this).stringof );
+		} else {
+			return __dynamicFunctions[fname]( variantArray(args[0..$]) );
 		}
 	}
 
-	void addDynamicFunction(Ret,Args...)( string fname, Ret delegate(Args) f ) {
+	Variant opCall(
+			Args:Variant[]
+			)(string fname, Args args) {
+		debug {
+			if( __dynamicFunctions.containsKey( fname ) )
+				return __dynamicFunctions[fname]( args );
+			else
+				assert( false,
+						"Function "
+						~ fname
+						~ " has not been attached to "
+						~ typeof(this).stringof );
+		} else {
+			return __dynamicFunctions[fname]( args );
+		}
+	}
 
-		if( _dynamicFunctions is null ) {
-			_dynamicFunctions = new FunctionsMap;
+	void attachDynamicFunction(
+			Ret:Variant,
+			Args:Variant[]
+			)( string fname, Ret delegate(Args) f ) {
+
+		if( __dynamicFunctions is null ) {
+			__dynamicFunctions = new FunctionsMap;
+		}
+
+		__dynamicFunctions[fname] = f;
+	}
+
+	void attachDynamicFunction(
+			Ret,
+			Args...
+			)( string fname, Ret delegate(Args) f ) {
+
+		if( __dynamicFunctions is null ) {
+			__dynamicFunctions = new FunctionsMap;
 		}
 
 		Variant vf(Variant[] iargs) {
 			Args targs;
+			debug if( iargs.length != targs.length )
+				throw new Exception("Bad number of arguments");
 			foreach( i, a; targs ) {
 				targs[i] = iargs[i].get!(Args[i]);
 			}
 			return Variant( f(targs) );
 		}
 
-		_dynamicFunctions[fname] = &vf;
+		__dynamicFunctions[fname] = &vf;
 	}
 }
