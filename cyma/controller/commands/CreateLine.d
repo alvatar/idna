@@ -20,9 +20,9 @@ class TCreateLine(T...) : InteractiveCommand!(T) {
 	import std.variant;
 	void execute( ref Model model ) {
 		//writeln(_ui.output());
-		// TODO: BEAUTIFY with opDispatch
 		//writeln( _ui.output()("test4",variantArray(0)) );
-		_ui.output.test();
+		//_ui.output.test();
+		_ui.output.test4(variantArray(0));
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");

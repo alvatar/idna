@@ -152,13 +152,13 @@ class ViewManager {
 	 import std.variant;
 	final ViewOutputActor immediate() {
 		ViewOutputActor result = new ViewOutputActor;
-		result.attachDynamicFunction( "test"
+		result.__attachMethod( "test"
 				, delegate int(){ writeln("NO ARGS"); return 99; } );
-		result.attachDynamicFunction( "test2"
+		result.__attachMethod( "test2"
 				, delegate int(int a){ writeln(a); return 99; } );
-		result.attachDynamicFunction( "test3"
+		result.__attachMethod( "test3"
 				, delegate int(int a,int b){ writeln(a); writeln(b); return 99; } );
-		result.attachDynamicFunction( "test4"
+		result.__attachMethod( "test4"
 				, delegate Variant(Variant[] a){ writeln(a); return Variant(77); } );
 		return result;
 	}

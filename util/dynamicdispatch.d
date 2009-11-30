@@ -4,91 +4,103 @@ template MakeDynamicDispatch() {
 
 	private {
 		import std.variant;
+
+		import meta.numeric;
 		import util.container.HashMap;
 	}
 
 	alias Variant delegate(Variant[]) VariantDelegate;
-	alias HashMap!(string,VariantDelegate) FunctionsMap;
-	//alias VariantDelegate[string] FunctionsMap;
+	alias HashMap!(string,VariantDelegate) MethodsMap;
 
-	private FunctionsMap __dynamicFunctions;
+	private MethodsMap __dynamicMethods;
 
-	FunctionsMap getDynamicFunctions() {
-		return __dynamicFunctions;
+	MethodsMap __getDynamicMethods() {
+		return __dynamicMethods;
 	}
 
-	FunctionsMap setDynamicFunctions( FunctionsMap funcs ) {
-		return __dynamicFunctions = funcs;
+	MethodsMap __setDynamicMethods( MethodsMap funcs ) {
+		return __dynamicMethods = funcs;
 	}
 
-	string[] getDynamicFunctionsNames() {
+	string[] __getDynamicMethodsNames() {
 		// Note: terrible implementation, extend Hashmap
 		string[] result;
-		foreach( f; __dynamicFunctions ) {
+		foreach( f; __dynamicMethods ) {
 			string key;
-			if( __dynamicFunctions.keyOf(f,key) )
+			if( __dynamicMethods.keyOf(f,key) )
 				result ~= key;
 		}
 		return result;
 	}
 
 	Variant opDispatch(string fname)(Variant[] args...) {
-		return __dynamicFunctions[fname]( args );
+		debug {
+			try {
+				return __dynamicMethods[fname]( args );
+			} catch (Exception e) {
+				assert(0, " Error calling dynamic method. Method "
+							~ fname
+							~ " has not been attached to class "
+					 		~ typeof(this).stringof );
+			}
+		} else {
+			return __dynamicMethods[fname]( args );
+		}
 	}
 
-	Variant opCall(
+	Variant __call(
 			Args...
 			)(string fname, Args args) {
 		debug {
-			if( __dynamicFunctions.containsKey( fname ) )
-				return __dynamicFunctions[fname]( variantArray(args[0..$]) );
+			if( __dynamicMethods.containsKey( fname ) )
+				return __dynamicMethods[fname]( variantArray(args[0..$]) );
 			else
 				assert( false,
-						"Function "
+						"Method "
 						~ fname
 						~ " has not been attached to "
 						~ typeof(this).stringof );
 		} else {
-			return __dynamicFunctions[fname]( variantArray(args[0..$]) );
+			return __dynamicMethods[fname]( variantArray(args[0..$]) );
 		}
 	}
 
-	Variant opCall(
+	Variant __call(
 			Args:Variant[]
 			)(string fname, Args args) {
 		debug {
-			if( __dynamicFunctions.containsKey( fname ) )
-				return __dynamicFunctions[fname]( args );
+			if( __dynamicMethods.containsKey( fname ) )
+				return __dynamicMethods[fname]( args );
 			else
 				assert( false,
-						"Function "
+						"Method "
 						~ fname
 						~ " has not been attached to "
 						~ typeof(this).stringof );
 		} else {
-			return __dynamicFunctions[fname]( args );
+			return __dynamicMethods[fname]( args );
 		}
 	}
 
-	void attachDynamicFunction(
+	void __attachMethod(
 			Ret:Variant,
 			Args:Variant[]
 			)( string fname, Ret delegate(Args) f ) {
 
-		if( __dynamicFunctions is null ) {
-			__dynamicFunctions = new FunctionsMap;
+		if( __dynamicMethods is null ) {
+			__dynamicMethods = new MethodsMap;
 		}
 
-		__dynamicFunctions[fname] = f;
+		__dynamicMethods[fname] = f;
 	}
 
-	void attachDynamicFunction(
+	void __attachMethod(
 			Ret,
 			Args...
 			)( string fname, Ret delegate(Args) f ) {
 
-		if( __dynamicFunctions is null ) {
-			__dynamicFunctions = new FunctionsMap;
+		if( __dynamicMethods is null ) {
+			__dynamicMethods = new MethodsMap;
 		}
 
 		Variant vf(Variant[] iargs) {
@@ -101,6 +113,14 @@ template MakeDynamicDispatch() {
 			return Variant( f(targs) );
 		}
 
-		__dynamicFunctions[fname] = &vf;
+		__dynamicMethods[fname] = &vf;
+	}
+
+	bool __detachMethod( string fname ) {
+		return __dynamicMethods.removeKey(fname);
+	}
+
+	bool __containsMethod( string fname ) {
+		return __dynamicMethods.containsKey(fname);
 	}
 }
