@@ -27,7 +27,7 @@ abstract class OutputActor {
 
 	void start( void[] env);
 
-	mixin MakeDynamicDispatch;
+	mixin MakeDynamicDispatch!(typeof(this));
 
 	protected {
 		ICanvas _canvas = null;

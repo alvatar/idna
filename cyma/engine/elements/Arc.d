@@ -1,4 +1,8 @@
-module cyma.engine.elements.arc;
+module cyma.engine.elements.Arc;
+
+private {
+	import cyma.engine.Element;
+}
 
 class Arc : Element
 {

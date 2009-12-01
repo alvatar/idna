@@ -22,7 +22,11 @@ class TCreateLine(T...) : InteractiveCommand!(T) {
 		//writeln(_ui.output());
 		//writeln( _ui.output()("test4",variantArray(0)) );
 		//_ui.output.test();
-		_ui.output.test4(variantArray(0));
+		//_ui.output.__call("test7",0,1);
+
+		//_ui.output["vsdsdf"] = delegate Variant ( Variant[] a ){ writeln(a); return Variant(0); };
+		//_ui.output.vsdsdf = delegate Variant ( Variant[] a ){ writeln(a); return Variant(0); };
+		_ui.output.test3(variantArray(0,2,2,3,4));
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");
