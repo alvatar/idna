@@ -158,9 +158,7 @@ class ViewManager {
 				, delegate int(int a){ writeln(a); return 99; } );
 		result.__bindMethod( "test3"
 				, delegate int(int a,int b){ writeln(a); writeln(b); return 99; } );
-		result.__bindMethod( "test4"
-				, delegate Variant(Variant[] a){ writeln(a); return Variant(77); } );
-		result["test5"] = delegate Variant(){ writeln(9); return Variant(77); };
+		result["test5"] = delegate void(){ writeln(9); return Variant(77); };
 		return result;
 	}
 

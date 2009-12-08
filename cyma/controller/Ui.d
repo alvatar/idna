@@ -56,7 +56,7 @@ abstract class Ui {
 		if( _output is null ) {
 			_output = outputActor;
 		} else {
-			_output.setDynamicFunctions( outputActor.getDynamicFunctions );
+			_output.__setDynamicMethods( outputActor.__getDynamicMethods );
 		}
 	}
 
