@@ -47,6 +47,7 @@ class GlUi : Ui {
 	}
 
 	this() {
+		// TODO: dependency injection?
  		_environmentProbe = new EnvironmentProbe( this );
 	}
 
@@ -83,7 +84,6 @@ class GlUi : Ui {
 		if( _context.created ) {
 			use(_context) in (GL gl) {
 				foreach( actor; drawActors ) {
-					// Update actors environment with the GlUi's environment
 					actor.start(gl);
 				}
 			};
@@ -220,8 +220,8 @@ class GlUi : Ui {
 		if( _context.created ) {
 			use(_context) in (GL gl) {
 				foreach( ref a; outputActors ) {
-					// Update actors environment with the GlUi's environment
-					a.environment = gl;
+					// Update actors context with the GlUi's context
+					a.context = gl;
 					// Preprocess actor
 					if( a.preprocess )
 						a.preprocess()();

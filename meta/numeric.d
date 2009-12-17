@@ -11,8 +11,8 @@ module meta.numeric;
 private {
 	import std.traits;
 
-	import meta.charfuncs;
-	import meta.stringfuncs;
+	import meta.char_funcs;
+	import meta.string_funcs;
 }
 
 /++ Compile-time conversion of numeric values to string +/

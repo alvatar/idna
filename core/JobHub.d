@@ -5,7 +5,7 @@ module core.JobHub;
 
 
 private {
-	import util.singleton;
+	import pattern.singleton;
 }
 
 

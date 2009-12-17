@@ -8,7 +8,9 @@
 
 module meta.type;
 
-private import meta.demangle; 
+private {
+	import meta.demangle; 
+}
 
 /++
  + For a given class type, returns the name of it's constructor,
@@ -28,4 +30,17 @@ template destructorNameOf (T)
 {
 	static assert (is (T == class), "destructorNameOf needs a class as parameter.");
 	string destructorNameOf = toString (demangleType !(T), false, 0, 0) ~ ".__dtor";
+}
+
+/// TODO: clean
+template ElemType(T) {
+	alias typeof((function() {
+		foreach (elem; Init!(T)) return elem; assert(false);
+	})()) ElemType;
+}
+
+template KeyType(T) {
+	alias typeof((function() {
+		foreach (key, elem; Init!(T)) return key; assert(false);
+	})()) KeyType;
 }

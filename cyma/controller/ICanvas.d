@@ -8,7 +8,7 @@ interface ICanvas {
 
 	/+ Setup ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 	void init();
-	void updateEnvironment();
+	void updateContext();
 	void clear();
 
 	/+ Operations over DrawableProxies ++++++++++++++++++++++++++++++++++++++++/

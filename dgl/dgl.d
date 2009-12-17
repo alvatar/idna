@@ -6,7 +6,7 @@ public {
 	import dgl.glufunctions;
 	import dgl.glfunctions;
 	import dgl.glwrap;
-	import util.use;
+	import pattern.use;
 	
 	import dgl.backend.native;
 }

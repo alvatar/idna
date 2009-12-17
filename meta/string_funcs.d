@@ -6,11 +6,43 @@
 
 *******************************************************************************/
 
-module meta.stringfuncs;
+module meta.string_funcs;
 
-import meta.charfuncs;
+import meta.char_funcs;
 
-/++ Strips the given character from the end of the string, until not possible anymore +/
+/++
+ + Changes case of string to upper
+ +/
+pure string toLower(string s) {
+	string r;
+	foreach (c; s) {
+		if (c >= 'A' && c <= 'Z'){
+			r ~= cast(char)((c + ('a' - 'A')));
+		} else {
+			r ~= c;
+		}
+	}
+	return r;
+}
+
+/++
+ + Changes case of string to upper
+ +/
+pure string toUpper(string s) {
+	string r;
+	foreach(c; s) {
+		if (c >= 'a' && c <= 'z'){
+			r ~= cast(char)(c + ('A' - 'a'));
+		} else {
+			r ~= c;
+		}
+	}
+	return r;
+}
+
+/++
+ + Strips the given character from the end of the string, until not possible anymore
+ +/
 pure T[] chomp (T) (T[] str, T c) {
 	int last = str.length-1;
 	while (last >= 0 && str[last] == c)
@@ -18,7 +50,9 @@ pure T[] chomp (T) (T[] str, T c) {
 	return str[0 .. last+1];
 }
 
-/++ Returns the given string repeated multiple times +/
+/++
+ + Returns the given string repeated multiple times
+ +/
 pure T[] repeat (T) (T[] str, uint times) {
 	if (times == 0)
 		return [];
@@ -28,22 +62,31 @@ pure T[] repeat (T) (T[] str, uint times) {
 		return repeat !(T) (str, times-1) ~ str;
 }
 
-/++ Returns true, if the given string starts with the given substring +/
+/++
+ + Returns true, if the given string starts with the given substring
+ +/
 pure bool startsWith (T) (T[] str, T[] sub) {
 	return sub.length <= str.length && sub == str[0 .. sub.length];
 }
 
-/++ Returns true, if the given string is empty +/
+/++
+ + Returns true, if the given string is empty
+ +/
 pure bool isEmpty (T) (T[] str) {
 	return str.length == 0;
 }
 
-/++ Returns true, if the given string contains the given character +/
+/++
+ + Returns true, if the given string contains the given character
+ +/
 pure bool contains (T) (T[] str, T c) {
 	return cfind !(T) (str, c) >= 0;
 }
 
-/++ Returns the left-most position of the given character in the given string, or -1 if the character is not found +/
+/++
+ + Returns the left-most position of the given character in the given string,
+ + or -1 if the character is not found
+ +/
 pure int cfind (T) (T[] str, T c) {
 	foreach (i, s; str) {
 		if (s == c) return i;
@@ -51,7 +94,10 @@ pure int cfind (T) (T[] str, T c) {
 	return -1;
 }
 
-/++ Returns the right-most position of the given character in the given string, or -1 if the character is not found +/
+/++
+ + Returns the right-most position of the given character in the given string,
+ + or -1 if the character is not found
+ +/
 pure int rcfind (T) (T[] str, T c) {
 	foreach_reverse (i, s; str) {
 		if (s == c) return i;
@@ -59,7 +105,10 @@ pure int rcfind (T) (T[] str, T c) {
 	return -1;
 }
 
-/++ Returns the left-most position of the given substring in the given string, or -1 if the substring is not found +/
+/++
+ + Returns the left-most position of the given substring in the given string,
+ + or -1 if the substring is not found
+ +/
 pure int find (T) (T[] str, T sub[]) {
 	// TODO: choose a better algorithm, but how to manage the temporary table with bug #1382
 	for (int i = 0; i < str.length - sub.length+1; i++) {
@@ -75,7 +124,10 @@ pure int find (T) (T[] str, T sub[]) {
 	return -1;
 }
 
-/++ Returns the right-most position of the given substring in the given string, or -1 if the substring is not found +/
+/++
+ + Returns the right-most position of the given substring in the given string,
+ + or -1 if the substring is not found
+ +/
 pure int rfind (T) (T[] str, T sub[]) {
 	// TODO: choose a better algorithm, but how to manage the temporary table with bug #1382
 	for (int i = str.length-sub.length; i>=0; i--) {
@@ -91,7 +143,10 @@ pure int rfind (T) (T[] str, T sub[]) {
 	return -1;
 }
 
-/++ Removes the characters from the left of the given string, as long as they are in the given set of characters +/
+/++
+ + Removes the characters from the left of the given string,
+ + as long as they are in the given set of characters
+ +/
 pure public static string ltrim (string str, string chars) {
 	foreach (i, c; str) {
 		bool match = false;
@@ -108,7 +163,9 @@ pure public static string ltrim (string str, string chars) {
 	return [];
 }
 
-/++ Removes the left-most element from a given array and returns it +/
+/++
+ + Removes the left-most element from a given array and returns it
+ +/
 pure public static T lremove (T) (ref T[] array) {
 	assert (array.length > 0);
 
@@ -117,7 +174,9 @@ pure public static T lremove (T) (ref T[] array) {
 	return result;
 }
 
-/++ Removes a given amount of left-most elements from a given array and returns them +/
+/++ 
+ + Removes a given amount of left-most elements from a given array and returns them
+ +/
 pure public static T[] lremove (T) (ref T[] array, uint amount) {
 	assert (amount <= array.length);
 
@@ -126,7 +185,9 @@ pure public static T[] lremove (T) (ref T[] array, uint amount) {
 	return result;
 }
 
-/++ Joins an array of strings to one, putting a given split-string between each of them +/
+/++
+ + Joins an array of strings to one, putting a given split-string between each of them
+ +/
 pure public static T[] join (T) (T[] split, T[][] array) {
 	T[] result;
 	foreach (i, a; array) {

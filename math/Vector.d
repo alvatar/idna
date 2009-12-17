@@ -7,9 +7,8 @@ private {
 	import std.math : isNaN, sqrt, abs;
 
 	import math.algebra;
-	import meta.typetuple;
-	import meta.tuplecons;
-	import meta.stringfuncs;
+	import meta.typecons;
+	import meta.string_funcs;
 	import meta.numeric;
 }
 
@@ -84,7 +83,7 @@ struct TVector( _type, int _dim ) {
 
 	union {
 		type[dim] array;
-		alias BuildTuple!(type, dim) VectorTuple;
+		alias RepeatType!(type, dim) VectorTuple;
 		VectorTuple tuple;
 		static if( dim >= 1 && dim <= 4 ) {
 			struct {

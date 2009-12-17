@@ -12,7 +12,6 @@ private {
 	}
 
 	import dgl.common;
-	import util.meta;
 }
 
 package {

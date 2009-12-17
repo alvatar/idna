@@ -1,7 +1,7 @@
 module core.MessageHub;
 
 private {
-	import util.singleton;
+	import pattern.singleton;
 	import core.Message;
 	import core.MessageHandler;
 }

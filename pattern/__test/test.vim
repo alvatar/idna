@@ -1,5 +1,5 @@
 " Quick settings
-let g:projectPath = "/data/projects/idna/math/"
+let g:projectPath = "/data/projects/idna/pattern/"
 let g:programName = "test"
 let makeString = "./build.sh"
 

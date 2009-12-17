@@ -6,7 +6,7 @@
 
 *******************************************************************************/
 
-module meta.charfuncs;
+module meta.char_funcs;
 
 /++ Returns true if the given char is an alpha char +/
 pure bool isAlphaChar (char c)

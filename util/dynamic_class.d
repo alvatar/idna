@@ -1,10 +1,12 @@
-module util.dynamicdispatch;
+module util.dynamic_class;
 
 class DynamicMethodException: Exception {
   this(string msg) { super(msg); }
 }
 
-template MakeDynamicDispatch(D) {
+template MakeClassDynamic() {
+
+	alias typeof(this) D;
 
 	private {
 		import std.variant;

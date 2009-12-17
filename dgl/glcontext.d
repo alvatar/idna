@@ -3,7 +3,7 @@ module dgl.glcontext;
 public {
 	import dgl.common;
 	import dgl.opengl;
-	import util.use;
+	import pattern.use;
 }
 
 

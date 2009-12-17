@@ -6,7 +6,7 @@ private{
 	import cyma.engine.Command;
 	import cyma.model.Model;
 	import math.Vector;
-	import util.creation;
+	import pattern.creation;
 }
 
 alias Command delegate() CommandCreator;

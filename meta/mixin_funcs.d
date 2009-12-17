@@ -6,7 +6,7 @@
 
 *******************************************************************************/
 
-module meta.mixinfuncs;
+module meta.mixin_funcs;
 
 /**
  * Escape any quotes and backslashes inside the given string,

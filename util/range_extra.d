@@ -62,7 +62,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-module rangeextra;
+module range_extra;
 
 import std.range, std.traits, std.typetuple, std.typecons, core.memory,
        std.array, std.functional;

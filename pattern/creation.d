@@ -1,4 +1,4 @@
-module util.creation;
+module pattern.creation;
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Add static creation to classes

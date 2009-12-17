@@ -24,7 +24,7 @@ abstract class Ui {
 	/++
 	 + Gives access to the environment where this Ui is
 	 +/
-	EnvironmentProbe environment() {
+	@property EnvironmentProbe environment() {
 		return _environmentProbe;
 	}
 
@@ -33,6 +33,9 @@ abstract class Ui {
 	 + Note: work-around to avoid need of calling output's dynamic functions
 	 + with an extra parenthesis pair
 	 +/
+	@property OutputActor output() {
+		return _output;
+	}
 	 /*
 	template output(T...) {
 		void output(T t) {
@@ -45,9 +48,6 @@ abstract class Ui {
 		}
 	}
 	*/
-	OutputActor output() {
-		return _output;
-	}
 
 	/++
 	 + Plugs an OutProbe to the Ui for allowing visual output to the Ui

@@ -1,4 +1,4 @@
-module util.singleton;
+module pattern.singleton;
 
 
 

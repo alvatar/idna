@@ -11,10 +11,12 @@ import cyma.engine.Driver;
 
 int main( string[] args ) {
 
+	////// TODO: DEPINJECTION
 	auto model = Model.create();
 	auto driver = Driver.create();
 	auto ui = UiManager.create( "GlUi" );
 	auto viewers = ViewManager.create();
+	//////
 
 	driver.init( model );
 	ui.init( driver );

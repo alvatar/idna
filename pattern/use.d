@@ -1,4 +1,4 @@
-module util.use;
+module pattern.use;
 
 private {
 	version( D_Version2 ) {

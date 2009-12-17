@@ -114,7 +114,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-module parallelfuture;
+module parallel_future;
 
 import core.thread, std.cpuid, std.algorithm, std.range, std.c.stdlib, std.stdio,
     std.contracts, std.functional, std.conv, std.math, core.memory;

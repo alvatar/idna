@@ -7,7 +7,7 @@ private {
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.view.ViewOutputActor;
-	import util.creation;
+	import pattern.creation;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -149,7 +149,7 @@ class ViewManager {
 	 + dispatched delegates (used for high-level drawing functions, as they
 	 + have a high overhead)
 	 +/
-	 import std.variant;
+	import std.variant;
 	final ViewOutputActor immediate() {
 		ViewOutputActor result = new ViewOutputActor;
 		result.__bindMethod( "test"

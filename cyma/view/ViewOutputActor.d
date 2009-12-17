@@ -16,9 +16,9 @@ class ViewOutputActor : OutputActor {
 	/++
 	 + Initialize actor and linked canvas.
 	 +/
-	 void start( void[] env) {
-		 this._environment = env;
-		 _canvas.updateEnvironment();
+	 void start( void[] context ) {
+		 this._context = context;
+		 _canvas.updateContext();
 		 _canvas.init();
 	 }
 }
