@@ -13,26 +13,43 @@ protected {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 abstract class Command {
 
-	protected {
-		/++ Command's context, info for executing the operations +/
-		CommandContext _context;
-		//DefineContext!(T) _context;
-	}
-
 	/++ Execution entry point +/
 	void execute( ref Model );
 
 	/++ Revert (undo) the command +/
 	void revert( ref Model );
 
-	/++ Context setup +/
-	Command context( CommandContext context );
-
-	CommandContext context();
-
 	/++ A function to retrieve name must be implemented +/
 	string name() {
 		return typeof(this).toString;
+	}
+}
+
+abstract class ContextualizedCommand(T...) : Command {
+
+	alias DefineContext!T ContextType;
+
+	protected {
+		/++ Command's context, info for executing the operations +/
+		ContextType _context;
+	}
+
+	@property
+	typeof(this) context( CommandContext context ) {
+		debug if( (_context = cast(DefineContext!T)context) is null )
+			throw new Exception("Incorrect context supplied to Command");
+		return this;
+	}
+
+	@property
+	ContextType context() {
+		return _context;
+	}
+
+	typeof(this) makeContext(T...)(T args) {
+		debug if( (_context = cast(DefineContext!T)MakeContext(args)) is null )
+			throw new Exception("Incorrect context supplied to Command");
+		return this;
 	}
 }
 

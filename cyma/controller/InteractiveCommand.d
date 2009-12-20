@@ -12,7 +12,7 @@ protected {
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Abstract class for common functionality of the commands
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-abstract class InteractiveCommand(T...) : Command {
+abstract class InteractiveCommand(T...) : ContextualizedCommand!T {
 
 	enum State {
 		Created
@@ -38,14 +38,4 @@ abstract class InteractiveCommand(T...) : Command {
 
 	/++ Execution sequence +/
 	void interactiveSequence( ref Model );
-
-	InteractiveCommand context( CommandContext context ) {
-		debug if( (_context = cast(DefineContext!(T))context) is null )
-			throw new Exception("Incorrect context supplied to Command");
-		return this;
-	}
-
-	DefineContext!(T) context() {
-		return _context;
-	}
 }

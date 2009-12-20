@@ -54,13 +54,17 @@ class GlUi : Ui {
 	/++
 	 + Initialize with a driver
 	 +/
+	template CommandCaller(C) {
+		Command CommandCaller() {
+			return new C(this);
+		}
+	}
 	Ui init( Driver driver ) {
 		_driver = driver;
 
 		// Populate command codes
-		_driver.registerCommand( "a", {
-				return cast(Command)( new CreateLine(this) );
-			} );
+		_driver.registerCommand( "a", &CommandCaller!CreateLine );
+		_driver.registerCommand( "x", &CommandCaller!EnginePlugin );
 
 		return this;
 	}
