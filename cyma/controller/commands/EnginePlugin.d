@@ -13,6 +13,8 @@ class EnginePlugin : InteractiveCommand!(string) {
 		SharedLib _plugin;
 		//bool _loaded = false;
 		//void plugin_main();
+		alias int function() PluginMainType;
+		extern(System) PluginMainType _plugin_main;
 		static Object _loaderMutex;
 	}
 
@@ -29,19 +31,21 @@ class EnginePlugin : InteractiveCommand!(string) {
 	}
 
 	override void interactiveSequence( ref Model model ) {
-		//context = MakeContext("load");
 		loadPlugin();
+		executePlugin();
+		unloadPlugin();
 	}
 
 	private:
-	import std.stdio;
-	void unloadPlugin() {
-		if( _plugin !is null ) {
-			_plugin.unload();
-			_plugin = null;
-		}
+
+	void executePlugin() {
+		if( _plugin_main !is null )
+			_plugin_main();
 	}
 
+	import std.stdio;
+	import std.path;
+	import std.file;
 	void loadPlugin() {
 		synchronized( _loaderMutex ) {
 			bool loadLibrary( string src ) {
@@ -51,53 +55,35 @@ class EnginePlugin : InteractiveCommand!(string) {
 					_plugin = SharedLib.load(src);
 					return _plugin !is null;
 				} catch (SharedLibException) {
-					writeln("PEDO");
+					writeln("Plugin " ~ src ~ " not found");
 					return false;
 				}
 			}
 			void* loadFunction(ref SharedLib lib, string name) {
 				void* func = lib.getSymbol( cast(char*)toStringz(name.dup) );
-				if (func is null) {
-					//TODO
-					//handleMissingProc(name);
-					return null;
-				} else return func;
+				if (func is null)
+					writeln("The plugin doesn't have the function plugin_main defined");
+				return func;
 			}
-			void load(string libraryName, void delegate() loadDg) {
-				string[] libSearchPaths = [""];
-				foreach (path; libSearchPaths) {
-					if( !path.length ) {
-						if( loadLibrary(libraryName) ) {
-							loadDg();
-							return;
-						} else continue;
-					}
-					/*
-					auto rootPath = basename(path);
-					if (exists(path) && isdir(path)) {
-						foreach (filePath; listdir(rootPath)) {
-							try {
-								if (isdir(filePath)) continue;
-							} catch {
-								continue;
-							}
-							if( fnmatch(filePath, name) ) {
-								if (loadLibrary(path.join(path, filePath))) {
-									loadFunc();
-									return;
-								} else continue;
-							}
-						}
-					}
-					*/
+			void load(string libraryName, void delegate() loaderDg) {
+				string[] libSearchPaths = [];
+				libSearchPaths ~= getcwd();
+				foreach( path; libSearchPaths ) {
+					auto fullpath = std.path.join( path, libraryName );
+					if( loadLibrary(fullpath) )
+						loaderDg();
 				}
-				//handleLibNotFound(namesList, libSearchPaths);
 			}
 
-			load( "engine_plugin.so", (){ loadFunction(_plugin,"plugin_main"); } );
+			load( "engine_plugin.so", (){ _plugin_main = cast(PluginMainType)loadFunction(_plugin,"plugin_main"); } );
 		}
 	}
 
-	void executePlugin() {
+	void unloadPlugin() {
+		if( _plugin !is null ) {
+			_plugin.unload();
+			_plugin = null;
+			_plugin_main = null;
+		}
 	}
 }
