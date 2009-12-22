@@ -9,8 +9,8 @@
 module meta.demangle;
 
 import meta.numeric;
-import meta.stringfuncs;
-import meta.charfuncs;
+import meta.string_funcs;
+import meta.char_funcs;
 
 // Activate this to debug compile-time-demangling via pragmas
 

@@ -19,7 +19,7 @@ class CreateLine : InteractiveCommand!(uint, vec2r, vec2r) {
 
 	import std.variant;
 	override void execute( ref Model model ) {
-		_ui.output().test5();
+		_ui.output().test5( 0xDEADC0DE );
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");

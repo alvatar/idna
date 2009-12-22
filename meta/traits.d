@@ -1,12 +1,4 @@
-/*******************************************************************************
-
-	copyright:      Copyright (c) 2008 Matthias Walter. All rights reserved
-
-    authors:        Matthias Walter
-
-*******************************************************************************/
-
-module meta.type;
+module meta.traits;
 
 private {
 	import meta.demangle; 
@@ -43,4 +35,11 @@ template KeyType(T) {
 	alias typeof((function() {
 		foreach (key, elem; Init!(T)) return key; assert(false);
 	})()) KeyType;
+}
+
+template isCallableType(T) {
+	const bool isCallableType = is( T == function )
+		|| is( typeof(*T) == function )
+		|| is( T == delegate )
+		|| is( typeof(T.opCall) == function );
 }

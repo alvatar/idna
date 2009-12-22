@@ -39,6 +39,7 @@ template MakeClassDynamic() {
 		return result;
 	}
 
+/******************* IMPLEMENTACION GENERICA: QUEDA CHEQUEOS
 	void __bindMethod(
 			Ret:Variant,
 			Args:Variant[]
@@ -82,16 +83,40 @@ template MakeClassDynamic() {
 
 		__dynamicMethods[fname] = &vf;
 	}
+*************************/
 
-/******************* IMPLEMENTACION GENERICA: QUEDA CHEQUEOS
+	import meta.traits;
+	import std.traits;
 	void __bindMethod(T)( string fname, T t ) {
 
 		if( __dynamicMethods is null ) {
 			__dynamicMethods = new MethodsMap;
 		}
 
-		Variant vf(Variant[] iargs) {
-			return t(iargs[0]);
+		static if( isCallableType!(T) ) {
+			Variant vf(Variant[] iargs) {
+				alias ParameterTypeTuple!(T) Args;
+				Args targs;
+				debug if( iargs.length != targs.length )
+					throw new Exception(
+								"Incorrect number of arguments, expected: "
+								~ to!(string)(targs.length)
+								~ ", passed: "
+								~ to!(string)(iargs.length)
+								);
+				foreach( i, a; targs )
+					targs[i] = iargs[i].get!(Args[i]);
+				static if( is(ReturnType!(T) == void) ) {
+					t(targs);
+					return Variant(0);
+				} else {
+					return Variant( t(targs) );
+				}
+			}
+		} else {
+			Variant vf(Variant[] iargs) {
+				return Variant(t);
+			}
 		}
 
 		__dynamicMethods[fname] = &vf;
@@ -104,7 +129,6 @@ template MakeClassDynamic() {
 	bool __containsMethod(string fname) {
 		return __dynamicMethods.containsKey(fname);
 	}
-*************************/
 
 	/++
 	 + Call statically (known name) a dynamically binded function
@@ -117,6 +141,7 @@ template MakeClassDynamic() {
 	 + Compiler doesn't currently understand variadic template for opDispatch
 	 +/
 	Variant opDispatch(string fname,Args...)(Args args) {
+		// TODO: try/catch
 		debug {
 			if( __dynamicMethods.containsKey( fname ) )
 				return __dynamicMethods[fname]( variantArray(args) );
@@ -158,8 +183,8 @@ template MakeClassDynamic() {
 		return __call(fname);
 	}
 
-	void opIndexAssign(Ret,Args...)(Ret delegate(Args) m, string fname) {
-		__bindMethod(fname,m);
+	void opIndexAssign(T)(T t, string fname) {
+		__bindMethod(fname,t);
 	}
 
 	 /********************
