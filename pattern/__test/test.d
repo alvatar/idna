@@ -1,15 +1,15 @@
 module test;
 
-import pattern.dconstructor.default_builder;
-import pattern.dconstructor.build;
-import pattern.dconstructor.property;
+import pattern.depinjection.default_builder;
+import pattern.depinjection.property;
 
 import test_interface;
+import test_impl;
 
 
 void main ()
 {
-	//builder ().bind!(IListener, Listener);
+	builder ().bind!(IListener, Listener);
 	//auto server = builder ().get!(IServer);
 	auto server = builder ().get!(IServer);
 	server.Run ();

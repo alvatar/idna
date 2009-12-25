@@ -1,32 +1,27 @@
-module pattern.dconstructor.stack;
+module pattern.depinjection.stack;
 
-private import pattern.dconstructor.exception;
+private import pattern.depinjection.exception;
 //import tango.util.container.HashSet;
 
 /** A stack representing the current stack of types being built. */
-class BuildStack
-{
+class BuildStack {
 //	private HashSet!(TypeInfo) _building;
 
-	this ()
-	{
+	this () {
 		//_building = new typeof(_building);
 	}
 
-	public
-	{
+	public {
 		/** Adds an element to the call stack. This should only be called from 
 		 * the Builder. */
-		void push (TypeInfo info)
-		{
+		void push (TypeInfo info) {
 			_targets ~= info;
 //			_building.add (info);
 		}
 
 		/** Removes the last element from the build stack. This should only be
 		 * called from the Builder. */
-		void pop ()
-		{
+		void pop () {
 			auto info = _targets[$ - 1];
 			_targets = _targets[0 .. $ - 1];
 //			_building.remove (info);
@@ -35,8 +30,7 @@ class BuildStack
 		/** Returns an ordered list of ClassInfo objects of the types being 
 		 * built. The item that was explicitly requested is in index 0, with
 		 * the most recent type to be built as the last element. */
-		public TypeInfo[] targets ()
-		{
+		public TypeInfo[] targets () {
 			return _targets.dup;
 		}
 
@@ -45,26 +39,21 @@ class BuildStack
 		 * representing type U. 
 		 * In the case that someone called Builder.get!(T) directly, ths
 		 * returns null. */
-		public TypeInfo buildfor ()
-		{
-			if (_targets.length >= 2)
-			{
+		public TypeInfo buildfor () {
+			if (_targets.length >= 2) {
 				return _targets[$ - 2];
 			}
 			return null;
 		}
 		
-		public TypeInfo last ()
-		{
-			if (_targets.length >= 1)
-			{
+		public TypeInfo last () {
+			if (_targets.length >= 1) {
 				return _targets[$ - 1];
 			}
 			return null;
 		}
 
-		package bool contains (TypeInfo type)
-		{
+		package bool contains (TypeInfo type) {
 			foreach (t; _targets)
 				if (t is type) return true;
 			return false;

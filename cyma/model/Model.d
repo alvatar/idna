@@ -46,20 +46,13 @@ class Model {
 		IdGenerator _idGenerator;
 	}
 
-	private {
-		this() {
-			++_updates;
-			_layers = new LayerStructure;
-			_layers.add(new Layer);
-			_idGenerator = new IdGenerator;
-			debug(verbose) writeln( "Layer created" );
-		}
+	this() {
+		++_updates;
+		_layers = new LayerStructure;
+		_layers.add(new Layer);
+		_idGenerator = new IdGenerator;
+		debug(verbose) writeln( "Layer created" );
 	}
-
-	/++
-	 + Static creation
-	 +/
-	mixin StaticCreation;
 
 	/++
 	 + Returns the number of updates that have been done to the model

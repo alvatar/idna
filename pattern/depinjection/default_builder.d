@@ -3,16 +3,14 @@
  * Terms and conditions for copying, distribution, and modification:
  * 0. You just do what the fuck you want.
  */
-module pattern.dconstructor.default_builder;
+module pattern.depinjection.default_builder;
 
-import pattern.dconstructor.build2;
+private import pattern.depinjection.build;
 
 private Builder _builder;
 
-public typeof(_builder) builder ()
-{
-	if (_builder is null)
-	{
+public typeof(_builder) builder () {
+	if (_builder is null) {
 		_builder = new typeof(_builder) ();
 	}
 	return _builder;

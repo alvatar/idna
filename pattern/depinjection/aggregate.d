@@ -1,27 +1,26 @@
 /**
  * Builders for aggregate types: arrays and dictionaries.
  */
-module pattern.dconstructor.aggregate;
+module pattern.depinjection.aggregate;
 
-import pattern.dconstructor.build;
-import pattern.dconstructor.object_builder;
+private {
+	import pattern.depinjection.build;
+	import pattern.depinjection.object_builders;
+}
 
 /**
  * Provides an array of the given type. Members of the array are provided 
  * statically. This array is provided for every type that requires an 
  * array of that type.
  */
-class GlobalListBuilder (TBuilder, TList) : AbstractBuilder!(TBuilder, TList[])
-{
+class GlobalListBuilder (TBuilder, TList) : AbstractBuilder!(TBuilder, TList[]) {
 	private TList[] _objs;
 
-	this (TList[] objs)
-	{
+	this (TList[] objs) {
 		_objs = objs.dup;
 	}
 
-	Entity!(TList[]) build (TBuilder parent)
-	{
+	Entity!(TList[]) build (TBuilder parent) {
 		Entity!(TList[]) entity;
 		entity.object = _objs.dup;
 		entity.intercepted = true;
@@ -29,11 +28,9 @@ class GlobalListBuilder (TBuilder, TList) : AbstractBuilder!(TBuilder, TList[])
 	}
 }
 
-TValue[TKey] dup(TValue, TKey) (TValue[TKey] aa)
-{
+TValue[TKey] dup(TValue, TKey) (TValue[TKey] aa) {
 	TValue[TKey] d;
-	foreach (a, b; aa)
-	{
+	foreach (a, b; aa) {
 		d[a] = b;
 	}
 	return d;
@@ -44,17 +41,14 @@ TValue[TKey] dup(TValue, TKey) (TValue[TKey] aa)
  * Anything taking a dictionary of that type will be given this dictionary.
  * The exception, of course, being when it's wrapped in a MultiBuilder.
  */
-class GlobalDictionaryBuilder (TBuilder, TKey, TValue) : AbstractBuilder!(TBuilder, TValue[TKey])
-{
+class GlobalDictionaryBuilder (TBuilder, TKey, TValue) : AbstractBuilder!(TBuilder, TValue[TKey]) {
 	private TValue[TKey] _dict;
 
-	this (TValue[TKey] dict)
-	{
+	this (TValue[TKey] dict) {
 		_dict = dup (dict);
 	}
 
-	Entity!(TValue[TKey]) build (TBuilder parent)
-	{
+	Entity!(TValue[TKey]) build (TBuilder parent) {
 		Entity!(TValue[TKey]) entity;
 		entity.object = dup (_dict);
 		entity.intercepted = true;

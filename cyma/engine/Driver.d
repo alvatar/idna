@@ -31,19 +31,9 @@ class Driver {
 		Model _model;
 	}
 
-	private {
-		this() {
-		}
-	}
-
 	void init( Model model ) {
 		_model = model;
 	}
-
-	/++
-	 + Static Creation
-	 +/
-	mixin StaticCreation;
 
 	/++
 	 + Register commands with an associated code

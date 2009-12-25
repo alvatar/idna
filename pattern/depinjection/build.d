@@ -1,45 +1,42 @@
 /**
- * dconstructor's first major revision is too heavy (too much overhead).
+ * depinjection's first major revision is too heavy (too much overhead).
  * This aims to be a light-weight reimplementation.
  */
-module pattern.dconstructor.build2;
+module pattern.depinjection.build;
 
-import pattern.dconstructor.circular;
-import pattern.dconstructor.exception;
-import pattern.dconstructor.interceptor;
-import pattern.dconstructor.property;
-import pattern.dconstructor.stack;
-import pattern.dconstructor.build_utils;
-import pattern.dconstructor.lifecycle;
-import pattern.dconstructor.subbuilders;
-import pattern.dconstructor.lifecycles;
-//import tango.core.RuntimeTraits;
-//import tango.core.Traits;
+private {
+	import pattern.depinjection.circular;
+	import pattern.depinjection.exception;
+	import pattern.depinjection.interceptor;
+	import pattern.depinjection.property;
+	import pattern.depinjection.stack;
+	import pattern.depinjection.build_utils;
+	import pattern.depinjection.lifecycle;
+	import pattern.depinjection.subbuilders;
+	import pattern.depinjection.lifecycles;
+}
 
 
-struct Context
-{
+struct Context {
+
 	TypeInfo type;
 	Builder config;
 
-	Context provide(T) (T value)
-	{
+	Context provide(T) (T value) {
 		config._for = type;
 		config.provide (value);
 		config._for = null;
 		return *this;
 	}
 
-	Context bind(TImpl, TService) ()
-	{
+	Context bind(TImpl, TService) () {
 		config._for = type;
 		config.bind!(TImpl, TService);
 		config._for = null;
 		return *this;
 	}
 
-	Context register(T) ()
-	{
+	Context register(T) () {
 		config._for = type;
 		config.register!(T);
 		config._for = null;
@@ -47,8 +44,8 @@ struct Context
 	}
 }
 
-class Builder
-{
+class Builder {
+
 	Interceptor[] interceptors;
 	package Circular circular;
 	public BuildStack stack;
@@ -63,9 +60,8 @@ class Builder
 
 	/** Create a builder using the default configuration. This is the recommended 
 	  * way to create a builder -- it will pay attention to bindings created with
-	  * dconstructor.property. */
-	this ()
-	{
+	  * depinjection.property. */
+	this () {
 		stack = new BuildStack;
 		circular = new Circular (stack);
 		defaultLifecycle = new SingletonLifecycle;
@@ -74,24 +70,19 @@ class Builder
 	}
 
 	/** Clear the configuration that you are currently using. */
-	void clear ()
-	{
+	void clear () {
 		builders = null;
 	}
 
 	/** Create an instance of type T (or throw an exception if this is not possible).
 	 * There is currently no way to check if the type can be created. */
-	T build(T) ()
-	{
+	T build(T) () {
 		T t;
 		auto builder = getBuilder!(T);
 		create (builder, cast(void*)&t, typeid(T));
-		static if (is (T == interface))
-		{
+		static if (is (T == interface)) {
 			return cast(T) *cast(Object*) &t;
-		}
-		else
-		{
+		} else {
 			return t;
 		}
 	}
@@ -99,28 +90,23 @@ class Builder
 	/// ditto
 	alias build get;
 
-	private void create (ContextAwareBuilder builder, void* fill, TypeInfo type)
-	{
-		if (builder is null)
-		{
+	private void create (ContextAwareBuilder builder, void* fill, TypeInfo type) {
+		if (builder is null) {
 			throw new BindingException (
 					"Tried to build an instance of type `" ~ type.toString ~ "', but it was not yet registered.");
 		}
 		builder.build (this, type, fill);
 	}
 
-	package void intercept (ref void[] value, TypeInfo type)
-	{
-		foreach (interceptor; interceptors)
-		{
+	package void intercept (ref void[] value, TypeInfo type) {
+		foreach (interceptor; interceptors) {
 			interceptor.intercept (value, type);
 		}
 	}
 
 	/** Create an instance of type T (or throw an exception if this is not possible).
 	 * There is currently no way to check if the type can be created. */
-	ContextAwareBuilder getBuilder(T) ()
-	{
+	ContextAwareBuilder getBuilder(T) () {
 		static if (is (T : Object))
 			if (autobuild && !knowabout (typeid(T)))
 				register!(T);
@@ -129,8 +115,7 @@ class Builder
 
 	/** When asked for an instance of the given type, insert (a copy of) the given value.
 	 * For structs, for instance, it will duplicate the struct and pass the copy. */
-	Builder provide(T) (T value)
-	{
+	Builder provide(T) (T value) {
 		void[] arr = (cast(void*) (&value))[0 .. T.sizeof];
 		registerBuilder (typeid(T), new ConstantBuilder (arr));
 		return this;
@@ -138,8 +123,7 @@ class Builder
 
 	/** When asked for TVisible, provide TImpl. This does not make TImpl available. 
 	  * If you provide a lifecycle, that lifecycle will be used for created objects. */
-	Builder bind(TVisible, TImpl: Object) (ILifecycle lifecycle = null)
-	{
+	Builder bind(TVisible, TImpl: Object) (ILifecycle lifecycle = null) {
 		static assert (is (TImpl : TVisible), "Type " ~ TImpl.stringof ~ " is not convertible to type " ~ TVisible.stringof ~ ".");
 		auto builder = new CtorBuilder!(TImpl);
 		registerBuilder (typeid(TVisible), builder, lifecycle);
@@ -148,8 +132,7 @@ class Builder
 
 	/** Register a type to be built automatically.
 	 * This type has to be constructable -- so it has to be a class type. */
-	Builder register(T: Object) (ILifecycle lifecycle = null)
-	{
+	Builder register(T: Object) (ILifecycle lifecycle = null) {
 		auto builder = new CtorBuilder!(T);
 		registerBuilder (typeid(T), builder, lifecycle);
 		return this;
@@ -157,11 +140,9 @@ class Builder
 
 	/** Write details about the current configuration to the given sink.
 	 * Useful if you want to debug your configuration. */
-	public void writeConfiguration (void delegate (string) sink)
-	{
+	public void writeConfiguration (void delegate (string) sink) {
 		sink ("\n\nRegistered types:");
-		foreach (type, builder; builders)
-		{
+		foreach (type, builder; builders) {
 			sink ("\n\t");
 			sink ("type ");
 			sink (type.toString ());
@@ -186,8 +167,7 @@ class Builder
 	 * }
 	 * builder.context!(BeingBuilt)().bind!(Thing, Interface);
 	 */
-	public Context context(T) ()
-	{
+	public Context context(T) () {
 		Context c;
 		c.config = this;
 		c.type = typeid(T);
@@ -197,36 +177,29 @@ class Builder
 	/// ditto
 	alias context on;
 
-	package void registerBuilder (TypeInfo type, ISingleBuilder builder, ILifecycle lifecycle)
-	{
+	package void registerBuilder (TypeInfo type, ISingleBuilder builder, ILifecycle lifecycle) {
 		if (lifecycle is null)
 			lifecycle = getLifecycle(type);
 		builder = new LifecycleBuilder (builder, type, lifecycle);
 		auto ptr = type in builders;
-		if (ptr)
-		{
+		if (ptr) {
 			(*ptr).add (builder, _for);
-		}
-		else
-		{
+		} else {
 			auto multi = new ContextAwareBuilder;
 			multi.add (builder, _for);
 			builders[type] = multi;
 		}
 	}
 
-	package ILifecycle getLifecycle (TypeInfo type)
-	{
-		foreach (provider; lifecycleProviders)
-		{
+	package ILifecycle getLifecycle (TypeInfo type) {
+		foreach (provider; lifecycleProviders) {
 			auto cycle = provider.get(type);
 			if (cycle) return cycle;
 		}
 		return defaultLifecycle;
 	}
 
-	private bool knowabout (TypeInfo info)
-	{
+	private bool knowabout (TypeInfo info) {
 		return (info in builders) !is null;
 	}
 }

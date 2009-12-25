@@ -1,4 +1,4 @@
-module pattern.dconstructor.lifecycle;
+module pattern.depinjection.lifecycle;
 
 /** A Lifecycle is used to determine when to create a new object
   * versus returning an existing one. 
@@ -10,15 +10,13 @@ module pattern.dconstructor.lifecycle;
   * This does not protect you from holding a reference to an object
   * from a prior lifecycle.
   */
-interface ILifecycle
-{
+interface ILifecycle {
 	ulong key();
 	bool current(ulong key);
 }
 
 /** A LifecycleProvider gets a lifecycle appropriate for a type. */
-interface ILifecycleProvider
-{
+interface ILifecycleProvider {
 	/** Get the appropriate ILifecycle for the given type.
 	  * Returns null to indicate that this provider does not
 	  * make any judgment about the type. */
@@ -26,22 +24,18 @@ interface ILifecycleProvider
 }
 
 /** Example implementation -- manually advance the lifecycle when necessary. */
-class Lifecycle : ILifecycle
-{
+class Lifecycle : ILifecycle {
 	ulong id;
 
-	ulong key()
-	{
+	ulong key() {
 		return id;
 	}
 
-	void advance()
-	{
+	void advance() {
 		id++;
 	}
 
-	bool current(ulong id)
-	{
+	bool current(ulong id) {
 		return this.id == id;
 	}
 }

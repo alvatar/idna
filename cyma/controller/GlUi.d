@@ -1,5 +1,6 @@
 module cyma.controller.GlUi;
 
+public import cyma.controller.Ui;
 private {
 	import std.stdio;
 
@@ -10,7 +11,6 @@ private {
 	import core.MainProcess;
 	import cyma.controller.commands.All;
 	import cyma.controller.GlWidget;
-	import cyma.controller.Ui;
 	import dgl.dgl;
 	import io.input.input;
 	import io.input.Writer;
@@ -22,7 +22,7 @@ private {
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Basic user interface based on Dgl (OpenGl)
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class GlUi : Ui {
+class GlUi : BaseUi {
 
 	enum Modes {
 		Interactive

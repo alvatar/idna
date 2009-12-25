@@ -37,6 +37,23 @@ template KeyType(T) {
 	})()) KeyType;
 }
 
+template assocArrayVal (AA) {
+	alias typeof(AA.init.values[0]) assocArrayVal;
+}
+
+unittest {
+	assert (is (assocArrayVal!(int[long]) == int));
+}
+
+template assocArrayKey (AA) {
+	alias typeof(AA.init.keys[0]) assocArrayKey;
+}
+
+unittest {
+	assert (is (assocArrayKey!(int[long]) == long));
+}
+
+
 template isCallableType(T) {
 	const bool isCallableType = is( T == function )
 		|| is( typeof(*T) == function )

@@ -1,4 +1,4 @@
-module cyma.view.ViewManager;
+module cyma.view.Viewer;
 
 private {
 	import std.stdio;
@@ -14,23 +14,16 @@ private {
  + The ViewManager manages canvases and takes care of generating the draw
  + functions from the model and the actors
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class ViewManager {
+class Viewer {
 	
 	private {
 		/++ DrawActors: everything needed to execute a group of draw functions +/
 		ViewOutputActor[] _viewActors;
 	}
 
-	private {
-		this() {
-			init();
-		}
+	this() {
+		init();
 	}
-
-	/++
-	 + Static Creation
-	 +/
-	mixin StaticCreation;
 
 	/++
 	 + Initialize Drawer and all DrawActors

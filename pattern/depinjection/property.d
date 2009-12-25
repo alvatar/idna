@@ -1,18 +1,14 @@
-module pattern.dconstructor.property;
+module pattern.depinjection.property;
 
 /**
  * An empty interface from which a class can inherit to mark it as a singleton.
  */
-public interface Singleton
-{
-}
+public interface Singleton {}
 
 /**
  * An empty interface from which a class can inherit to mark it as not being a singleton.
  */
-public interface Instance
-{
-}
+public interface Instance {}
 
 /** Mixin to autoregister this type as implementing the given type.
  * Examples:
@@ -23,8 +19,7 @@ public interface Instance
  * }
  * ---
  */
-public template Implements (T)
-{
+public template Implements (T) {
 	const Implements =
 	`
 	static this ()

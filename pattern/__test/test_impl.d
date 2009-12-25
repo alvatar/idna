@@ -1,11 +1,10 @@
 module test_impl;
 
 private {
-	import testInterface;
+	import test_interface;
 
-	import dconstructor.default_builder;
-	import dconstructor.build;
-	import dconstructor.property;
+	import pattern.depinjection.default_builder;
+	import pattern.depinjection.property;
 }
 
 class Connection : IConnection
@@ -40,7 +39,7 @@ class Server : IServer
 	import std.stdio;
 	void Run ()
 	{
-		while (true)
+		for( int i=0; i<100; i++)
 		{
 			//IConnection connection = _listener.Accept ();
 			//Stdout.formatln ("new connection: {}", connection.ReadAll ());
@@ -52,7 +51,7 @@ class Server : IServer
 
 class ServerExtra : IServer
 {
-	mixin (Implements!(IServer));
+	//mixin (Implements!(IServer));
 
 	private IListener _listener;
 
@@ -64,7 +63,7 @@ class ServerExtra : IServer
 	import std.stdio;
 	void Run ()
 	{
-		while (true)
+		for( int i=0; i<100; i++)
 		{
 			writeln("SAVE ME");
 		}

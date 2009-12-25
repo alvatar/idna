@@ -8,7 +8,36 @@ package {
 	import cyma.controller.OutputActor;
 }
 
-abstract class Ui {
+interface Ui {
+
+	@property EnvironmentProbe environment();
+
+	@property OutputActor output();
+
+	void outplug( OutputActor outputActor );
+
+	/++
+	 + Init function, common to all user interfaces. Must be overriden,
+	 + even if no initialization is necessary
+	 +/
+	Ui init( Driver driver );
+
+	/++
+	 + Defines all actions to be taken in order to collect and process the
+	 + input from the system. This is also in charge of changing any state
+	 + inside the Ui itself. Defines the process of building commands
+	 + through a IDriver
+	 +/
+	void doUi( OutputActor[] outpuActors );
+
+	/++
+	 + Get the process that executes the user interface
+	 +/
+	IJob main();
+	 
+}
+
+abstract class BaseUi : Ui {
 
 	protected {
 		/++ The driver that this Ui will use +/
@@ -59,24 +88,4 @@ abstract class Ui {
 			_output.__setDynamicMethods( outputActor.__getDynamicMethods );
 		}
 	}
-
-	/++
-	 + Init function, common to all user interfaces. Must be overriden,
-	 + even if no initialization is necessary
-	 +/
-	Ui init( Driver driver );
-
-	/++
-	 + Defines all actions to be taken in order to collect and process the
-	 + input from the system. This is also in charge of changing any state
-	 + inside the Ui itself. Defines the process of building commands
-	 + through a IDriver
-	 +/
-	void doUi( OutputActor[] outpuActors );
-
-	/++
-	 + Get the process that executes the user interface
-	 +/
-	 IJob main();
-	 
 }
