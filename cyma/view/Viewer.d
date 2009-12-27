@@ -7,7 +7,6 @@ private {
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.view.ViewOutputActor;
-	import pattern.creation;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -143,7 +142,7 @@ class Viewer {
 	 + have a high overhead)
 	 +/
 	import std.variant;
-	final ViewOutputActor immediate() {
+	final ViewOutputActor output() {
 		ViewOutputActor result = new ViewOutputActor;
 		result.__bindMethod( "test"
 				, delegate int(){ writeln("NO ARGS"); return 99; } );

@@ -1,0 +1,28 @@
+== Dconstructor: Dependency injection for D ==
+
+=== What is dconstructor? ===
+Dconstructor is a dependency injection tool for D. Dependency injection is a means of organizing services in a decoupled fashion. It reduces the amount of code you need to write and simplifies refactoring in comparison to the factory pattern. Compared to directly calling constructors, dconstructor improves testability and reduces the amount of code you need to write. It also simplifies configuration and promotes the Single Responsibility Principle.
+
+=== Benefits of dconstructor ===
+==== Write less code ====
+You don't have to create factory classes, manually implement the singleton pattern, or even call constructors.
+
+==== Easier refactoring ====
+If you need to change a class's dependencies, there is only one place to make the change. And unlike a service locator, you don't need to worry about maintaining the correct order; dconstructor manages that.
+
+==== Single Responsibility Principle ====
+Classes are not responsible for building their dependencies.
+
+==== Improved testability ====
+Dependency injection makes it easier to replace a class's dependencies with stubs or mocks for testing in isolation.
+
+
+=== See also: ===
+ * BasicUsage
+ * BuilderOptions
+ * CustomBuilders
+ * Interceptors
+
+
+=== Downloads ===
+

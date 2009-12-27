@@ -2,7 +2,7 @@ module cyma.controller.OutputActor;
 
 private {
 	import cyma.controller.ICanvas;
-	import util.dynamic_class;
+	import pattern.dynamic_class;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

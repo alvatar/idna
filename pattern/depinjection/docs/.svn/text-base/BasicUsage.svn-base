@@ -1,0 +1,85 @@
+== Basic Usage == 
+Building objects with dconstructor consists of two steps: registering types and building. Using autobuild (see BuilderOptions) can eliminate some or all of the registration process, depending on your usage of interfaces and inheritance.
+
+There are two ways to register a type. Let's have a look:
+{{{
+#!d
+class MyClass {}
+void main ()
+{
+	builder().register!(MyClass);
+}
+}}}
+
+Or with an interface:
+{{{
+#!d
+interface Interface {}
+class MyClass : Interface {}
+void main ()
+{
+	builder().bind!(Interface, MyClass);
+}
+}}}
+
+Alternatively, you can perform the registration in the class itself:
+{{{
+#!d
+interface Interface {}
+class MyClass : Interface 
+{
+	mixin (Implements!(Interface));
+}
+
+class MyOtherClass
+{
+	mixin (Register);
+}
+}}}
+
+
+=== Building ===
+The only method you need to use in order to build an object is Builder.get:
+{{{
+#!d
+void main ()
+{
+	MyClass instance = builder().get!(MyClass);
+}
+}}}
+
+=== Two-stage builds and circular dependencies ===
+Let's consider a pluggable formatting system:
+{{{
+#!d
+class Formatter 
+{
+	this (DateTimeFormatter datetimes, TimeFormatter times, DateFormatter dates) { ... }
+}
+
+class DateTimeFormatter
+{
+	this (Formatter formatter) { ... }
+	public char[] format (DateTime value)
+	{
+		return formatter.format ("{} {}", value.date, value.time);
+	}
+}
+}}}
+
+In this case, DateTimeFormatter cannot be built without a Formatter, and Formatter cannot be built without a DateTimeFormatter. Dconstructor will throw a CircularDependencyException if you try building this.
+
+However, it isn't necessary to have a Formatter reference in the DateTimeFormatter as soon as the DateTimeFormatter is created, as long as the reference is there before it's used. Dconstructor allows for a second building stage:
+{{{
+#!d
+class DateTimeFormatter
+{
+	public void inject (Formatter formatter) { ... }
+	public char[] format (DateTime value)
+	{
+		return formatter.format ("{} {}", value.date, value.time);
+	}
+}
+}}}
+
+Note that this only works with non-transient objects. If you attempt this with classes that are transient, dconstructor will still throw a CircularDependencyException.

@@ -1,7 +1,7 @@
 module io.input.InputHub;
 
 private {
-	import pattern.singleton;
+	import pattern.creation;
 	//import core.JobHub;
 	import io.input.input;
 }

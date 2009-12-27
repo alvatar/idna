@@ -1,0 +1,30 @@
+== Lifecycles ==
+In dconstructor, a '''lifecycle''' describes the period of time for which an object is valid after it has been constructed. Each lifecycle goes through generations. An object constructed during one generation cannot be used during the next generation. Even if an object is built immediately before the end of the generation, it will cease to be valid as soon as the generation ends.
+
+Lifecycles are only evaluated for a stored object when that object is requested. For example, if an object is built and its generation expires before it can be returned to the function requesting that object, dconstructor does not build the object again.
+
+Let's look at a simple example: Singleton. For Singleton, an object never expires:
+{{{
+#!d
+	class SingletonLifecycle : ILifecycle
+	{
+		ulong key () { return 0; }
+		bool current (ulong key) { return true; }
+	}
+}}}
+
+Here, 'key' is simply an identifier for each generation. Since SingletonLifecycle only has one generation, it is always current.
+
+A slightly more complex example would be an object that needs to be built during each web request:
+{{{
+#!d
+	class PerWebRequestLifecycle : ILifecycle
+	{
+		private ulong id;
+		void requestReceived () { id++; }
+		ulong key () { return id; }
+		bool current (ulong key) { key == id; }
+	}
+}}}
+
+A weakness of lifecycles is that they cannot rotate between existing values. So you cannot implement a thread-local Lifecycle that would return consistent values within the context of one thread and different values for different threads.

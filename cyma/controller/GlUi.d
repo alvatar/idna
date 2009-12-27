@@ -46,27 +46,18 @@ class GlUi : BaseUi {
 		bool _callInitActors = true;
 	}
 
-	this() {
-		// TODO: dependency injection?
- 		_environmentProbe = new EnvironmentProbe( this );
-	}
-
 	/++
 	 + Initialize with a driver
 	 +/
 	template CommandCaller(C) {
 		Command CommandCaller() {
-			return new C(this);
+			return new C( _environment, output );
 		}
 	}
-	Ui init( Driver driver ) {
-		_driver = driver;
-
+	void init() {
 		// Populate command codes
 		_driver.registerCommand( "a", &CommandCaller!CreateLine );
 		_driver.registerCommand( "x", &CommandCaller!EnginePlugin );
-
-		return this;
 	}
 
 	/++

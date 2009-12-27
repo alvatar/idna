@@ -1,0 +1,53 @@
+== Interceptors ==
+Sometimes, you need to add certain behavior to objects that activates once they have been created. Or perhaps you want to log object creation. One common example is an interceptor that runs a method on an object in a new thread. Let's look at the necessary code to implement that.
+
+=== Custom logic ===
+First, we want to start with an interface that marks the type as being runnable:
+{{{
+#!d
+interface IThreadRunnable
+{
+	void run();
+}
+}}}
+
+And the code that will run one of these:
+{{{
+#!d
+void run (IThreadRunnable runnable)
+{
+	new Thread(&runnable.run).start();
+}
+}}}
+
+=== Writing the interceptor ===
+The interceptor class is simple. It must implement the dconstructor.interceptor.IInterceptor interface:
+{{{
+#!d
+class ThreadRunnableInterceptor : IInterceptor
+{
+	void intercept (Variant value)
+	{
+		// Any code you want here -- in this case, we run the object if it's
+		// runnable.
+		if (value.isImplicitly!(IThreadRunnable)) 
+		{
+			auto obj = value.get!(IThreadRunnable);
+			run (obj);
+		}
+	}
+}
+}}}
+
+=== Using the interceptor ===
+All we have to do now is add that to our Builder:
+{{{
+#!d
+void main ()
+{
+	auto build = builder();
+	build.interceptors ~= new ThreadRunnableInterceptor;
+}
+}}}
+
+For reference, you can look at the examples, specifically interceptor.d in the examples folder (dconstructor/trunk/dconstructor/examples).

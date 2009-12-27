@@ -1,10 +1,7 @@
 module simple;
 
-import dconstructor.default_builder;
-import dconstructor.build;
-import dconstructor.property;
-//import tango.core.Thread;
-//import tango.io.Stdout;
+import pattern.depinjection.default_builder;
+import pattern.depinjection.property;
 
 interface IServer
 {

@@ -1,0 +1,93 @@
+== Custom Builders ==
+You will occasionally find classes that need to be built in a particular way that dconstructor doesn't allow. For instance, if you are using Tango's log implementation, you must use Log.getLogger rather than directly calling a constructor. This tutorial will show how to accomplish that.
+
+=== The base class ===
+All builders must inherit from the ISingleBuilder class:
+{{{
+class ISingleBuilder
+{
+	void build (Builder builder, out Variant value);
+}
+}}}
+
+=== A simple builder ===
+Let's say you have a class Log with a static method getLogger(char[] name) that returns a Log. You can write your interceptor as follows:
+{{{
+#!d
+class LogBuilder : ISingleBuilder
+{
+	void build (Builder builder, out Variant value)
+	{
+		value = Variant(Log.getLogger("name"));
+	}
+}
+}}}
+
+=== Adding the builder ===
+
+To add your builder, use the following:
+{{{
+#!d
+builder().config.custom!(Log)(new LogBuilder());
+}}}
+
+=== Examining the build stack ===
+Often, you need a custom builder because you need to customize the object you return based on what object it is being built for. For that reason, dconstructor provides a build stack: Builder.stack. You can see the API docmentation for dconstructor.stack for more details.
+
+For the logging example, let's see how this would work:
+{{{
+#!d
+TypeInfo info = parent.stack.buildfor();
+auto name = info.toString;
+value = Variant(Log.getLogger(name));
+}}}
+
+In the case that you directly called the Builder to get a particular type, buildfor will return null, so to handle this case, here's the completed code:
+{{{
+#!d
+class LogBuilder : ISingleBuilder
+{
+	void build (Builder parent, out Variant value)
+	{
+		TypeInfo info = parent.stack.buildfor();
+		auto name = info ? info.toString : "Application";
+		value = Variant(Log.getLogger(name));
+	}
+}
+}}}
+
+=== Post-build dependencies ===
+If your object has post-build dependencies, you can have dconstructor fill those automatically:
+{{{
+#!d
+class Optional
+{
+	...
+	void inject (IDependency dependency) {}
+}
+class OptionalBuilder(TBuilder) : AbstractBuilder!(TBuilder, Optional)
+{
+	Optional build (TBuilder parent)
+	{
+		auto optional = get(parent);
+		parent.postDependencies(optional);
+		return optional;
+	}
+}
+}}}
+
+=== Interceptors ===
+If you want your object to go through any defined interceptors that your builder has, you need to do that manually. Doing so is simple:
+{{{
+#!d
+class OptionalBuilder : ISingleBuilder
+{
+	Optional build (Builder parent, out Variant value)
+	{
+		value = Variant(...);
+		parent.intercept(value);
+	}
+}
+}}}
+
+Of course, not doing so is simpler.

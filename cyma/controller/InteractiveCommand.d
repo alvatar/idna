@@ -5,7 +5,8 @@ private {
 }
 
 protected {
-	import cyma.controller.Ui;
+	import cyma.application.EnvironmentProbe;
+	import cyma.controller.OutputActor;
 	import cyma.engine.Command;
 }
 
@@ -28,12 +29,26 @@ abstract class InteractiveCommand(T...) : ContextualizedCommand!T {
 		/++ Holds previous state +/
 		State _previousState;
 
-		/++ Ui link +/
-		Ui _ui;
+		/++ EnvironmentProbe +/
+		EnvironmentProbe _environment;
+
+		/++ OutputActor +/
+		OutputActor _output;
 	}
 
-	this( Ui ui ) {
-		_ui = ui;
+	this( EnvironmentProbe environment, OutputActor output ) {
+		_environment = environment;
+		_output = output;
+	}
+
+	@property
+	EnvironmentProbe environment() {
+		return _environment;
+	}
+
+	@property
+	OutputActor output() {
+		return _output;
 	}
 
 	/++ Execution sequence +/

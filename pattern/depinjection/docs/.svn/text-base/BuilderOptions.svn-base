@@ -1,0 +1,34 @@
+== Builder options ==
+
+=== autobuild ===
+By default, you must register each type with the Builder before you can build it. If you turn on autobuild, you do not need to register concrete types; they will be built automatically. You can turn on autobuild by calling builder().autobuild(true), and turn it off similarly.
+
+=== defaultLifecycle ===
+For a more thorough explanation, see [Lifecycles].
+
+This sets the default lifecycle to use for constructed objects. Setting this will not affect any lifecycles for objects that have been registered. Dconstructor's default value for this is SingletonLifecycle.
+
+=== lifecycleProviders ===
+For a more thorough explanation, see [Lifecycles].
+
+This is an array of ILifecycleProvider variables. They determine what lifecycle to use for a particular type. By default, dconstructor uses one that provides a SingletonLifecycle for variables implementing the Singleton interface and one that provides an InstanceLifecycle for those implementing the Instance interface. You may remove these for efficiency or add more according to your needs.
+
+== How do I provide these options? ==
+
+Lifecycle options apply to types as they are registered. It will not affect types that have already been registered. If you use static constructors, it is recommended that you use the following snippet:
+{{{
+#!d
+module mypackage.builder;
+import dconstructor.api;
+private Builder _builder;
+public Builder builder()
+{
+	if (_builder is null)
+	{
+		_builder = Builder;
+		_builder.defaultLifecycle = getDefaultLifecycle();
+		_builder.lifecycleProviders = getLifecycleProviders();
+	}
+	return _builder;
+}
+}}}

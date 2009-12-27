@@ -1,4 +1,4 @@
-module util.dynamic_class;
+module pattern.dynamic_class;
 
 class DynamicMethodException: Exception {
   this(string msg) { super(msg); }
@@ -39,7 +39,7 @@ template MakeClassDynamic() {
 		return result;
 	}
 
-/******************* IMPLEMENTACION GENERICA: QUEDA CHEQUEOS
+/******************* Old implementation. Pending removal
 	void __bindMethod(
 			Ret:Variant,
 			Args:Variant[]
@@ -151,9 +151,7 @@ template MakeClassDynamic() {
 						~ fname
 						~ " has not been binded to class "
 						~ typeof(this).stringof );
-		} else {
-			return __dynamicMethods[fname]( variantArray(args) );
-		}
+		} else return __dynamicMethods[fname]( variantArray(args) );
 	}
 
 	/++
@@ -174,9 +172,7 @@ template MakeClassDynamic() {
 						~ fname
 						~ " has not been binded to class "
 					 	~ typeof(this).stringof );
-		} else {
-			return __dynamicMethods[fname]( args );
-		}
+		} else return __dynamicMethods[fname]( args );
 	}
 
 	Variant opIndex(string fname) {

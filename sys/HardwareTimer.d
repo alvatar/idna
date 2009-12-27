@@ -2,7 +2,7 @@ module sys.HardwareTimer;
 
 
 private {
-	import pattern.singleton;
+	import pattern.creation;
 	import sys.StopWatch;
 }
 

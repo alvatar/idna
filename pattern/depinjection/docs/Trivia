@@ -1,0 +1,24 @@
+=== Efficiency of dconstructor ===
+A major perceived reason to use D rather than, say, C# or Java is efficiency. Native code can be faster than JIT code. So, you may ask, what is the performance of dconstructor?
+
+Most benchmarks that I have found for IoC containers are very limited -- fetching one concrete class with two dependencies, for instance. I prepared an example following that pattern in examples/speed2.d. Wanting a more thorough and real-to-life example, I created examples/speed.d. This contains an object graph of 373 classes.
+
+The following results for build1 were derived from a Pentium 3 computer clocked at 997.511MHz, sporting 128MB of RAM.
+* speed.d, singletons, 1,000,000 iterations: 1.35s
+* speed.d, instances, 10,000 iterations: 17.06s
+* speed2.d, singletons, 1,000,000 iterations: 1.34s
+* speed2.d, instances, 1,000,000 iterations: 7.98s
+
+Since this time, I have generated timings on a much larger machine (Intel Core 2 Duo T5760, 1.8GHz, 2GB RAM) for both build1 and build2:
+* build1, speed.d, singletons, 10,000,000 iterations: 2.64s
+* build1, speed.d, instances, 10,000 iterations: 4.17s
+* build1, speed2.d, singletons, 1,000,000 iterations: 1.25s
+* build1, speed2.d, instances, 1,000,000 iterations: 5.18s
+* build2, speed.d, singletons, 10,000,000 iterations: 2.53s
+* build2, speed.d, instances, 10,000 iterations: 4.23s
+* build2, speed2.d, singletons, 1,000,000 iterations: 0.39s
+* build2, speed2.d, instances, 1,000,000 iterations: 2.89s
+
+At any rate, dconstructor compares favorably with the IoC benchmarks at http://www.codinginstinct.com/2008/04/ioc-container-benchmark-unity-windsor.html. (The timings shown there correspond to the speed2 test.)
+
+The short of it is, if you have a web application where each server is processing thousands of requests per second, your choice of dependency strategy is not going to have a significant impact on performance. And if you have any other type of application, dconstructor will have even less effect on application speed.

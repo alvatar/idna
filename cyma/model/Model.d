@@ -6,7 +6,6 @@ private {
 
 	import cyma.model.Layer;
 	import cyma.model.Node;
-	import pattern.creation;
 	import util.container.LinkedList;
 	import util.container.Vector;
 }

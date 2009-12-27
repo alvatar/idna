@@ -6,7 +6,6 @@ private{
 	import cyma.engine.Command;
 	import cyma.model.Model;
 	import math.Vector;
-	import pattern.creation;
 }
 
 alias Command delegate() CommandCreator;
@@ -31,7 +30,7 @@ class Driver {
 		Model _model;
 	}
 
-	void init( Model model ) {
+	void plug( Model model ) {
 		_model = model;
 	}
 

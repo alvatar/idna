@@ -3,6 +3,7 @@ module cyma.application.Main;
 import std.stdio;
 
 import core.JobHub;
+import cyma.application.EnvironmentProbe;
 import cyma.controller.GlUi;
 import cyma.controller.Ui;
 import cyma.view.Viewer;
@@ -15,17 +16,17 @@ int main( string[] args ) {
 	builder.register!(Model);
 	builder.register!(Driver);
 	builder.bind!(Ui,GlUi);
+	builder.register!(EnvironmentProbe);
 	builder.register!(Viewer);
 
 	auto model = builder.get!Model;
 	auto driver = builder.get!Driver;
 	auto ui = builder.get!Ui;
+	auto environment = builder.get!EnvironmentProbe;
 	auto viewer = builder.get!Viewer;
 
-	driver.init( model );
-	ui.init( driver );
-
-	ui.outplug( viewer.immediate );
+	driver.plug( model );
+	ui.plug( driver, environment, viewer.output );
 
 	jobHub.addPostFrameJob( {
 

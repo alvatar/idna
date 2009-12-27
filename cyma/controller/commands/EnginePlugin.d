@@ -11,16 +11,14 @@ class EnginePlugin : InteractiveCommand!(string) {
 
 	private {
 		SharedLib _plugin;
-		//bool _loaded = false;
-		//void plugin_main();
 		alias int function() PluginMainType;
 		extern(System) PluginMainType _plugin_main;
 		static Object _loaderMutex;
 	}
 
-	this( Ui ui ) {
+	this( EnvironmentProbe environment, OutputActor output ) {
 		if (_loaderMutex is null) _loaderMutex = new Object;
-		super(ui);
+		super(environment,output);
 	}
 
 	override void execute( ref Model model ) {

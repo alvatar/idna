@@ -13,13 +13,15 @@ private {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 class CreateLine : InteractiveCommand!(uint, vec2r, vec2r) {
 
-	this( Ui ui ) {
-		super(ui);
+	this( EnvironmentProbe environment, OutputActor output ) {
+		super(environment,output);
 	}
 
 	import std.variant;
 	override void execute( ref Model model ) {
-		_ui.output().test5( 0xDEADC0DE );
+		//_ui.output().test5( 0xDEADC0DE );
+		output.test5( 0xDEADC0DE );
+		//TO: environment.test5( 0xDEADC0DE );
 
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");

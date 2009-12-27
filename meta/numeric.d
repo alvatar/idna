@@ -91,35 +91,27 @@ pure ParsedDecInt parseHexInt (string str, string ignore = "_") {
 	byte sign = 1;
 	if (str[0] == '+')
 		i = 1;
-	else if (str[0] == '-')
-	{
+	else if (str[0] == '-') {
 		i = 1;
 		sign = -1;
 	}
 
 	long result = 0;
-	foreach (c; str[i .. $])
-	{
-		if (isHexDigit (c))
-		{
+	foreach (c; str[i .. $]) {
+		if (isHexDigit (c)) {
 			result *= 16;
 			result += hexDigitToInt (c);
 			i++;
 			index = i;
-		}
-		else if (ignore.contains (c))
-		{
+		} else if (ignore.contains (c)) {
 			i++;
-		}
-		else
-			break;
+		} else break;
 	}
 	return ParsedDecInt( sign * result, index);
 }
 
 /++ Parses a given string, beginning with a decimal integer and returns it +/
-pure ParsedDecInt parseDecInt (string str, string ignore = "_")
-{
+pure ParsedDecInt parseDecInt (string str, string ignore = "_") {
 	if (str.length == 0)
 		return ParsedDecInt(0,0);
 	
@@ -128,84 +120,69 @@ pure ParsedDecInt parseDecInt (string str, string ignore = "_")
 	byte sign = 1;
 	if (str[0] == '+')
 		i = 1;
-	else if (str[0] == '-')
-	{
+	else if (str[0] == '-') {
 		i = 1;
 		sign = -1;
 	}
 
 	long result = 0;
 	int last_ignored = 0;
-	foreach (c; str[i .. $])
-	{
-		if (isDecDigit (c))
-		{
+	foreach (c; str[i .. $]) {
+		if (isDecDigit (c)) {
 			result *= 10;
 			result += decDigitToInt (c);
 			i++;
 			index = i;
-		}
-		else if (ignore.contains (c))
-		{
+		} else if (ignore.contains (c)) {
 			i++;
-		}
-		else
-			break;
+		} else break;
 	}
 	return ParsedDecInt( sign * result, index );
 }
 
 /++ Converts a given hexadecimal string to an integer value +/
-pure long hexToInt (string str, string ignore = "_")
-{
+pure long hexToInt (string str, string ignore = "_") {
 	return parseHexInt (str, ignore).number;
 }
 
 /++ Converts a given decimal string to an integer value +/
-pure long decToInt (string str, string ignore = "_")
-{
+pure long decToInt (string str, string ignore = "_") {
 	return parseDecInt (str, ignore).number;
 }
 
 /++ Returns true of the given string is a hexadecimal number +/
-pure bool isHexInt (string str, string ignore = "_")
-{
+pure bool isHexInt (string str, string ignore = "_") {
 	auto parsed = parseHexInt (str, ignore);
 	return parsed.index == str.length;
 }
 
 /++ Returns true of the given string is a decimal number +/
-pure bool isDecInt (string str, string ignore = "_")
-{
+pure bool isDecInt (string str, string ignore = "_") {
 	auto parsed = parseDecInt (str, ignore);
 	return parsed.index == str.length;
 }
 
 /++ Returns the remaining string after parsing a hexadecimal number +/
-pure string consumeHexInt (string str, string ignore = "_")
-{
+pure string consumeHexInt (string str, string ignore = "_") {
 	auto parsed = parseHexInt (str, ignore);
 	return str[parsed.index..$];
 }
 
 /++ Returns the remaining string after parsing a decimal number +/
-pure string consumeDecInt (string str, string ignore = "_")
-{
+pure string consumeDecInt (string str, string ignore = "_") {
 	auto parsed = parseDecInt (str, ignore);
 	return str[parsed.index..$];
 }
 
 /++ Returns the absolute value of a given integer +/
-pure long abs (long v)
-{
+pure long abs (long v) {
 	if (v >= 0)
 		return v;
 	else
 		return -v;
 }
 
-unittest
-{
+unittest {
 	static assert (intToHex (0xFF) == "FF");
 	static assert (intToDec (-255) == "-255");
 	static assert (hexToInt ("FF") == 0xFF);
@@ -221,8 +198,7 @@ unittest
 }
 
 /++ Converts a given float to a decimal string +/
-pure string floatToDec (real _f)
-{
+pure string floatToDec (real _f) {
 	real f = _f;
 	if (f !<>= 0)
 		return "NaN";
@@ -232,16 +208,13 @@ pure string floatToDec (real _f)
 		return "infinity";
 	if (f == 0.0)
 		return "0.0";
-	if (f < 0.001 || f >= 10000000)
-	{
+	if (f < 0.001 || f >= 10000000) {
 		int exponent = 0;
-		while (f >= 10.0)
-		{
+		while (f >= 10.0) {
 			f /= 10.0;
 			exponent++;
 		}
-		while (f < 1.0)
-		{
+		while (f < 1.0) {
 			f *= 10.0;
 			exponent--;
 		}
@@ -252,8 +225,7 @@ pure string floatToDec (real _f)
 	f -= mantissa;
 	
 	string buffer = ".";
-	while (f != 0 && buffer.length < real.dig)
-	{
+	while (f != 0 && buffer.length < real.dig) {
 		f *= 10;
 		buffer ~= intToDecDigit(cast (long) f);
 		f -= cast (long) f;
@@ -263,8 +235,7 @@ pure string floatToDec (real _f)
 }
 
 /++ Converts a given float to a hexadecimal string +/
-pure string floatToHex (real _f)
-{
+pure string floatToHex (real _f) {
 	real f = _f;
 	if (f !<>= 0)
 		return "NaN";
@@ -275,16 +246,13 @@ pure string floatToHex (real _f)
 	if (f == 0.0)
 		return "0.0";
 	
-	if (f < 0.00390625 || f >= 0xffffffff)
-	{
+	if (f < 0.00390625 || f >= 0xffffffff) {
 		int exponent = 0;
-		while (f >= 16.0)
-		{
+		while (f >= 16.0) {
 			f /= 16.0;
 			exponent++;
 		}
-		while (f < 1.0)
-		{
+		while (f < 1.0) {
 			f *= 16.0;
 			exponent--;
 		}
@@ -295,8 +263,7 @@ pure string floatToHex (real _f)
 	f -= mantissa;
 	
 	string buffer = ".";
-	while (f != 0 && buffer.length < (4*real.dig)/5)
-	{
+	while (f != 0 && buffer.length < (4*real.dig)/5) {
 		f *= 16;
 		buffer ~= intToHexDigit(cast (long) f);
 		f -= cast (long) f;
@@ -305,8 +272,7 @@ pure string floatToHex (real _f)
 	return (buffer[$-1] == '.') ? buffer ~ "0" : buffer;
 }
 
-unittest
-{
+unittest {
 	static assert (floatToDec (0.0) == "0.0");
 	static assert (floatToDec (real.nan) == "NaN");
 	static assert (floatToDec (real.infinity) == "infinity");
