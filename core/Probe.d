@@ -1,4 +1,4 @@
-module util.Probe;
+module core.Probe;
 
 private {
 	import std.variant;

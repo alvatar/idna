@@ -1,10 +1,7 @@
 module cyma.application.EnvironmentProbe;
 
 private {
-	import std.variant;
-	
-	import util.container.HashMap;
-	import util.Probe;
+	import core.Probe;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
