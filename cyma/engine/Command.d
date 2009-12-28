@@ -13,11 +13,15 @@ protected {
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 abstract class Command {
 
-	/++ Execution entry point +/
-	void execute( ref Model );
+	/++ Execution entry point, returns true if finished +/
+	bool execute( ref Model );
 
 	/++ Revert (undo) the command +/
 	void revert( ref Model );
+
+	/++ Pipe code as string inside this command +/
+	void pipeCode( string code ) {
+	}
 
 	/++ A function to retrieve name must be implemented +/
 	string name() {

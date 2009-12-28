@@ -152,7 +152,7 @@ class Viewer {
 		result.__bindMethod( "test3"
 				, delegate int(int a,int b){ writeln(a); writeln(b); return 99; } );
 		*/
-		result["test5"] = delegate int(uint input){ writeln(input); return 2; };
+		result["test5"] = delegate int(uint input){ return 3; };
 		return result;
 	}
 

@@ -182,9 +182,9 @@ final class GlCanvas : Canvas {
 
 			gl.BindBuffer(GL_ARRAY_BUFFER, vboIDs[0]);
 
-			foreach( vertex; cast(VertexData[])_vertices ) {
+			/* foreach( vertex; cast(VertexData[])_vertices ) {
 				writeln(vertex);
-			}
+			} */
 			gl.BufferData(GL_ARRAY_BUFFER
 						, _vertices.length
 						, _vertices.ptr

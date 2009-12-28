@@ -21,17 +21,17 @@ class EnginePlugin : InteractiveCommand!(string) {
 		super(environment,output);
 	}
 
-	override void execute( ref Model model ) {
-		interactiveSequence( model );
+	override bool execute( ref Model model ) {
+		loadPlugin();
+		executePlugin();
+		unloadPlugin();
+		return true;
 	}
 
 	override void revert( ref Model model ) {
 	}
 
 	override void interactiveSequence( ref Model model ) {
-		loadPlugin();
-		executePlugin();
-		unloadPlugin();
 	}
 
 	private:

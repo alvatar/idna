@@ -4,19 +4,19 @@ public import cyma.controller.Ui;
 private {
 	import std.stdio;
 
-	import core.AsyncMessageHub;
-	import core.JobHub;
+	import core.MessageHandler;
 	import core.MessageHub;
-	import core.Message;
 	import core.MainProcess;
-	import cyma.controller.commands.All;
-	import cyma.controller.GlWidget;
 	import dgl.dgl;
 	import io.input.input;
 	import io.input.Writer;
 	import io.input.InputHub;
 	import io.utils;
 	import math.Vector;
+
+	import cyma.application.messages;
+	import cyma.controller.commands.All;
+	import cyma.controller.GlWidget;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -26,6 +26,7 @@ class GlUi : BaseUi {
 
 	enum Modes {
 		Interactive
+		, CommandRunning
 		, Console
 	}
 
@@ -46,9 +47,7 @@ class GlUi : BaseUi {
 		bool _callInitActors = true;
 	}
 
-	/++
-	 + Initialize with a driver
-	 +/
+	/++ Initialize with a driver +/
 	template CommandCaller(C) {
 		Command CommandCaller() {
 			return new C( _environment, output );
@@ -57,12 +56,25 @@ class GlUi : BaseUi {
 	void init() {
 		// Populate command codes
 		_driver.registerCommand( "a", &CommandCaller!CreateLine );
+		_driver.registerCommand( "q", &CommandCaller!Quit );
 		_driver.registerCommand( "x", &CommandCaller!EnginePlugin );
+
+		// --> Externally induced mode changes
+		MessageHandler handler = new MessageHandler;
+		handler.register!(CommandFinishedMessage)(
+				delegate void(CommandFinishedMessage msg){
+					_currentMode = Modes.Interactive;
+				}
+			);
+		handler.register!(CommandStartedMessage)(
+				delegate void(CommandStartedMessage msg){
+					_currentMode = Modes.CommandRunning;
+				}
+			);
+		messageHub.registerMessageHandler(handler);
 	}
 
-	/++
-	 + Initialize Actors
-	 +/
+	/++ Initialize Actors +/
 	void initActors( OutputActor[] drawActors ) {
 		// Create OpenGl input and context
 		_keyboard = new QueueKeyboardReader( inputHub.mainChannel );
@@ -82,37 +94,40 @@ class GlUi : BaseUi {
 					actor.start(gl);
 				}
 			};
-		} else assert( false, "Something happened when creating OpenGL Context" );
+		} else assert( false, "Error creating OpenGL Context" );
 
-		/++
-		 + Handle the keyboard input, through the driver
-		 +/
+		// Handle the keyboard input, through the driver
 		void handleKeyboard() {
-			if( _context is null
-				|| _keyboard is null ) return;
+			if( _context is null || _keyboard is null )
+				return;
 
-			if( _keyboard.keyDown(KeySym.q) ) { // Quit TODO: convert into command
-				messageHub.sendMessage(new QuitMessage);
-			} else if( _keyboard.keyDown(KeySym.Escape) ) { // Mode change
-				if( _currentMode == Modes.Interactive ) {
+			// --> Internally induced mode changes
+			if( _keyboard.keyDown(KeySym.Escape) ) {
+
+				if( _currentMode == Modes.Interactive )
 					_currentMode = Modes.Console;
-				} else if( _currentMode == Modes.Console ) {
+				else if( _currentMode == Modes.Console )
 					_currentMode = Modes.Interactive;
-				}
-			} else if( _keyboard.queueLength ) {
-				auto unicodeArray = getStringFromKeySym( _keyboard.getInputQueue );
+				else if( _currentMode == Modes.CommandRunning )
+					_driver.abortCurrent();
 
+			} else if( _keyboard.queueLength ) { // Rest of keys
+
+				auto unicodeArray = getStringFromKeySym( _keyboard.getInputQueue );
 				switch(_currentMode) {
 					case Modes.Interactive:
 					_driver.evaluateNow( unicodeArray );
 					break;
 
+					case Modes.CommandRunning:
+					_driver.pipeToCommand( unicodeArray );
+					break;
+
 					case Modes.Console:
-					if( _keyboard.keyDown(KeySym.Return) ) {
+					if( _keyboard.keyDown(KeySym.Return) )
 						_driver.evaluateCode();
-					} else {
+					else
 						_driver.pushCode( unicodeArray );
-					}
 					break;
 				}
 			}
@@ -165,10 +180,7 @@ class GlUi : BaseUi {
 		};
 	}
 
-	/++
-	 + User interface loop
-	 +/
-	//debug import std.random;
+	/++ User interface loop +/
 	void doUi( OutputActor[] outputActors ) {
 		/*
 		debug {
@@ -237,9 +249,7 @@ class GlUi : BaseUi {
 
 	}
 
-	/++
-	 + User interface main process
-	 +/
+	/++ User interface main process +/
 	IJob main() {
 		return new MainProcess;
 	}

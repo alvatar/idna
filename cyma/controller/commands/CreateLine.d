@@ -1,7 +1,7 @@
 module cyma.controller.commands.CreateLine;
 
 private {
-	import std.stdio;
+	debug import std.stdio;
 
 	import cyma.controller.InteractiveCommand;
 	import cyma.engine.operations.AddLine;
@@ -17,8 +17,7 @@ class CreateLine : InteractiveCommand!(uint, vec2r, vec2r) {
 		super(environment,output);
 	}
 
-	import std.variant;
-	override void execute( ref Model model ) {
+	override bool execute( ref Model model ) {
 		//_ui.output().test5( 0xDEADC0DE );
 		output.test5( 0xDEADC0DE );
 		//TO: environment.test5( 0xDEADC0DE );
@@ -26,9 +25,11 @@ class CreateLine : InteractiveCommand!(uint, vec2r, vec2r) {
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");
 			interactiveSequence( model );
+			return false;
+		} else {
+			addline( model, context.arguments );
+			return false;
 		}
-
-		addline( model, context.arguments );
 	}
 
 	override void revert( ref Model ) {
@@ -38,7 +39,10 @@ class CreateLine : InteractiveCommand!(uint, vec2r, vec2r) {
 		// logical revert (inverse vectors)
 	}
 
-	import std.random;
+	override void pipeCode( string code ) {
+	}
+
+	private import std.random;
 	override void interactiveSequence( ref Model model ) {
 		auto rnd = Random(unpredictableSeed);
 		rnd.seed(unpredictableSeed);

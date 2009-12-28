@@ -8,13 +8,16 @@
 module core.MainProcess;
 
 private {
+	debug import std.stdio;
+
 	import io.input.input;
 	import io.input.InputHub;
-	import core.Message;
 	import core.MessageHandler;
 	import core.MessageHub;
 	import core.JobHub;
 	import sys.HardwareTimer;
+
+	import cyma.application.messages;
 	//import utils.Profiler : profile;
 }
 
@@ -71,8 +74,8 @@ class MainProcess : Process {
 		
 	}
 	
-	
 	void handleQuitMsg(QuitMessage msg)	{
+		debug writeln( typeof(this).stringof ~ " -> Message received: Quit" );
 		stop();
 	}
 }
