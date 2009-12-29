@@ -1,7 +1,7 @@
 module cyma.controller.OutputActor;
 
 private {
-	import cyma.controller.ICanvas;
+	import cyma.controller.graphical.ICanvas;
 	import pattern.dynamic_class;
 }
 
@@ -9,7 +9,7 @@ private {
  + Define the interface of a DrawActor, allowing to move draw contexts
  + around avoiding cyclic dependencies
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-abstract class OutputActor {
+class OutputActor {
 
 	alias void delegate() DrawFunction;
 
@@ -24,8 +24,6 @@ abstract class OutputActor {
 
 		DrawFunction _show = null;
 	}
-
-	void start( void[] env );
 
 	mixin MakeClassDynamic;
 
@@ -91,5 +89,11 @@ abstract class OutputActor {
 
 	DrawFunction show( DrawFunction show ) {
 		return _show = show;
+	}
+
+	void start( void[] context ) {
+		this._context = context;
+		_canvas.updateContext();
+		_canvas.init();
 	}
 }

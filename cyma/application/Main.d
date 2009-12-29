@@ -3,13 +3,14 @@ module cyma.application.Main;
 import std.stdio;
 
 import core.JobHub;
+import pattern.depinjection.default_builder;
+
 import cyma.application.EnvironmentProbe;
-import cyma.controller.GlUi;
 import cyma.controller.Ui;
+import cyma.controller.graphical.GlUi;
 import cyma.view.Viewer;
 import cyma.model.Model;
 import cyma.engine.Driver;
-import pattern.depinjection.default_builder;
 
 int main( string[] args ) {
 

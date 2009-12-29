@@ -1,11 +1,3 @@
-/*******************************************************************************
-
-	copyright:      Copyright (c) 2008 Matthias Walter. All rights reserved
-
-    authors:        Matthias Walter
-
-*******************************************************************************/
-
 module meta.numeric;
 
 private {

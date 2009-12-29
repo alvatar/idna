@@ -56,16 +56,12 @@ InputQueue function()[]	inputQueueFactories;
 
 
 template MInput() {
-   static int inputTypeId;
+	static int inputTypeId;
    
-   static this() {
-      inputTypeId = lastInputId++;
-	  version( D_Version2 ) {
-			inputQueueFactories ~= &InputQueueT!(typeof(this)).produce;
-	  } else {
-			inputQueueFactories ~= &InputQueueT!(typeof(*this)).produce;
-	  }
-   }
+	static this() {
+   		inputTypeId = lastInputId++;
+		inputQueueFactories ~= &InputQueueT!(typeof(this)).produce;
+	}
 }
 
 struct KeyboardInput {

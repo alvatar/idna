@@ -2,12 +2,14 @@ module cyma.engine.Driver;
 
 private{
 	import std.stdio;
+	import std.variant;
+
+	import core.MessageHub;
+	import math.Vector;
 
 	import cyma.application.messages;
-	import core.MessageHub;
-	import cyma.engine.Command;
+	import cyma.controller.Command;
 	import cyma.model.Model;
-	import math.Vector;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -91,13 +93,13 @@ class Driver {
 	}
 
 	/++ Pipe given strings to the command for its evaluation within the code +/
-	void pipeToCommand( string code ) {
+	void pipeToCurrentCommand( Variant data ) {
 		debug if( !_commandQueue.length )
 			throw new Exception(
 				"pipeToCommand: You are piping code to commands and there aren't any"
 				);
 		// Feed the first of the commands
-		_commandQueue[0].pipeCode( code );
+		_commandQueue[0].pipe( data );
 	}
 
 	/++ Push code for the language interpreter +/

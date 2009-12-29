@@ -5,7 +5,7 @@ private {
 	import std.traits;
 
 	import cyma.controller.OutputActor;
-	import cyma.controller.ICanvas;
+	import cyma.controller.graphical.ICanvas;
 }
 
 protected {

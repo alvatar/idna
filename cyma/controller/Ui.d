@@ -23,16 +23,14 @@ interface Ui {
 	@property OutputActor output();
 
 	/++
-	 + Plugs an OutProbe to the Ui for allowing visual output to the Ui
-	 +/
-	//void outplug( OutputActor outputActor );
-
-	/++
 	 + Init function, common to all user interfaces. Must be overriden,
 	 + even if no initialization is necessary
 	 +/
 	void init();
-	Ui plug( Driver driver, EnvironmentProbe probe, OutputActor output );
+
+	/++ Links all the necessary elements to give the Ui control over the
+	 + application +/
+	Ui plug( Driver idriver, EnvironmentProbe ienvironment, OutputActor ioutput );
 
 	/++
 	 + Defines all actions to be taken in order to collect and process the
@@ -51,57 +49,32 @@ interface Ui {
 abstract class BaseUi : Ui {
 
 	protected {
-		/++ The driver that this Ui will use +/
 		Driver _driver;
-
-		/++ Environment probe, for retrieving environment data +/
 		EnvironmentProbe _environment;
-
-		/++ Immediate output is done through an OutputActor +/
 		OutputActor _output;
 	}
 
-	@property EnvironmentProbe environment() {
+	/++ The environment is controlled by the main user interface and passed to
+	 + all commands +/
+	@property
+	EnvironmentProbe environment() {
 		return _environment;
 	}
 
-	@property OutputActor output() {
+	/++ The output is controlled by the main user interface and passed to all
+	 + commands in its specific form, depending on the implementation of
+	 + OutputActor for the specific Ui implementation +/
+	@property
+	OutputActor output() {
 		return _output;
 	}
-	 /*
-	template output(T...) {
-		void output(T t) {
-			return _output(t);
-		}
-	}
-	template output() {
-		OutputActor output() {
-			return _output;
-		}
-	}
-	*/
 
-	Ui plug( Driver driver, EnvironmentProbe environment, OutputActor output ) {
-		/*
-		if( _output is null ) {
-			_output = output;
-		} else {
-			_output.__setDynamicMethods( output.__getDynamicMethods );
-		}
-		*/
-		_driver = driver;
-		_environment = environment;
-		_output = output;
+	/++ Impl. +/
+	Ui plug( Driver idriver, EnvironmentProbe ienvironment, OutputActor ioutput ) {
+		_driver = idriver;
+		_environment = ienvironment;
+		_output = ioutput;
 		init();
 		return this;
 	}
-	/*
-	void outplug( OutputActor outputActor ) {
-		if( _output is null ) {
-			_output = outputActor;
-		} else {
-			_output.__setDynamicMethods( outputActor.__getDynamicMethods );
-		}
-	}
-	*/
 }

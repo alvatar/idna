@@ -1,4 +1,4 @@
-module cyma.controller.ICanvas;
+module cyma.controller.graphical.ICanvas;
 
 private {
 	import cyma.engine.Element;

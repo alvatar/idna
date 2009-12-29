@@ -5,17 +5,21 @@ private {
 	import std.utf;
 
 	import io.input.input;
+	import io.input.KeySym;
 }
 
-string getStringFromKeySym( KeyboardInput[] kinput ) {
-
+string getUnicodeFromInput( KeyboardInput[] kinput ) {
 	if( !kinput ) return "";
-
 	dchar[] extracted;
-	foreach( k; kinput ) {
+	foreach( k; kinput )
 		extracted ~= k.unicode;
-	}
-	auto result = toUTF8(extracted);
+	return toUTF8(extracted);
+}
 
-	return result;
+int[] getKeySymsFromInput( KeyboardInput[] kinput ) {
+	if( !kinput ) return [];
+	io.input.KeySym.KeySym[] extracted;
+	foreach( k; kinput )
+		extracted ~= k.keySym;
+	return cast(int[])extracted;
 }

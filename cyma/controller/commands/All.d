@@ -1,7 +1,7 @@
 module cyma.controller.commands.All;
 
 public {
-	import cyma.engine.Command;
+	import cyma.controller.Command;
 	import cyma.controller.commands.CreateLine;
 	import cyma.controller.commands.EnginePlugin;
 	import cyma.controller.commands.Quit;

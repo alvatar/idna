@@ -3,11 +3,11 @@ module cyma.controller.commands.EnginePlugin;
 private {
 	import std.string;
 
-	import cyma.controller.InteractiveCommand;
+	import cyma.controller.Command;
 	import sys.SharedLib;
 }
 
-class EnginePlugin : InteractiveCommand!(string) {
+class EnginePlugin : ContextualizedCommand!(string) {
 
 	private {
 		SharedLib _plugin;
@@ -18,7 +18,8 @@ class EnginePlugin : InteractiveCommand!(string) {
 
 	this( EnvironmentProbe environment, OutputActor output ) {
 		if (_loaderMutex is null) _loaderMutex = new Object;
-		super(environment,output);
+		_environment = environment;
+		_output = output;
 	}
 
 	override bool execute( ref Model model ) {
@@ -29,9 +30,6 @@ class EnginePlugin : InteractiveCommand!(string) {
 	}
 
 	override void revert( ref Model model ) {
-	}
-
-	override void interactiveSequence( ref Model model ) {
 	}
 
 	private:

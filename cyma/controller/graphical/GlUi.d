@@ -1,4 +1,4 @@
-module cyma.controller.GlUi;
+module cyma.controller.graphical.GlUi;
 
 public import cyma.controller.Ui;
 private {
@@ -16,7 +16,7 @@ private {
 
 	import cyma.application.messages;
 	import cyma.controller.commands.All;
-	import cyma.controller.GlWidget;
+	import cyma.controller.graphical.GlWidget;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -59,7 +59,7 @@ class GlUi : BaseUi {
 		_driver.registerCommand( "q", &CommandCaller!Quit );
 		_driver.registerCommand( "x", &CommandCaller!EnginePlugin );
 
-		// --> Externally induced mode changes
+		// -- Externally induced mode changes
 		MessageHandler handler = new MessageHandler;
 		handler.register!(CommandFinishedMessage)(
 				delegate void(CommandFinishedMessage msg){
@@ -72,6 +72,7 @@ class GlUi : BaseUi {
 				}
 			);
 		messageHub.registerMessageHandler(handler);
+		// --
 	}
 
 	/++ Initialize Actors +/
@@ -101,26 +102,26 @@ class GlUi : BaseUi {
 			if( _context is null || _keyboard is null )
 				return;
 
-			// --> Internally induced mode changes
 			if( _keyboard.keyDown(KeySym.Escape) ) {
-
+				// -- Internally induced mode changes
 				if( _currentMode == Modes.Interactive )
 					_currentMode = Modes.Console;
 				else if( _currentMode == Modes.Console )
 					_currentMode = Modes.Interactive;
 				else if( _currentMode == Modes.CommandRunning )
 					_driver.abortCurrent();
-
+				// --
 			} else if( _keyboard.queueLength ) { // Rest of keys
 
-				auto unicodeArray = getStringFromKeySym( _keyboard.getInputQueue );
+				auto unicodeArray = getUnicodeFromInput( _keyboard.getInputQueue );
 				switch(_currentMode) {
 					case Modes.Interactive:
 					_driver.evaluateNow( unicodeArray );
 					break;
 
 					case Modes.CommandRunning:
-					_driver.pipeToCommand( unicodeArray );
+					auto input = _keyboard.getInputQueue;
+					_driver.pipeToCurrentCommand( Variant(&input) );
 					break;
 
 					case Modes.Console:
@@ -142,6 +143,17 @@ class GlUi : BaseUi {
 		_context.msgFilter = &(new OSInputWriter(inputHub.mainChannel)).filter;
 		inputHub.mainChannel.addReader( new class InputReader {
 			void onInput(MouseInput* i) {
+				switch(_currentMode) {
+					case Modes.Interactive:
+					break;
+
+					case Modes.CommandRunning:
+					_driver.pipeToCurrentCommand( Variant(i) );
+					break;
+
+					case Modes.Console:
+					break;
+				}
 				/*
 				if( i.buttons == MouseInput.Button.Left
 					&& i.type == MouseInput.Type.ButtonDown )

@@ -4,17 +4,15 @@ private {
 	import core.MessageHub;
 
 	import cyma.application.messages;
-	import cyma.controller.InteractiveCommand;
+	import cyma.controller.Command;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  + Create a single line
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
-class Quit : InteractiveCommand!() {
+class Quit : ContextualizedCommand!() {
 
-	this( EnvironmentProbe environment, OutputActor output ) {
-		super(environment,output);
-	}
+	mixin MakeCommandConstructor;
 
 	override bool execute( ref Model model ) {
 		messageHub.sendMessage(new QuitMessage);
@@ -23,8 +21,5 @@ class Quit : InteractiveCommand!() {
 
 	override void revert( ref Model ) {
 		assert(false, "You shouldn't be calling revert in a Quit command");
-	}
-
-	override void interactiveSequence( ref Model model ) {
 	}
 }

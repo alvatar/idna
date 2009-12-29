@@ -6,7 +6,7 @@ private {
 
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
-	import cyma.view.ViewOutputActor;
+	import cyma.controller.OutputActor;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -17,7 +17,7 @@ class Viewer {
 	
 	private {
 		/++ DrawActors: everything needed to execute a group of draw functions +/
-		ViewOutputActor[] _viewActors;
+		OutputActor[] _viewActors;
 	}
 
 	this() {
@@ -36,7 +36,7 @@ class Viewer {
 	/++
 	 + Zero level: iterate over everything and recreate the representation
 	 +/
-	final ViewOutputActor[] load( ref Model model ) {
+	final OutputActor[] load( ref Model model ) {
 
 		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
@@ -61,7 +61,7 @@ class Viewer {
 	 + First level: Iterate over each active canvas, updating the proxy
 	 + geometries to the model current state (adds, deletes, modifications).
 	 +/
-	final ViewOutputActor[] update( ref Model model ) {
+	final OutputActor[] update( ref Model model ) {
 
 		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
@@ -93,7 +93,7 @@ class Viewer {
 	/++
 	 + Second level: Regenerate the proxy geometry that needs so
 	 +/
-	final ViewOutputActor[] regenerate( ref Model model ) {
+	final OutputActor[] regenerate( ref Model model ) {
 		// Note on implementation: could be done using a pointers-to-proxies list
 		// or iteration and acting on specific proxy types.
 
@@ -120,7 +120,7 @@ class Viewer {
 	/++
 	 + Third level: Redraw the current proxy geometry
 	 +/
-	final ViewOutputActor[] draw() {
+	final OutputActor[] draw() {
 
 		foreach( ref actor; _viewActors ) {
 			auto actorRef = actor;
@@ -142,8 +142,8 @@ class Viewer {
 	 + have a high overhead)
 	 +/
 	import std.variant;
-	final ViewOutputActor output() {
-		ViewOutputActor result = new ViewOutputActor;
+	final OutputActor output() {
+		OutputActor result = new OutputActor;
 		result.__bindMethod( "test"
 				, delegate int(){ writeln("NO ARGS"); return 99; } );
 		/*
@@ -159,8 +159,8 @@ class Viewer {
 	/++
 	 + Add canvas to the target list of the drawer
 	 +/
-	final private ViewOutputActor addDrawActor( Canvas canvas, string name ) {
-		ViewOutputActor newDrawActor = new ViewOutputActor;
+	final private OutputActor addDrawActor( Canvas canvas, string name ) {
+		OutputActor newDrawActor = new OutputActor;
 		newDrawActor.name = name;
 		newDrawActor.canvas = canvas;
 		canvas.setParendDrawActor( newDrawActor );
@@ -173,7 +173,7 @@ class Viewer {
 	/++
 	 + Remove a canvas from the target list
 	 +/
-	final private ViewOutputActor removeDrawActor( string name ) {
+	final private OutputActor removeDrawActor( string name ) {
 		// TODO
 		return null;
 	}
