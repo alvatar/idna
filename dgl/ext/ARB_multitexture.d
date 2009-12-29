@@ -1,6 +1,6 @@
 module dgl.ext.ARB_multitexture;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 437;
+private ushort extensionId__ = 38;
 alias extensionId__ ARB_multitexture;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -107,205 +107,205 @@ version (all) {
 	public {
 void ActiveTexture(GL gl_, ParameterTypeTuple!(fp_glActiveTextureARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glActiveTextureARB)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "ActiveTexture", funcPtr, params__);
 		}
 void ClientActiveTexture(GL gl_, ParameterTypeTuple!(fp_glClientActiveTextureARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glClientActiveTextureARB)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "ClientActiveTexture", funcPtr, params__);
 		}
 void MultiTexCoord1d(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1dARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1dARB)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "MultiTexCoord1d", funcPtr, params__);
 		}
 void MultiTexCoord1dv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1dvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1dvARB)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "MultiTexCoord1dv", funcPtr, params__);
 		}
 void MultiTexCoord1f(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1fARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1fARB)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "MultiTexCoord1f", funcPtr, params__);
 		}
 void MultiTexCoord1fv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1fvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1fvARB)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "MultiTexCoord1fv", funcPtr, params__);
 		}
 void MultiTexCoord1i(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1iARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1iARB)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "MultiTexCoord1i", funcPtr, params__);
 		}
 void MultiTexCoord1iv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1ivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1ivARB)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "MultiTexCoord1iv", funcPtr, params__);
 		}
 void MultiTexCoord1s(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1sARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1sARB)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "MultiTexCoord1s", funcPtr, params__);
 		}
 void MultiTexCoord1sv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord1svARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord1svARB)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "MultiTexCoord1sv", funcPtr, params__);
 		}
 void MultiTexCoord2d(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2dARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2dARB)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "MultiTexCoord2d", funcPtr, params__);
 		}
 void MultiTexCoord2dv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2dvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2dvARB)(gl.extFuncs[extensionId__][11]);
 			return checkedCall(gl_, "MultiTexCoord2dv", funcPtr, params__);
 		}
 void MultiTexCoord2f(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2fARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2fARB)(gl.extFuncs[extensionId__][12]);
 			return checkedCall(gl_, "MultiTexCoord2f", funcPtr, params__);
 		}
 void MultiTexCoord2fv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2fvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2fvARB)(gl.extFuncs[extensionId__][13]);
 			return checkedCall(gl_, "MultiTexCoord2fv", funcPtr, params__);
 		}
 void MultiTexCoord2i(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2iARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2iARB)(gl.extFuncs[extensionId__][14]);
 			return checkedCall(gl_, "MultiTexCoord2i", funcPtr, params__);
 		}
 void MultiTexCoord2iv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2ivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2ivARB)(gl.extFuncs[extensionId__][15]);
 			return checkedCall(gl_, "MultiTexCoord2iv", funcPtr, params__);
 		}
 void MultiTexCoord2s(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2sARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2sARB)(gl.extFuncs[extensionId__][16]);
 			return checkedCall(gl_, "MultiTexCoord2s", funcPtr, params__);
 		}
 void MultiTexCoord2sv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord2svARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord2svARB)(gl.extFuncs[extensionId__][17]);
 			return checkedCall(gl_, "MultiTexCoord2sv", funcPtr, params__);
 		}
 void MultiTexCoord3d(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3dARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3dARB)(gl.extFuncs[extensionId__][18]);
 			return checkedCall(gl_, "MultiTexCoord3d", funcPtr, params__);
 		}
 void MultiTexCoord3dv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3dvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3dvARB)(gl.extFuncs[extensionId__][19]);
 			return checkedCall(gl_, "MultiTexCoord3dv", funcPtr, params__);
 		}
 void MultiTexCoord3f(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3fARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3fARB)(gl.extFuncs[extensionId__][20]);
 			return checkedCall(gl_, "MultiTexCoord3f", funcPtr, params__);
 		}
 void MultiTexCoord3fv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3fvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3fvARB)(gl.extFuncs[extensionId__][21]);
 			return checkedCall(gl_, "MultiTexCoord3fv", funcPtr, params__);
 		}
 void MultiTexCoord3i(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3iARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3iARB)(gl.extFuncs[extensionId__][22]);
 			return checkedCall(gl_, "MultiTexCoord3i", funcPtr, params__);
 		}
 void MultiTexCoord3iv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3ivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3ivARB)(gl.extFuncs[extensionId__][23]);
 			return checkedCall(gl_, "MultiTexCoord3iv", funcPtr, params__);
 		}
 void MultiTexCoord3s(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3sARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3sARB)(gl.extFuncs[extensionId__][24]);
 			return checkedCall(gl_, "MultiTexCoord3s", funcPtr, params__);
 		}
 void MultiTexCoord3sv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord3svARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord3svARB)(gl.extFuncs[extensionId__][25]);
 			return checkedCall(gl_, "MultiTexCoord3sv", funcPtr, params__);
 		}
 void MultiTexCoord4d(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4dARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4dARB)(gl.extFuncs[extensionId__][26]);
 			return checkedCall(gl_, "MultiTexCoord4d", funcPtr, params__);
 		}
 void MultiTexCoord4dv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4dvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4dvARB)(gl.extFuncs[extensionId__][27]);
 			return checkedCall(gl_, "MultiTexCoord4dv", funcPtr, params__);
 		}
 void MultiTexCoord4f(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4fARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4fARB)(gl.extFuncs[extensionId__][28]);
 			return checkedCall(gl_, "MultiTexCoord4f", funcPtr, params__);
 		}
 void MultiTexCoord4fv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4fvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4fvARB)(gl.extFuncs[extensionId__][29]);
 			return checkedCall(gl_, "MultiTexCoord4fv", funcPtr, params__);
 		}
 void MultiTexCoord4i(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4iARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4iARB)(gl.extFuncs[extensionId__][30]);
 			return checkedCall(gl_, "MultiTexCoord4i", funcPtr, params__);
 		}
 void MultiTexCoord4iv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4ivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4ivARB)(gl.extFuncs[extensionId__][31]);
 			return checkedCall(gl_, "MultiTexCoord4iv", funcPtr, params__);
 		}
 void MultiTexCoord4s(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4sARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4sARB)(gl.extFuncs[extensionId__][32]);
 			return checkedCall(gl_, "MultiTexCoord4s", funcPtr, params__);
 		}
 void MultiTexCoord4sv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4svARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMultiTexCoord4svARB)(gl.extFuncs[extensionId__][33]);
 			return checkedCall(gl_, "MultiTexCoord4sv", funcPtr, params__);
 		}
@@ -325,7 +325,7 @@ void MultiTexCoord4sv(GL gl_, ParameterTypeTuple!(fp_glMultiTexCoord4svARB) para
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

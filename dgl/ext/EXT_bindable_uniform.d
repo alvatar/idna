@@ -1,6 +1,6 @@
 module dgl.ext.EXT_bindable_uniform;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 407;
+private ushort extensionId__ = 8;
 alias extensionId__ EXT_bindable_uniform;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -47,19 +47,19 @@ version (all) {
 	public {
 void UniformBuffer(GL gl_, ParameterTypeTuple!(fp_glUniformBufferEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glUniformBufferEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "UniformBuffer", funcPtr, params__);
 		}
 GLint GetUniformBufferSize(GL gl_, ParameterTypeTuple!(fp_glGetUniformBufferSizeEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetUniformBufferSizeEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "GetUniformBufferSize", funcPtr, params__);
 		}
 GLintptr GetUniformOffset(GL gl_, ParameterTypeTuple!(fp_glGetUniformOffsetEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetUniformOffsetEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "GetUniformOffset", funcPtr, params__);
 		}
@@ -79,7 +79,7 @@ GLintptr GetUniformOffset(GL gl_, ParameterTypeTuple!(fp_glGetUniformOffsetEXT) 
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

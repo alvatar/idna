@@ -21,14 +21,14 @@ const char*	myProgramName = "04_varying_parameter",
 void main() {
 	auto context = GLWindow();
 	context
-		.title(`Dog Demo`)
+		.title(`Dgl Demo`)
 		.showCursor(false)
 		.fullscreen(false)
 		.width(800)
 		.height(600)
 	.create();
 	
-	initDogCg();
+	initDglCg();
 	
 	use(context) in (GL gl) {
 		gl.ClearColor(1, 1, 1, 1);

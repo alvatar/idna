@@ -1,6 +1,6 @@
 module dgl.ext.GLX_SUN_video_resize;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 423;
+private ushort extensionId__ = 24;
 alias extensionId__ GLX_SUN_video_resize;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -42,13 +42,13 @@ version (Posix) {
 	public {
 int XVideoResize(GL gl_, ParameterTypeTuple!(fp_glXVideoResizeSUN) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glXVideoResizeSUN)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "XVideoResize", funcPtr, params__);
 		}
 int XGetVideoResize(GL gl_, ParameterTypeTuple!(fp_glXGetVideoResizeSUN) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glXGetVideoResizeSUN)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "XGetVideoResize", funcPtr, params__);
 		}
@@ -68,7 +68,7 @@ int XGetVideoResize(GL gl_, ParameterTypeTuple!(fp_glXGetVideoResizeSUN) params_
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

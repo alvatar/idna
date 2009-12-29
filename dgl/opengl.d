@@ -33,14 +33,14 @@ public {
 }
 
 
-version (DogNoExtSupportAsserts) {
+version (DglNoExtSupportAsserts) {
 } else {
-	version = DogExtSupportAsserts;
+	version = DglExtSupportAsserts;
 }
 
 
 struct ExtContext {
-	version (DogExtSupportAsserts) {
+	version (DglExtSupportAsserts) {
 		GLHandle	glh;
 		ushort[30]	extList;
 		ushort		numExt;
@@ -50,10 +50,10 @@ struct ExtContext {
 	
 	bool opIn(void delegate() dg) {
 		if (supported) {
-			version (DogNoExtSupportAsserts) {
+			version (DglNoExtSupportAsserts) {
 				dg();
 			}
-			version (DogExtSupportAsserts) {
+			version (DglExtSupportAsserts) {
 				foreach (e; extList[0..numExt]) {
 					++glh.extEnabled[e];
 				}
@@ -86,7 +86,7 @@ ExtContext ext(GL gl, ushort[] extList ...) {
 	if (supported) {
 		res.supported = true;
 		
-		version (DogExtSupportAsserts) {
+		version (DglExtSupportAsserts) {
 			res.glh = _getGL(gl);
 			assert (extList.length < 30, `will any more be needed? :P`);
 			res.extList[0..extList.length] = extList;
@@ -102,7 +102,7 @@ ExtContext ext(GL gl, ushort[] extList ...) {
 
 
 version (Windows) {
-	public import xf.dog.platform.Win32;
+	public import xf.dgl.platform.Win32;
 }
 else version (Posix) {
 	version (linux) {
@@ -280,7 +280,7 @@ bool isOpenGLVersionSupported(string versionStr, char delim) {
 			if (implMajor == chkMajor && implMinor >= chkMinor) return true;
 		}
 	} else {
-		debug(verbose) Stdout.formatln(fromStringz(fp_glGetString(xf.dog.common.GL_VERSION)));
+		debug(verbose) Stdout.formatln(fromStringz(fp_glGetString(xf.dgl.common.GL_VERSION)));
 		if	(	extractVersionNumbers(fromStringz(fp_glGetString(dgl.common.GL_VERSION)), '.', &implMajor, &implMinor) &&
 				extractVersionNumbers(versionStr, delim, &chkMajor, &chkMinor))
 		{

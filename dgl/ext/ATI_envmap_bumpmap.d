@@ -1,6 +1,6 @@
 module dgl.ext.ATI_envmap_bumpmap;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 443;
+private ushort extensionId__ = 44;
 alias extensionId__ ATI_envmap_bumpmap;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -50,25 +50,25 @@ version (all) {
 	public {
 void TexBumpParameteriv(GL gl_, ParameterTypeTuple!(fp_glTexBumpParameterivATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexBumpParameterivATI)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "TexBumpParameteriv", funcPtr, params__);
 		}
 void TexBumpParameterfv(GL gl_, ParameterTypeTuple!(fp_glTexBumpParameterfvATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexBumpParameterfvATI)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "TexBumpParameterfv", funcPtr, params__);
 		}
 void GetTexBumpParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetTexBumpParameterivATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetTexBumpParameterivATI)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "GetTexBumpParameteriv", funcPtr, params__);
 		}
 void GetTexBumpParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetTexBumpParameterfvATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetTexBumpParameterfvATI)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "GetTexBumpParameterfv", funcPtr, params__);
 		}
@@ -88,7 +88,7 @@ void GetTexBumpParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetTexBumpParameterf
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

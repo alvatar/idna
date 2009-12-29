@@ -1,6 +1,6 @@
 module dgl.ext.NV_depth_buffer_float;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,15 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 399;
+private ushort extensionId__ = 0;
 alias extensionId__ NV_depth_buffer_float;
-import dgl.ext.ARB_color_buffer_float;
-import dgl.ext.EXT_packed_depth_stencil;
-import dgl.ext.EXT_framebuffer_object;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -48,19 +45,19 @@ version (all) {
 	public {
 void DepthRanged(GL gl_, ParameterTypeTuple!(fp_glDepthRangedNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDepthRangedNV)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "DepthRanged", funcPtr, params__);
 		}
 void ClearDepthd(GL gl_, ParameterTypeTuple!(fp_glClearDepthdNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glClearDepthdNV)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "ClearDepthd", funcPtr, params__);
 		}
 void DepthBoundsd(GL gl_, ParameterTypeTuple!(fp_glDepthBoundsdNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDepthBoundsdNV)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "DepthBoundsd", funcPtr, params__);
 		}
@@ -80,7 +77,7 @@ void DepthBoundsd(GL gl_, ParameterTypeTuple!(fp_glDepthBoundsdNV) params__) {
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

@@ -7,3 +7,5 @@ bin
 *.o
 *.moduleDeps
 tags
+/dgl/gen/Generator
+.svn*

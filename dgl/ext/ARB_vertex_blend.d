@@ -1,6 +1,6 @@
 module dgl.ext.ARB_vertex_blend;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 472;
+private ushort extensionId__ = 73;
 alias extensionId__ ARB_vertex_blend;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -90,61 +90,61 @@ version (all) {
 	public {
 void Weightbv(GL gl_, ParameterTypeTuple!(fp_glWeightbvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightbvARB)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "Weightbv", funcPtr, params__);
 		}
 void Weightsv(GL gl_, ParameterTypeTuple!(fp_glWeightsvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightsvARB)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "Weightsv", funcPtr, params__);
 		}
 void Weightiv(GL gl_, ParameterTypeTuple!(fp_glWeightivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightivARB)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "Weightiv", funcPtr, params__);
 		}
 void Weightfv(GL gl_, ParameterTypeTuple!(fp_glWeightfvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightfvARB)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "Weightfv", funcPtr, params__);
 		}
 void Weightdv(GL gl_, ParameterTypeTuple!(fp_glWeightdvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightdvARB)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "Weightdv", funcPtr, params__);
 		}
 void Weightubv(GL gl_, ParameterTypeTuple!(fp_glWeightubvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightubvARB)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "Weightubv", funcPtr, params__);
 		}
 void Weightusv(GL gl_, ParameterTypeTuple!(fp_glWeightusvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightusvARB)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "Weightusv", funcPtr, params__);
 		}
 void Weightuiv(GL gl_, ParameterTypeTuple!(fp_glWeightuivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightuivARB)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "Weightuiv", funcPtr, params__);
 		}
 void WeightPointer(GL gl_, ParameterTypeTuple!(fp_glWeightPointerARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWeightPointerARB)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "WeightPointer", funcPtr, params__);
 		}
 void VertexBlend(GL gl_, ParameterTypeTuple!(fp_glVertexBlendARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVertexBlendARB)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "VertexBlend", funcPtr, params__);
 		}
@@ -164,7 +164,7 @@ void VertexBlend(GL gl_, ParameterTypeTuple!(fp_glVertexBlendARB) params__) {
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

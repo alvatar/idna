@@ -1,6 +1,6 @@
 module dgl.ext.EXT_texture_integer;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 420;
+private ushort extensionId__ = 21;
 alias extensionId__ EXT_texture_integer;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -91,37 +91,37 @@ version (all) {
 	public {
 void TexParameterIiv(GL gl_, ParameterTypeTuple!(fp_glTexParameterIivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexParameterIivEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "TexParameterIiv", funcPtr, params__);
 		}
 void TexParameterIuiv(GL gl_, ParameterTypeTuple!(fp_glTexParameterIuivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexParameterIuivEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "TexParameterIuiv", funcPtr, params__);
 		}
 void GetTexParameterIiv(GL gl_, ParameterTypeTuple!(fp_glGetTexParameterIivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetTexParameterIivEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "GetTexParameterIiv", funcPtr, params__);
 		}
 void GetTexParameterIuiv(GL gl_, ParameterTypeTuple!(fp_glGetTexParameterIuivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetTexParameterIuivEXT)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "GetTexParameterIuiv", funcPtr, params__);
 		}
 void ClearColorIi(GL gl_, ParameterTypeTuple!(fp_glClearColorIiEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glClearColorIiEXT)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "ClearColorIi", funcPtr, params__);
 		}
 void ClearColorIui(GL gl_, ParameterTypeTuple!(fp_glClearColorIuiEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glClearColorIuiEXT)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "ClearColorIui", funcPtr, params__);
 		}
@@ -141,7 +141,7 @@ void ClearColorIui(GL gl_, ParameterTypeTuple!(fp_glClearColorIuiEXT) params__) 
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

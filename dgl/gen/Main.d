@@ -399,7 +399,7 @@ void generateExt(int extI, Extension ext, Print p) {
 	auto fmt = &p.format;
 	scope (exit) p();
 	
-	fmt(`module dgl.ext.{};`\n`import dgl.OpenGL;`\n`import dgl.GLExt;`\n, ext.name);	
+	fmt(`module dgl.ext.{};`\n`import dgl.opengl;`\n`import dgl.glext;`\n, ext.name);	
 	fmt(`
 version( D_Version2 ) {{
 	import std.string : containsPattern = count;
@@ -417,9 +417,9 @@ version( D_Version2 ) {{
 	}
 	
 	fmt(`
-	version (DogNoExtSupportAsserts) {{
+	version (DglNoExtSupportAsserts) {{
 	} else {{
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	`);
 	
@@ -478,7 +478,7 @@ version( D_Version2 ) {{
 			//fmt(\t\t`static if (!is(typeof({}))) `, transName);
 			p/+(`final `)+/(f.retType)(` `)(transName)(`(GL gl_, `)(`ParameterTypeTuple!(fp_`)(f.name)(`) params__) {`\n);
 			fmt(\t\t\t`auto gl = _getGL(gl_);`\n);
-			fmt(\t\t\t`version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);`\n);
+			fmt(\t\t\t`version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);`\n);
 			fmt(\t\t\t`auto funcPtr = cast(fp_{})(gl.extFuncs[extensionId__][{}]);`\n, f.name, i);
 			fmt(\t\t\t`return checkedCall(gl_, "{}", funcPtr, params__);`\n, transName);
 			p(\t\t)(`}`\n);
@@ -503,7 +503,7 @@ version( D_Version2 ) {{
 			if (gl.extFuncs.length <= extensionId__) {{
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {{
+				version (DglExtSupportAsserts) {{
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

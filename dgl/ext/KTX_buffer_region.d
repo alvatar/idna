@@ -1,6 +1,6 @@
 module dgl.ext.KTX_buffer_region;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 465;
+private ushort extensionId__ = 66;
 alias extensionId__ KTX_buffer_region;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -47,31 +47,31 @@ version (all) {
 	public {
 GLuint BufferRegionEnabled(GL gl_, ParameterTypeTuple!(fp_glBufferRegionEnabledEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBufferRegionEnabledEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "BufferRegionEnabled", funcPtr, params__);
 		}
 GLuint NewBufferRegion(GL gl_, ParameterTypeTuple!(fp_glNewBufferRegionEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glNewBufferRegionEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "NewBufferRegion", funcPtr, params__);
 		}
 void DeleteBufferRegion(GL gl_, ParameterTypeTuple!(fp_glDeleteBufferRegionEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDeleteBufferRegionEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "DeleteBufferRegion", funcPtr, params__);
 		}
 void ReadBufferRegion(GL gl_, ParameterTypeTuple!(fp_glReadBufferRegionEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glReadBufferRegionEXT)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "ReadBufferRegion", funcPtr, params__);
 		}
 void DrawBufferRegion(GL gl_, ParameterTypeTuple!(fp_glDrawBufferRegionEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDrawBufferRegionEXT)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "DrawBufferRegion", funcPtr, params__);
 		}
@@ -91,7 +91,7 @@ void DrawBufferRegion(GL gl_, ParameterTypeTuple!(fp_glDrawBufferRegionEXT) para
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

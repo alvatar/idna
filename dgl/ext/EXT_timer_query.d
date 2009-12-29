@@ -1,6 +1,6 @@
 module dgl.ext.EXT_timer_query;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 406;
+private ushort extensionId__ = 7;
 alias extensionId__ EXT_timer_query;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -41,13 +41,13 @@ version (all) {
 	public {
 void GetQueryObjecti64v(GL gl_, ParameterTypeTuple!(fp_glGetQueryObjecti64vEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetQueryObjecti64vEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "GetQueryObjecti64v", funcPtr, params__);
 		}
 void GetQueryObjectui64v(GL gl_, ParameterTypeTuple!(fp_glGetQueryObjectui64vEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetQueryObjectui64vEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "GetQueryObjectui64v", funcPtr, params__);
 		}
@@ -67,7 +67,7 @@ void GetQueryObjectui64v(GL gl_, ParameterTypeTuple!(fp_glGetQueryObjectui64vEXT
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

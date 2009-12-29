@@ -29,14 +29,14 @@ CGparameter myCgNormalMapParam,
 void main() {
 	auto context = GLWindow();
 	context
-		.title(`Dog Demo`)
+		.title(`Dgl Demo`)
 		.showCursor(false)
 		.fullscreen(false)
 		.width(800)
 		.height(600)
 	.create();
 	
-	initDogCg();
+	initDglCg();
 	
 	use(context) in (GL gl) {
 		gl.ext(VERSION_1_3) in {

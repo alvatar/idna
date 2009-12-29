@@ -1,10 +1,14 @@
-module xf.dog.testThreads;
+module dgl.testThreads;
 
-import xf.dog.Dog;
-import xf.omg.core.LinearAlgebra : vec2i;
-import tango.core.Thread;
-import tango.io.Stdout;
-import xf.utils.Bind;
+import dgl.dgl;
+//import xf.omg.core.LinearAlgebra : vec2i;
+//import tango.core.Thread;
+//import tango.io.Stdout;
+import utils.Bind;
+
+struct vec2i {
+	int x,y;
+}
 
 
 

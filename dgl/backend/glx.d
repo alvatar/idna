@@ -10,7 +10,7 @@ private {
 		alias char[] string;
 	}
 
-	import DogWindow = dgl.Window;
+	import DglWindow = dgl.window;
 	import dgl.glcontext;
 	import dgl.opengl;
 	import dgl.glufunctions;
@@ -27,7 +27,7 @@ private {
 	alias sys.x11.x.Window Window;
 }
 
-class GLWindow : GLContext, DogWindow.Window {
+class GLWindow : GLContext, DglWindow.Window {
 	public bool delegate(XEvent ev) msgFilter;
 	
 	~this() {
@@ -510,7 +510,7 @@ class GLWindow : GLContext, DogWindow.Window {
 		GL _gl;
 		
 		static bool classRegistered = false;
-		static const char* className = "DogWindow";
+		static const char* className = "DglWindow";
 
 		void setRes(size_t x, size_t y) {
 			int length;

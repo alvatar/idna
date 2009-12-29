@@ -1,6 +1,6 @@
 module dgl.ext.VERSION_1_2;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 405;
+private ushort extensionId__ = 6;
 alias extensionId__ VERSION_1_2;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -83,25 +83,25 @@ version (all) {
 	public {
 void DrawRangeElements(GL gl_, ParameterTypeTuple!(fp_glDrawRangeElements) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDrawRangeElements)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "DrawRangeElements", funcPtr, params__);
 		}
 void TexImage3D(GL gl_, ParameterTypeTuple!(fp_glTexImage3D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexImage3D)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "TexImage3D", funcPtr, params__);
 		}
 void TexSubImage3D(GL gl_, ParameterTypeTuple!(fp_glTexSubImage3D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTexSubImage3D)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "TexSubImage3D", funcPtr, params__);
 		}
 void CopyTexSubImage3D(GL gl_, ParameterTypeTuple!(fp_glCopyTexSubImage3D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCopyTexSubImage3D)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "CopyTexSubImage3D", funcPtr, params__);
 		}
@@ -121,7 +121,7 @@ void CopyTexSubImage3D(GL gl_, ParameterTypeTuple!(fp_glCopyTexSubImage3D) param
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

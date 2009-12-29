@@ -26,9 +26,9 @@ public {
 typedef void[] GL;
 
 
-version (DogNoExtSupportAsserts) {
+version (DglNoExtSupportAsserts) {
 } else {
-	version = DogExtSupportAsserts;
+	version = DglExtSupportAsserts;
 }
 
 
@@ -36,7 +36,7 @@ class GLHandle {
 	bool			insideGlBegin = false;
 	void*[][]	extFuncs;
 	
-	version (DogExtSupportAsserts) {
+	version (DglExtSupportAsserts) {
 		int[]		extEnabled;
 	}
 }
@@ -71,7 +71,7 @@ extern (System) {
 
 
 public ReturnTypeOf!(Func) checkedCall(Func, Params ...)(GL gl, string fname, Func fp, Params p) {
-	version (DogNoErrorChecking) {
+	version (DglNoErrorChecking) {
 		return fp(p);
 	}
 	else {

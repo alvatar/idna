@@ -1,6 +1,6 @@
 module dgl.ext.WIN_swap_hint;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 432;
+private ushort extensionId__ = 33;
 alias extensionId__ WIN_swap_hint;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -39,7 +39,7 @@ version (all) {
 	public {
 void AddSwapHintRect(GL gl_, ParameterTypeTuple!(fp_glAddSwapHintRectWIN) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glAddSwapHintRectWIN)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "AddSwapHintRect", funcPtr, params__);
 		}
@@ -59,7 +59,7 @@ void AddSwapHintRect(GL gl_, ParameterTypeTuple!(fp_glAddSwapHintRectWIN) params
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

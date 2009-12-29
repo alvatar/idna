@@ -1,6 +1,6 @@
 module dgl.ext.GLX_SGIX_swap_group;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 446;
+private ushort extensionId__ = 47;
 alias extensionId__ GLX_SGIX_swap_group;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -39,7 +39,7 @@ version (Posix) {
 	public {
 void XJoinSwapGroup(GL gl_, ParameterTypeTuple!(fp_glXJoinSwapGroupSGIX) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glXJoinSwapGroupSGIX)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "XJoinSwapGroup", funcPtr, params__);
 		}
@@ -59,7 +59,7 @@ void XJoinSwapGroup(GL gl_, ParameterTypeTuple!(fp_glXJoinSwapGroupSGIX) params_
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

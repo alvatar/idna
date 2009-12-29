@@ -1,6 +1,6 @@
 module dgl.ext.GLX_SGIX_swap_barrier;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 461;
+private ushort extensionId__ = 62;
 alias extensionId__ GLX_SGIX_swap_barrier;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -40,13 +40,13 @@ version (Posix) {
 	public {
 void XBindSwapBarrier(GL gl_, ParameterTypeTuple!(fp_glXBindSwapBarrierSGIX) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glXBindSwapBarrierSGIX)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "XBindSwapBarrier", funcPtr, params__);
 		}
 Bool XQueryMaxSwapBarriers(GL gl_, ParameterTypeTuple!(fp_glXQueryMaxSwapBarriersSGIX) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glXQueryMaxSwapBarriersSGIX)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "XQueryMaxSwapBarriers", funcPtr, params__);
 		}
@@ -66,7 +66,7 @@ Bool XQueryMaxSwapBarriers(GL gl_, ParameterTypeTuple!(fp_glXQueryMaxSwapBarrier
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

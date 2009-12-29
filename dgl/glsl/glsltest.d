@@ -1,9 +1,9 @@
-module dog.glsltest;
+module dgl.glsltest;
 
-import xf.dog.Dog;
-import xf.dog.ext.ARB_multitexture;
-import xf.dog.ext.VERSION_2_0;
-import xf.dog.Glsl;
+import xf.dgl.dgl;
+import xf.dgl.ext.ARB_multitexture;
+import xf.dgl.ext.VERSION_2_0;
+import xf.dgl.Glsl;
 
 import tango.io.Stdout		: Stdout;
 import tango.stdc.stringz	: fromStringz;
@@ -57,7 +57,7 @@ void main()
 		{
 			GLuint p = gl.CreateProgram();
 
-			gl.dogCompileShaderFile("minimal.vert", GL_VERTEX_SHADER, p);
+			gl.dglCompileShaderFile("minimal.vert", GL_VERTEX_SHADER, p);
 
 			const char[] fragmentShader = "
 			void main()
@@ -65,10 +65,10 @@ void main()
 				        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 			}
 			";
-			gl.dogCompileShaderSource(fragmentShader, GL_FRAGMENT_SHADER, p);
+			gl.dglCompileShaderSource(fragmentShader, GL_FRAGMENT_SHADER, p);
 
 			gl.LinkProgram(p);
-			gl.dogPrintProgramInfoLog(p);
+			gl.dglPrintProgramInfoLog(p);
 			gl.UseProgram(p);
 
 			/+!
@@ -106,7 +106,7 @@ void main()
 
 					gl.LinkProgram(p);
 
-					gl.dogPrintProgramInfoLog(p);
+					gl.dglPrintProgramInfoLog(p);
 
 					gl.UseProgram(p);
 				}; +/

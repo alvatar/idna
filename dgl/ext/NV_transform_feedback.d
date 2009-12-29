@@ -1,6 +1,6 @@
 module dgl.ext.NV_transform_feedback;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 478;
+private ushort extensionId__ = 80;
 alias extensionId__ NV_transform_feedback;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -74,67 +74,67 @@ version (all) {
 	public {
 void BeginTransformFeedback(GL gl_, ParameterTypeTuple!(fp_glBeginTransformFeedbackNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBeginTransformFeedbackNV)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "BeginTransformFeedback", funcPtr, params__);
 		}
 void EndTransformFeedback(GL gl_, ParameterTypeTuple!(fp_glEndTransformFeedbackNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glEndTransformFeedbackNV)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "EndTransformFeedback", funcPtr, params__);
 		}
 void TransformFeedbackAttribs(GL gl_, ParameterTypeTuple!(fp_glTransformFeedbackAttribsNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTransformFeedbackAttribsNV)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "TransformFeedbackAttribs", funcPtr, params__);
 		}
 void BindBufferRange(GL gl_, ParameterTypeTuple!(fp_glBindBufferRangeNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindBufferRangeNV)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "BindBufferRange", funcPtr, params__);
 		}
 void BindBufferOffset(GL gl_, ParameterTypeTuple!(fp_glBindBufferOffsetNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindBufferOffsetNV)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "BindBufferOffset", funcPtr, params__);
 		}
 void BindBufferBase(GL gl_, ParameterTypeTuple!(fp_glBindBufferBaseNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindBufferBaseNV)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "BindBufferBase", funcPtr, params__);
 		}
 void TransformFeedbackVaryings(GL gl_, ParameterTypeTuple!(fp_glTransformFeedbackVaryingsNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glTransformFeedbackVaryingsNV)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "TransformFeedbackVaryings", funcPtr, params__);
 		}
 void ActiveVarying(GL gl_, ParameterTypeTuple!(fp_glActiveVaryingNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glActiveVaryingNV)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "ActiveVarying", funcPtr, params__);
 		}
 GLint GetVaryingLocation(GL gl_, ParameterTypeTuple!(fp_glGetVaryingLocationNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetVaryingLocationNV)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "GetVaryingLocation", funcPtr, params__);
 		}
 void GetActiveVarying(GL gl_, ParameterTypeTuple!(fp_glGetActiveVaryingNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetActiveVaryingNV)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "GetActiveVarying", funcPtr, params__);
 		}
 void GetTransformFeedbackVarying(GL gl_, ParameterTypeTuple!(fp_glGetTransformFeedbackVaryingNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetTransformFeedbackVaryingNV)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "GetTransformFeedbackVarying", funcPtr, params__);
 		}
@@ -154,7 +154,7 @@ void GetTransformFeedbackVarying(GL gl_, ParameterTypeTuple!(fp_glGetTransformFe
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

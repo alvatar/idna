@@ -1,9 +1,11 @@
 module dgl.test;
 
-import dgl.Dgl,
-	dgl.ext.WGL_EXT_swap_control,
-	dgl.ext.WGL_EXT_extensions_string,
-	dgl.ext.ARB_shader_objects,
+import dgl.dgl,
+//dgl.ext.WGL_EXT_swap_control,
+	//dgl.ext.WGL_EXT_extensions_string,
+	//dgl.ext.ARB_shader_objects,
+	//dgl.ext.VERSION_3_1,
+	dgl.ext.VERSION_2_0,
 	dgl.ext.ARB_multitexture;
 
 version( D_Version2 ) {
@@ -41,7 +43,7 @@ void draw(GL gl) {
 void main() {
 	auto context = GLWindow();
 	context
-		.title(`Dog Demo`)
+		.title(`Dgl Demo`)
 		.showCursor(true)
 		.fullscreen(false)
 		.width(800)
@@ -74,10 +76,10 @@ void main() {
 		gl.MatrixMode(GL_MODELVIEW);
 		gl.LoadIdentity();
 		
-		if (gl.ext(ARB_shader_objects).supported) {
-			stdout("ARB_shader_objects supported");
+		if (gl.ext(VERSION_2_0).supported) {
+			stdout("VERSION_2_0 supported");
 		} else {
-			stdout("ARB_shader_objects NOT supported");
+			stdout("VERSION_2_0 NOT supported");
 		}
 	};
 

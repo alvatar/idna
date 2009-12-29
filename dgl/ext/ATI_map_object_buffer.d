@@ -1,6 +1,6 @@
 module dgl.ext.ATI_map_object_buffer;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 483;
+private ushort extensionId__ = 86;
 alias extensionId__ ATI_map_object_buffer;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -40,13 +40,13 @@ version (all) {
 	public {
 void* MapObjectBuffer(GL gl_, ParameterTypeTuple!(fp_glMapObjectBufferATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMapObjectBufferATI)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "MapObjectBuffer", funcPtr, params__);
 		}
 void UnmapObjectBuffer(GL gl_, ParameterTypeTuple!(fp_glUnmapObjectBufferATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glUnmapObjectBufferATI)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "UnmapObjectBuffer", funcPtr, params__);
 		}
@@ -66,7 +66,7 @@ void UnmapObjectBuffer(GL gl_, ParameterTypeTuple!(fp_glUnmapObjectBufferATI) pa
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

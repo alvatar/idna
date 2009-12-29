@@ -1,6 +1,6 @@
 module dgl.ext.NV_geometry_program4;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,13 +13,13 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 454;
+private ushort extensionId__ = 55;
 alias extensionId__ NV_geometry_program4;
 import dgl.ext.NV_gpu_program4;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -43,7 +43,7 @@ version (all) {
 	public {
 void ProgramVertexLimit(GL gl_, ParameterTypeTuple!(fp_glProgramVertexLimitNV) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glProgramVertexLimitNV)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "ProgramVertexLimit", funcPtr, params__);
 		}
@@ -63,7 +63,7 @@ void ProgramVertexLimit(GL gl_, ParameterTypeTuple!(fp_glProgramVertexLimitNV) p
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

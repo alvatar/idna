@@ -406,19 +406,19 @@ class GLWindow : GLContext, Window {
 			}
 		}
 		
-		_hrc = cast(typeof(_hrc))xf.dog.platform.Win32.wglCreateContext(_gl, _hdc);
+		_hrc = cast(typeof(_hrc))xf.dgl.platform.Win32.wglCreateContext(_gl, _hdc);
 		if (_hrc is null) {
 			printWinError();
 			throw new Exception("wglCreateContext failed");
 		}
 		
 		scope (failure) {
-			xf.dog.platform.Win32.wglDeleteContext(_gl, _hrc);
+			xf.dgl.platform.Win32.wglDeleteContext(_gl, _hrc);
 			_hrc = null;
 		}
 	
 	
-		if (!xf.dog.platform.Win32.wglMakeCurrent(_gl, _hdc, _hrc)) {
+		if (!xf.dgl.platform.Win32.wglMakeCurrent(_gl, _hdc, _hrc)) {
 			printWinError();
 			throw new Exception("wglMakeCurrent failed");
 		}
@@ -448,7 +448,7 @@ class GLWindow : GLContext, Window {
 				}
 				
 				uint numFormats = 0;
-				if (!xf.dog.ext.WGL_ARB_pixel_format.wglChoosePixelFormat(_gl, _hdc, formatAttribs.ptr, fAttributes.ptr, 1, &overridePixelFormat, &numFormats) || 0 == numFormats) {
+				if (!xf.dgl.ext.WGL_ARB_pixel_format.wglChoosePixelFormat(_gl, _hdc, formatAttribs.ptr, fAttributes.ptr, 1, &overridePixelFormat, &numFormats) || 0 == numFormats) {
 					// throw new Exception("wglChoosePixelFormat failed");
 				} else {
 					recreate = true;
@@ -508,9 +508,9 @@ class GLWindow : GLContext, Window {
 		if (_hwnd !is null) {
 			if (_hdc !is null)
 			{
-				xf.dog.platform.Win32.wglMakeCurrent(_gl, _hdc, null);
+				xf.dgl.platform.Win32.wglMakeCurrent(_gl, _hdc, null);
 				if (_hrc !is null) {
-					xf.dog.platform.Win32.wglDeleteContext(_gl, _hrc);
+					xf.dgl.platform.Win32.wglDeleteContext(_gl, _hrc);
 					_hrc = null;
 				}
 
@@ -611,7 +611,7 @@ class GLWindow : GLContext, Window {
 		GL			_gl;
 		
 		static bool				classRegistered = false;
-		static const char* 	className = "DogWindow";
+		static const char* 	className = "DglWindow";
 		
 		bool			preInitDone = false;
 		int			overridePixelFormat = 0;
@@ -621,7 +621,7 @@ class GLWindow : GLContext, Window {
 
 
 	protected {
-		char[]	_title	= "xf.dog.GLWindow";
+		char[]	_title	= "xf.dgl.GLWindow";
 		bool		_fullscreen		= false;
 		bool		_decorations		= true;
 		bool		_visible				= false;

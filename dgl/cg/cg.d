@@ -1,8 +1,8 @@
-module xf.dog.cg;
+module xf.dgl.cg;
 
 public {
-	import xf.dog.cg.consts;
-	import xf.dog.cg.functions;
+	import xf.dgl.cg.consts;
+	import xf.dgl.cg.functions;
 	
 	import tango.sys.sharedlib;
 }
@@ -26,7 +26,7 @@ private {
 }
 
 
-void initDogCg() {
+void initDglCg() {
 	if (cgDyLib !is null) {
 		cgDyLib.unload();
 	}

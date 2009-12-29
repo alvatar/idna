@@ -24,7 +24,7 @@ private {
 
 
 private ReturnTypeOf!(Func) checkedCall(Func, Params ...)(string fname, Func fp, Params p) {
-	version (DogCgNoErrorChecking) {
+	version (DglCgNoErrorChecking) {
 		return fp(p);
 	}
 	else {

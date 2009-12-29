@@ -1,6 +1,6 @@
 module dgl.ext.ARB_imaging;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 410;
+private ushort extensionId__ = 11;
 alias extensionId__ ARB_imaging;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -147,193 +147,193 @@ version (all) {
 	public {
 void ColorTable(GL gl_, ParameterTypeTuple!(fp_glColorTable) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glColorTable)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "ColorTable", funcPtr, params__);
 		}
 void ColorSubTable(GL gl_, ParameterTypeTuple!(fp_glColorSubTable) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glColorSubTable)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "ColorSubTable", funcPtr, params__);
 		}
 void ColorTableParameteriv(GL gl_, ParameterTypeTuple!(fp_glColorTableParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glColorTableParameteriv)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "ColorTableParameteriv", funcPtr, params__);
 		}
 void ColorTableParameterfv(GL gl_, ParameterTypeTuple!(fp_glColorTableParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glColorTableParameterfv)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "ColorTableParameterfv", funcPtr, params__);
 		}
 void CopyColorSubTable(GL gl_, ParameterTypeTuple!(fp_glCopyColorSubTable) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCopyColorSubTable)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "CopyColorSubTable", funcPtr, params__);
 		}
 void CopyColorTable(GL gl_, ParameterTypeTuple!(fp_glCopyColorTable) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCopyColorTable)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "CopyColorTable", funcPtr, params__);
 		}
 void GetColorTable(GL gl_, ParameterTypeTuple!(fp_glGetColorTable) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetColorTable)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "GetColorTable", funcPtr, params__);
 		}
 void GetColorTableParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetColorTableParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetColorTableParameterfv)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "GetColorTableParameterfv", funcPtr, params__);
 		}
 void GetColorTableParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetColorTableParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetColorTableParameteriv)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "GetColorTableParameteriv", funcPtr, params__);
 		}
 void Histogram(GL gl_, ParameterTypeTuple!(fp_glHistogram) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glHistogram)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "Histogram", funcPtr, params__);
 		}
 void ResetHistogram(GL gl_, ParameterTypeTuple!(fp_glResetHistogram) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glResetHistogram)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "ResetHistogram", funcPtr, params__);
 		}
 void GetHistogram(GL gl_, ParameterTypeTuple!(fp_glGetHistogram) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetHistogram)(gl.extFuncs[extensionId__][11]);
 			return checkedCall(gl_, "GetHistogram", funcPtr, params__);
 		}
 void GetHistogramParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetHistogramParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetHistogramParameterfv)(gl.extFuncs[extensionId__][12]);
 			return checkedCall(gl_, "GetHistogramParameterfv", funcPtr, params__);
 		}
 void GetHistogramParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetHistogramParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetHistogramParameteriv)(gl.extFuncs[extensionId__][13]);
 			return checkedCall(gl_, "GetHistogramParameteriv", funcPtr, params__);
 		}
 void Minmax(GL gl_, ParameterTypeTuple!(fp_glMinmax) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMinmax)(gl.extFuncs[extensionId__][14]);
 			return checkedCall(gl_, "Minmax", funcPtr, params__);
 		}
 void ResetMinmax(GL gl_, ParameterTypeTuple!(fp_glResetMinmax) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glResetMinmax)(gl.extFuncs[extensionId__][15]);
 			return checkedCall(gl_, "ResetMinmax", funcPtr, params__);
 		}
 void GetMinmaxParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetMinmaxParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetMinmaxParameterfv)(gl.extFuncs[extensionId__][16]);
 			return checkedCall(gl_, "GetMinmaxParameterfv", funcPtr, params__);
 		}
 void GetMinmaxParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetMinmaxParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetMinmaxParameteriv)(gl.extFuncs[extensionId__][17]);
 			return checkedCall(gl_, "GetMinmaxParameteriv", funcPtr, params__);
 		}
 void ConvolutionFilter1D(GL gl_, ParameterTypeTuple!(fp_glConvolutionFilter1D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionFilter1D)(gl.extFuncs[extensionId__][18]);
 			return checkedCall(gl_, "ConvolutionFilter1D", funcPtr, params__);
 		}
 void ConvolutionFilter2D(GL gl_, ParameterTypeTuple!(fp_glConvolutionFilter2D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionFilter2D)(gl.extFuncs[extensionId__][19]);
 			return checkedCall(gl_, "ConvolutionFilter2D", funcPtr, params__);
 		}
 void ConvolutionParameterf(GL gl_, ParameterTypeTuple!(fp_glConvolutionParameterf) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionParameterf)(gl.extFuncs[extensionId__][20]);
 			return checkedCall(gl_, "ConvolutionParameterf", funcPtr, params__);
 		}
 void ConvolutionParameterfv(GL gl_, ParameterTypeTuple!(fp_glConvolutionParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionParameterfv)(gl.extFuncs[extensionId__][21]);
 			return checkedCall(gl_, "ConvolutionParameterfv", funcPtr, params__);
 		}
 void ConvolutionParameteri(GL gl_, ParameterTypeTuple!(fp_glConvolutionParameteri) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionParameteri)(gl.extFuncs[extensionId__][22]);
 			return checkedCall(gl_, "ConvolutionParameteri", funcPtr, params__);
 		}
 void ConvolutionParameteriv(GL gl_, ParameterTypeTuple!(fp_glConvolutionParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glConvolutionParameteriv)(gl.extFuncs[extensionId__][23]);
 			return checkedCall(gl_, "ConvolutionParameteriv", funcPtr, params__);
 		}
 void CopyConvolutionFilter1D(GL gl_, ParameterTypeTuple!(fp_glCopyConvolutionFilter1D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCopyConvolutionFilter1D)(gl.extFuncs[extensionId__][24]);
 			return checkedCall(gl_, "CopyConvolutionFilter1D", funcPtr, params__);
 		}
 void CopyConvolutionFilter2D(GL gl_, ParameterTypeTuple!(fp_glCopyConvolutionFilter2D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCopyConvolutionFilter2D)(gl.extFuncs[extensionId__][25]);
 			return checkedCall(gl_, "CopyConvolutionFilter2D", funcPtr, params__);
 		}
 void GetConvolutionFilter(GL gl_, ParameterTypeTuple!(fp_glGetConvolutionFilter) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetConvolutionFilter)(gl.extFuncs[extensionId__][26]);
 			return checkedCall(gl_, "GetConvolutionFilter", funcPtr, params__);
 		}
 void GetConvolutionParameterfv(GL gl_, ParameterTypeTuple!(fp_glGetConvolutionParameterfv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetConvolutionParameterfv)(gl.extFuncs[extensionId__][27]);
 			return checkedCall(gl_, "GetConvolutionParameterfv", funcPtr, params__);
 		}
 void GetConvolutionParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetConvolutionParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetConvolutionParameteriv)(gl.extFuncs[extensionId__][28]);
 			return checkedCall(gl_, "GetConvolutionParameteriv", funcPtr, params__);
 		}
 void SeparableFilter2D(GL gl_, ParameterTypeTuple!(fp_glSeparableFilter2D) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSeparableFilter2D)(gl.extFuncs[extensionId__][29]);
 			return checkedCall(gl_, "SeparableFilter2D", funcPtr, params__);
 		}
 void GetSeparableFilter(GL gl_, ParameterTypeTuple!(fp_glGetSeparableFilter) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetSeparableFilter)(gl.extFuncs[extensionId__][30]);
 			return checkedCall(gl_, "GetSeparableFilter", funcPtr, params__);
 		}
 void GetMinmax(GL gl_, ParameterTypeTuple!(fp_glGetMinmax) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetMinmax)(gl.extFuncs[extensionId__][31]);
 			return checkedCall(gl_, "GetMinmax", funcPtr, params__);
 		}
@@ -353,7 +353,7 @@ void GetMinmax(GL gl_, ParameterTypeTuple!(fp_glGetMinmax) params__) {
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

@@ -1,6 +1,6 @@
 module dgl.ext.ARB_matrix_palette;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 453;
+private ushort extensionId__ = 54;
 alias extensionId__ ARB_matrix_palette;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -53,31 +53,31 @@ version (all) {
 	public {
 void CurrentPaletteMatrix(GL gl_, ParameterTypeTuple!(fp_glCurrentPaletteMatrixARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glCurrentPaletteMatrixARB)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "CurrentPaletteMatrix", funcPtr, params__);
 		}
 void MatrixIndexPointer(GL gl_, ParameterTypeTuple!(fp_glMatrixIndexPointerARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMatrixIndexPointerARB)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "MatrixIndexPointer", funcPtr, params__);
 		}
 void MatrixIndexubv(GL gl_, ParameterTypeTuple!(fp_glMatrixIndexubvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMatrixIndexubvARB)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "MatrixIndexubv", funcPtr, params__);
 		}
 void MatrixIndexusv(GL gl_, ParameterTypeTuple!(fp_glMatrixIndexusvARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMatrixIndexusvARB)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "MatrixIndexusv", funcPtr, params__);
 		}
 void MatrixIndexuiv(GL gl_, ParameterTypeTuple!(fp_glMatrixIndexuivARB) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMatrixIndexuivARB)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "MatrixIndexuiv", funcPtr, params__);
 		}
@@ -97,7 +97,7 @@ void MatrixIndexuiv(GL gl_, ParameterTypeTuple!(fp_glMatrixIndexuivARB) params__
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

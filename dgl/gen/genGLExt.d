@@ -77,7 +77,7 @@ void createOutput(Ext[] extensions) {
 	scope o = new Print!(char)(new Layout!(char), outFile);
 	
 	o.formatln(
-`module dog.GLExt;
+`module dgl.GLExt;
 
 
 
@@ -102,8 +102,8 @@ template MGLExt() {{
 		if (e.name[0..4] == `GLX_`) o.formatln(`		version (GLX) `);
 		o.formatln(
 `		static if (extMaskTestBit__(extMask__, {0})) {{
-			private static import dog.ext.{1};
-			mixin dog.ext.{1}.{1}__!({0});
+			private static import dgl.ext.{1};
+			mixin dgl.ext.{1}.{1}__!({0});
 		}`, e.id, e.name);
 	}
 	

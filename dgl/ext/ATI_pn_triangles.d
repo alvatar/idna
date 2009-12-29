@@ -1,6 +1,6 @@
 module dgl.ext.ATI_pn_triangles;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 485;
+private ushort extensionId__ = 88;
 alias extensionId__ ATI_pn_triangles;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -49,13 +49,13 @@ version (all) {
 	public {
 void PNTrianglesi(GL gl_, ParameterTypeTuple!(fp_glPNTrianglesiATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glPNTrianglesiATI)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "PNTrianglesi", funcPtr, params__);
 		}
 void PNTrianglesf(GL gl_, ParameterTypeTuple!(fp_glPNTrianglesfATI) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glPNTrianglesfATI)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "PNTrianglesf", funcPtr, params__);
 		}
@@ -75,7 +75,7 @@ void PNTrianglesf(GL gl_, ParameterTypeTuple!(fp_glPNTrianglesfATI) params__) {
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

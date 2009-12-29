@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 412;
+private ushort extensionId__ = 13;
 alias extensionId__ VERSION_1_5;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -95,115 +95,115 @@ version (all) {
 	public {
 void GenQueries(GL gl_, ParameterTypeTuple!(fp_glGenQueries) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGenQueries)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "GenQueries", funcPtr, params__);
 		}
 void DeleteQueries(GL gl_, ParameterTypeTuple!(fp_glDeleteQueries) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDeleteQueries)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "DeleteQueries", funcPtr, params__);
 		}
 GLboolean IsQuery(GL gl_, ParameterTypeTuple!(fp_glIsQuery) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glIsQuery)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "IsQuery", funcPtr, params__);
 		}
 void BeginQuery(GL gl_, ParameterTypeTuple!(fp_glBeginQuery) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBeginQuery)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "BeginQuery", funcPtr, params__);
 		}
 void EndQuery(GL gl_, ParameterTypeTuple!(fp_glEndQuery) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glEndQuery)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "EndQuery", funcPtr, params__);
 		}
 void GetQueryiv(GL gl_, ParameterTypeTuple!(fp_glGetQueryiv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetQueryiv)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "GetQueryiv", funcPtr, params__);
 		}
 void GetQueryObjectiv(GL gl_, ParameterTypeTuple!(fp_glGetQueryObjectiv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetQueryObjectiv)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "GetQueryObjectiv", funcPtr, params__);
 		}
 void GetQueryObjectuiv(GL gl_, ParameterTypeTuple!(fp_glGetQueryObjectuiv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetQueryObjectuiv)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "GetQueryObjectuiv", funcPtr, params__);
 		}
 void BindBuffer(GL gl_, ParameterTypeTuple!(fp_glBindBuffer) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindBuffer)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "BindBuffer", funcPtr, params__);
 		}
 void DeleteBuffers(GL gl_, ParameterTypeTuple!(fp_glDeleteBuffers) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDeleteBuffers)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "DeleteBuffers", funcPtr, params__);
 		}
 void GenBuffers(GL gl_, ParameterTypeTuple!(fp_glGenBuffers) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGenBuffers)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "GenBuffers", funcPtr, params__);
 		}
 GLboolean IsBuffer(GL gl_, ParameterTypeTuple!(fp_glIsBuffer) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glIsBuffer)(gl.extFuncs[extensionId__][11]);
 			return checkedCall(gl_, "IsBuffer", funcPtr, params__);
 		}
 void BufferData(GL gl_, ParameterTypeTuple!(fp_glBufferData) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBufferData)(gl.extFuncs[extensionId__][12]);
 			return checkedCall(gl_, "BufferData", funcPtr, params__);
 		}
 void BufferSubData(GL gl_, ParameterTypeTuple!(fp_glBufferSubData) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBufferSubData)(gl.extFuncs[extensionId__][13]);
 			return checkedCall(gl_, "BufferSubData", funcPtr, params__);
 		}
 void GetBufferSubData(GL gl_, ParameterTypeTuple!(fp_glGetBufferSubData) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetBufferSubData)(gl.extFuncs[extensionId__][14]);
 			return checkedCall(gl_, "GetBufferSubData", funcPtr, params__);
 		}
 GLvoid* MapBuffer(GL gl_, ParameterTypeTuple!(fp_glMapBuffer) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glMapBuffer)(gl.extFuncs[extensionId__][15]);
 			return checkedCall(gl_, "MapBuffer", funcPtr, params__);
 		}
 GLboolean UnmapBuffer(GL gl_, ParameterTypeTuple!(fp_glUnmapBuffer) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glUnmapBuffer)(gl.extFuncs[extensionId__][16]);
 			return checkedCall(gl_, "UnmapBuffer", funcPtr, params__);
 		}
 void GetBufferParameteriv(GL gl_, ParameterTypeTuple!(fp_glGetBufferParameteriv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetBufferParameteriv)(gl.extFuncs[extensionId__][17]);
 			return checkedCall(gl_, "GetBufferParameteriv", funcPtr, params__);
 		}
 void GetBufferPointerv(GL gl_, ParameterTypeTuple!(fp_glGetBufferPointerv) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetBufferPointerv)(gl.extFuncs[extensionId__][18]);
 			return checkedCall(gl_, "GetBufferPointerv", funcPtr, params__);
 		}
@@ -223,7 +223,7 @@ void GetBufferPointerv(GL gl_, ParameterTypeTuple!(fp_glGetBufferPointerv) param
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

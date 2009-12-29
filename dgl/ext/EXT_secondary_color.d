@@ -1,6 +1,6 @@
 module dgl.ext.EXT_secondary_color;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 434;
+private ushort extensionId__ = 35;
 alias extensionId__ EXT_secondary_color;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -62,103 +62,103 @@ version (all) {
 	public {
 void SecondaryColor3b(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3bEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3bEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "SecondaryColor3b", funcPtr, params__);
 		}
 void SecondaryColor3bv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3bvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3bvEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "SecondaryColor3bv", funcPtr, params__);
 		}
 void SecondaryColor3d(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3dEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3dEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "SecondaryColor3d", funcPtr, params__);
 		}
 void SecondaryColor3dv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3dvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3dvEXT)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "SecondaryColor3dv", funcPtr, params__);
 		}
 void SecondaryColor3f(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3fEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3fEXT)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "SecondaryColor3f", funcPtr, params__);
 		}
 void SecondaryColor3fv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3fvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3fvEXT)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "SecondaryColor3fv", funcPtr, params__);
 		}
 void SecondaryColor3i(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3iEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3iEXT)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "SecondaryColor3i", funcPtr, params__);
 		}
 void SecondaryColor3iv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3ivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3ivEXT)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "SecondaryColor3iv", funcPtr, params__);
 		}
 void SecondaryColor3s(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3sEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3sEXT)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "SecondaryColor3s", funcPtr, params__);
 		}
 void SecondaryColor3sv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3svEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3svEXT)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "SecondaryColor3sv", funcPtr, params__);
 		}
 void SecondaryColor3ub(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3ubEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3ubEXT)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "SecondaryColor3ub", funcPtr, params__);
 		}
 void SecondaryColor3ubv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3ubvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3ubvEXT)(gl.extFuncs[extensionId__][11]);
 			return checkedCall(gl_, "SecondaryColor3ubv", funcPtr, params__);
 		}
 void SecondaryColor3ui(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3uiEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3uiEXT)(gl.extFuncs[extensionId__][12]);
 			return checkedCall(gl_, "SecondaryColor3ui", funcPtr, params__);
 		}
 void SecondaryColor3uiv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3uivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3uivEXT)(gl.extFuncs[extensionId__][13]);
 			return checkedCall(gl_, "SecondaryColor3uiv", funcPtr, params__);
 		}
 void SecondaryColor3us(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3usEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3usEXT)(gl.extFuncs[extensionId__][14]);
 			return checkedCall(gl_, "SecondaryColor3us", funcPtr, params__);
 		}
 void SecondaryColor3usv(GL gl_, ParameterTypeTuple!(fp_glSecondaryColor3usvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColor3usvEXT)(gl.extFuncs[extensionId__][15]);
 			return checkedCall(gl_, "SecondaryColor3usv", funcPtr, params__);
 		}
 void SecondaryColorPointer(GL gl_, ParameterTypeTuple!(fp_glSecondaryColorPointerEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSecondaryColorPointerEXT)(gl.extFuncs[extensionId__][16]);
 			return checkedCall(gl_, "SecondaryColorPointer", funcPtr, params__);
 		}
@@ -178,7 +178,7 @@ void SecondaryColorPointer(GL gl_, ParameterTypeTuple!(fp_glSecondaryColorPointe
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

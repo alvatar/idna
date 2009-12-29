@@ -1,6 +1,6 @@
 module dgl.ext.EXT_vertex_shader;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 441;
+private ushort extensionId__ = 42;
 alias extensionId__ EXT_vertex_shader;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -190,253 +190,253 @@ version (all) {
 	public {
 void BeginVertexShader(GL gl_, ParameterTypeTuple!(fp_glBeginVertexShaderEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBeginVertexShaderEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "BeginVertexShader", funcPtr, params__);
 		}
 void EndVertexShader(GL gl_, ParameterTypeTuple!(fp_glEndVertexShaderEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glEndVertexShaderEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "EndVertexShader", funcPtr, params__);
 		}
 void BindVertexShader(GL gl_, ParameterTypeTuple!(fp_glBindVertexShaderEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindVertexShaderEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "BindVertexShader", funcPtr, params__);
 		}
 GLuint GenVertexShaders(GL gl_, ParameterTypeTuple!(fp_glGenVertexShadersEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGenVertexShadersEXT)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "GenVertexShaders", funcPtr, params__);
 		}
 void DeleteVertexShader(GL gl_, ParameterTypeTuple!(fp_glDeleteVertexShaderEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDeleteVertexShaderEXT)(gl.extFuncs[extensionId__][4]);
 			return checkedCall(gl_, "DeleteVertexShader", funcPtr, params__);
 		}
 void ShaderOp1(GL gl_, ParameterTypeTuple!(fp_glShaderOp1EXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glShaderOp1EXT)(gl.extFuncs[extensionId__][5]);
 			return checkedCall(gl_, "ShaderOp1", funcPtr, params__);
 		}
 void ShaderOp2(GL gl_, ParameterTypeTuple!(fp_glShaderOp2EXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glShaderOp2EXT)(gl.extFuncs[extensionId__][6]);
 			return checkedCall(gl_, "ShaderOp2", funcPtr, params__);
 		}
 void ShaderOp3(GL gl_, ParameterTypeTuple!(fp_glShaderOp3EXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glShaderOp3EXT)(gl.extFuncs[extensionId__][7]);
 			return checkedCall(gl_, "ShaderOp3", funcPtr, params__);
 		}
 void Swizzle(GL gl_, ParameterTypeTuple!(fp_glSwizzleEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSwizzleEXT)(gl.extFuncs[extensionId__][8]);
 			return checkedCall(gl_, "Swizzle", funcPtr, params__);
 		}
 void WriteMask(GL gl_, ParameterTypeTuple!(fp_glWriteMaskEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glWriteMaskEXT)(gl.extFuncs[extensionId__][9]);
 			return checkedCall(gl_, "WriteMask", funcPtr, params__);
 		}
 void InsertComponent(GL gl_, ParameterTypeTuple!(fp_glInsertComponentEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glInsertComponentEXT)(gl.extFuncs[extensionId__][10]);
 			return checkedCall(gl_, "InsertComponent", funcPtr, params__);
 		}
 void ExtractComponent(GL gl_, ParameterTypeTuple!(fp_glExtractComponentEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glExtractComponentEXT)(gl.extFuncs[extensionId__][11]);
 			return checkedCall(gl_, "ExtractComponent", funcPtr, params__);
 		}
 GLuint GenSymbols(GL gl_, ParameterTypeTuple!(fp_glGenSymbolsEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGenSymbolsEXT)(gl.extFuncs[extensionId__][12]);
 			return checkedCall(gl_, "GenSymbols", funcPtr, params__);
 		}
 void SetInvariant(GL gl_, ParameterTypeTuple!(fp_glSetInvariantEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSetInvariantEXT)(gl.extFuncs[extensionId__][13]);
 			return checkedCall(gl_, "SetInvariant", funcPtr, params__);
 		}
 void SetLocalConstant(GL gl_, ParameterTypeTuple!(fp_glSetLocalConstantEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glSetLocalConstantEXT)(gl.extFuncs[extensionId__][14]);
 			return checkedCall(gl_, "SetLocalConstant", funcPtr, params__);
 		}
 void Variantbv(GL gl_, ParameterTypeTuple!(fp_glVariantbvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantbvEXT)(gl.extFuncs[extensionId__][15]);
 			return checkedCall(gl_, "Variantbv", funcPtr, params__);
 		}
 void Variantsv(GL gl_, ParameterTypeTuple!(fp_glVariantsvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantsvEXT)(gl.extFuncs[extensionId__][16]);
 			return checkedCall(gl_, "Variantsv", funcPtr, params__);
 		}
 void Variantiv(GL gl_, ParameterTypeTuple!(fp_glVariantivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantivEXT)(gl.extFuncs[extensionId__][17]);
 			return checkedCall(gl_, "Variantiv", funcPtr, params__);
 		}
 void Variantfv(GL gl_, ParameterTypeTuple!(fp_glVariantfvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantfvEXT)(gl.extFuncs[extensionId__][18]);
 			return checkedCall(gl_, "Variantfv", funcPtr, params__);
 		}
 void Variantdv(GL gl_, ParameterTypeTuple!(fp_glVariantdvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantdvEXT)(gl.extFuncs[extensionId__][19]);
 			return checkedCall(gl_, "Variantdv", funcPtr, params__);
 		}
 void Variantubv(GL gl_, ParameterTypeTuple!(fp_glVariantubvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantubvEXT)(gl.extFuncs[extensionId__][20]);
 			return checkedCall(gl_, "Variantubv", funcPtr, params__);
 		}
 void Variantusv(GL gl_, ParameterTypeTuple!(fp_glVariantusvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantusvEXT)(gl.extFuncs[extensionId__][21]);
 			return checkedCall(gl_, "Variantusv", funcPtr, params__);
 		}
 void Variantuiv(GL gl_, ParameterTypeTuple!(fp_glVariantuivEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantuivEXT)(gl.extFuncs[extensionId__][22]);
 			return checkedCall(gl_, "Variantuiv", funcPtr, params__);
 		}
 void VariantPointer(GL gl_, ParameterTypeTuple!(fp_glVariantPointerEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glVariantPointerEXT)(gl.extFuncs[extensionId__][23]);
 			return checkedCall(gl_, "VariantPointer", funcPtr, params__);
 		}
 void EnableVariantClientState(GL gl_, ParameterTypeTuple!(fp_glEnableVariantClientStateEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glEnableVariantClientStateEXT)(gl.extFuncs[extensionId__][24]);
 			return checkedCall(gl_, "EnableVariantClientState", funcPtr, params__);
 		}
 void DisableVariantClientState(GL gl_, ParameterTypeTuple!(fp_glDisableVariantClientStateEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glDisableVariantClientStateEXT)(gl.extFuncs[extensionId__][25]);
 			return checkedCall(gl_, "DisableVariantClientState", funcPtr, params__);
 		}
 GLuint BindLightParameter(GL gl_, ParameterTypeTuple!(fp_glBindLightParameterEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindLightParameterEXT)(gl.extFuncs[extensionId__][26]);
 			return checkedCall(gl_, "BindLightParameter", funcPtr, params__);
 		}
 GLuint BindMaterialParameter(GL gl_, ParameterTypeTuple!(fp_glBindMaterialParameterEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindMaterialParameterEXT)(gl.extFuncs[extensionId__][27]);
 			return checkedCall(gl_, "BindMaterialParameter", funcPtr, params__);
 		}
 GLuint BindTexGenParameter(GL gl_, ParameterTypeTuple!(fp_glBindTexGenParameterEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindTexGenParameterEXT)(gl.extFuncs[extensionId__][28]);
 			return checkedCall(gl_, "BindTexGenParameter", funcPtr, params__);
 		}
 GLuint BindTextureUnitParameter(GL gl_, ParameterTypeTuple!(fp_glBindTextureUnitParameterEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindTextureUnitParameterEXT)(gl.extFuncs[extensionId__][29]);
 			return checkedCall(gl_, "BindTextureUnitParameter", funcPtr, params__);
 		}
 GLuint BindParameter(GL gl_, ParameterTypeTuple!(fp_glBindParameterEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glBindParameterEXT)(gl.extFuncs[extensionId__][30]);
 			return checkedCall(gl_, "BindParameter", funcPtr, params__);
 		}
 GLboolean IsVariantEnabled(GL gl_, ParameterTypeTuple!(fp_glIsVariantEnabledEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glIsVariantEnabledEXT)(gl.extFuncs[extensionId__][31]);
 			return checkedCall(gl_, "IsVariantEnabled", funcPtr, params__);
 		}
 void GetVariantBooleanv(GL gl_, ParameterTypeTuple!(fp_glGetVariantBooleanvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetVariantBooleanvEXT)(gl.extFuncs[extensionId__][32]);
 			return checkedCall(gl_, "GetVariantBooleanv", funcPtr, params__);
 		}
 void GetVariantIntegerv(GL gl_, ParameterTypeTuple!(fp_glGetVariantIntegervEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetVariantIntegervEXT)(gl.extFuncs[extensionId__][33]);
 			return checkedCall(gl_, "GetVariantIntegerv", funcPtr, params__);
 		}
 void GetVariantFloatv(GL gl_, ParameterTypeTuple!(fp_glGetVariantFloatvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetVariantFloatvEXT)(gl.extFuncs[extensionId__][34]);
 			return checkedCall(gl_, "GetVariantFloatv", funcPtr, params__);
 		}
 void GetVariantPointerv(GL gl_, ParameterTypeTuple!(fp_glGetVariantPointervEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetVariantPointervEXT)(gl.extFuncs[extensionId__][35]);
 			return checkedCall(gl_, "GetVariantPointerv", funcPtr, params__);
 		}
 void GetInvariantBooleanv(GL gl_, ParameterTypeTuple!(fp_glGetInvariantBooleanvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetInvariantBooleanvEXT)(gl.extFuncs[extensionId__][36]);
 			return checkedCall(gl_, "GetInvariantBooleanv", funcPtr, params__);
 		}
 void GetInvariantIntegerv(GL gl_, ParameterTypeTuple!(fp_glGetInvariantIntegervEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetInvariantIntegervEXT)(gl.extFuncs[extensionId__][37]);
 			return checkedCall(gl_, "GetInvariantIntegerv", funcPtr, params__);
 		}
 void GetInvariantFloatv(GL gl_, ParameterTypeTuple!(fp_glGetInvariantFloatvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetInvariantFloatvEXT)(gl.extFuncs[extensionId__][38]);
 			return checkedCall(gl_, "GetInvariantFloatv", funcPtr, params__);
 		}
 void GetLocalConstantBooleanv(GL gl_, ParameterTypeTuple!(fp_glGetLocalConstantBooleanvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetLocalConstantBooleanvEXT)(gl.extFuncs[extensionId__][39]);
 			return checkedCall(gl_, "GetLocalConstantBooleanv", funcPtr, params__);
 		}
 void GetLocalConstantIntegerv(GL gl_, ParameterTypeTuple!(fp_glGetLocalConstantIntegervEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetLocalConstantIntegervEXT)(gl.extFuncs[extensionId__][40]);
 			return checkedCall(gl_, "GetLocalConstantIntegerv", funcPtr, params__);
 		}
 void GetLocalConstantFloatv(GL gl_, ParameterTypeTuple!(fp_glGetLocalConstantFloatvEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glGetLocalConstantFloatvEXT)(gl.extFuncs[extensionId__][41]);
 			return checkedCall(gl_, "GetLocalConstantFloatv", funcPtr, params__);
 		}
@@ -456,7 +456,7 @@ void GetLocalConstantFloatv(GL gl_, ParameterTypeTuple!(fp_glGetLocalConstantFlo
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

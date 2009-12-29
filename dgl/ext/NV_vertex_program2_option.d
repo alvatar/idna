@@ -1,6 +1,6 @@
 module dgl.ext.NV_vertex_program2_option;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,13 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 429;
+private ushort extensionId__ = 30;
 alias extensionId__ NV_vertex_program2_option;
-import dgl.ext.ARB_vertex_program;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -55,7 +54,7 @@ version (all) {
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

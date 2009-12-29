@@ -1,6 +1,6 @@
 module dgl.ext.EXT_geometry_shader4;
-import dgl.OpenGL;
-import dgl.GLExt;
+import dgl.opengl;
+import dgl.glext;
 
 version( D_Version2 ) {
 	import std.string : containsPattern = count;
@@ -13,12 +13,12 @@ version( D_Version2 ) {
 
 
 
-private ushort extensionId__ = 480;
+private ushort extensionId__ = 82;
 alias extensionId__ EXT_geometry_shader4;
 
-	version (DogNoExtSupportAsserts) {
+	version (DglNoExtSupportAsserts) {
 	} else {
-		version = DogExtSupportAsserts;
+		version = DglExtSupportAsserts;
 	}
 	
 	static this() {
@@ -62,25 +62,25 @@ version (all) {
 	public {
 void ProgramParameteri(GL gl_, ParameterTypeTuple!(fp_glProgramParameteriEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glProgramParameteriEXT)(gl.extFuncs[extensionId__][0]);
 			return checkedCall(gl_, "ProgramParameteri", funcPtr, params__);
 		}
 void FramebufferTexture(GL gl_, ParameterTypeTuple!(fp_glFramebufferTextureEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glFramebufferTextureEXT)(gl.extFuncs[extensionId__][1]);
 			return checkedCall(gl_, "FramebufferTexture", funcPtr, params__);
 		}
 void FramebufferTextureLayer(GL gl_, ParameterTypeTuple!(fp_glFramebufferTextureLayerEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glFramebufferTextureLayerEXT)(gl.extFuncs[extensionId__][2]);
 			return checkedCall(gl_, "FramebufferTextureLayer", funcPtr, params__);
 		}
 void FramebufferTextureFace(GL gl_, ParameterTypeTuple!(fp_glFramebufferTextureFaceEXT) params__) {
 			auto gl = _getGL(gl_);
-			version (DogExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
+			version (DglExtSupportAsserts) assert (gl.extEnabled.length > extensionId__ && gl.extEnabled[extensionId__] > 0, extNotEnabledError);
 			auto funcPtr = cast(fp_glFramebufferTextureFaceEXT)(gl.extFuncs[extensionId__][3]);
 			return checkedCall(gl_, "FramebufferTextureFace", funcPtr, params__);
 		}
@@ -100,7 +100,7 @@ void FramebufferTextureFace(GL gl_, ParameterTypeTuple!(fp_glFramebufferTextureF
 			if (gl.extFuncs.length <= extensionId__) {
 				gl.extFuncs.length = extensionId__ + 1;
 				
-				version (DogExtSupportAsserts) {
+				version (DglExtSupportAsserts) {
 					gl.extEnabled.length = extensionId__ + 1;
 				}
 			}

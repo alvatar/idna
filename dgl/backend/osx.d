@@ -11,19 +11,19 @@ private {
 	import sys.osx.nsevent;
 	import sys.osx.nsgeometry;
 	import sys.osx.nsapplication;
-	import sys.osx.dogview;
+	import sys.osx.dgl;
 }
 
 class GLWindow : GLContext, Window {
 	public bool delegate(NSEvent) msgFilter;
 
 	static this() {
-		registerClass("DogWindow", "NSWindow");
+		registerClass("DglWindow", "NSWindow");
 	}
 
 	this() {
 		app = Application();
-        if (_meta is null) _meta = lookUp("DogWindow");
+        if (_meta is null) _meta = lookUp("DglWindow");
 
 		dispatchMethod.method_count = 1;
 		dispatchMethod.method_list[0].method_name = app.selDispatch;
@@ -124,7 +124,7 @@ class GLWindow : GLContext, Window {
 	}
 
 	protected {
-		char[] _title = "dog.GLWindow";
+		char[] _title = "dgl.GLWindow";
 		bool _fullscreen = false;
 		bool _decorations = true;
 		bool _visible = false;
@@ -170,7 +170,7 @@ class GLWindow : GLContext, Window {
 		int[] attr = [5, 12, 32, 0];
 		autorelease(send(pfid, sel("initWithAttributes:"), attr.ptr));
 
-		view = new DogView(obj, rect, pfid, cast(id function(id, SEL, ...))&draw);
+		view = new DglView(obj, rect, pfid, cast(id function(id, SEL, ...))&draw);
 
 		if (_gl is null) {
 			_gl._setGL(new GLHandle);
@@ -208,7 +208,7 @@ class GLWindow : GLContext, Window {
 	private {
 		GL _gl;
 		NSApplication app;
-		DogView view;
+		DglView view;
         int backing = 2;
 		id pool;
 		objc_method_list dispatchMethod;
@@ -228,7 +228,7 @@ private id draw(id o, SEL s, void delegate(GL) dg, GL gl) {
 }
 
 import tango.sys.SharedLib;
-import xf.dog.OpenGL;
+import xf.dgl.OpenGL;
 void loadTestFuncs() {
 	auto lib = SharedLib.load("/Library/Frameworks/OpenGL.framework/OpenGL");
     assert(lib !is null);
