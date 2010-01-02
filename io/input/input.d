@@ -316,7 +316,7 @@ class InputChannel {
 	this() {
 		queueIndices = new LinkedList!(int);
 		queues.length = lastInputId;
-		foreach (i, inout q; queues) {
+		foreach (i, ref q; queues) {
 			q = inputQueueFactories[i]();
 		}
 	}

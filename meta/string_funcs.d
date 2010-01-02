@@ -143,6 +143,31 @@ pure int rfind (T) (T[] str, T sub[]) {
 	return -1;
 }
 
+/++ Returns a string replacing a substring by another +/
+pure string replace( string _source, string subfrom, string subto ) {
+	int i = 0;
+	string source = _source;
+	string res;
+	if( source.length < subfrom.length )
+		return source;
+	while(i <= source.length - subfrom.length) {
+		if (source[i .. i+subfrom.length] == subfrom) {
+			res ~= source[0 .. i];
+			res ~= subto;
+			source = source[i + subfrom.length .. $];
+			// TODO: REVIEW: No debería comenzar desde i la próxima vez sin reiniciar??
+			i = 0;
+		} else {
+			i++;
+		}
+		if (source.length < subfrom.length)
+			break;
+	}
+	res ~= source;
+	return res;
+}
+
+
 /++
  + Removes the characters from the left of the given string,
  + as long as they are in the given set of characters

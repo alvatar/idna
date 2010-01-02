@@ -13,16 +13,6 @@ private {
  + Type creation
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
 /++
- + Build a values tuple
- +/
-template BuildValueTuple(value, int count) {
-	static if (!count)
-		alias TypeTuple!() BuildValueTuple;
-	else
-		alias TypeTuple!(typeof(value), BuildValueTuple!(value,count-1)) BuildValueTuple;
-}
-
-/++
  + Build a tuple repeating a type
  +/
 template RepeatType(T, int count) {
@@ -39,16 +29,16 @@ typeof(return) structtuple(T ...)(T t) {
 	return Stuple!(UnstaticAll!(T))(t);
 }
 
-private template StructTupleMembers(T...) {
+private template cStructTupleMembers(T...) {
 	static if (T.length) {
 		const int id=T[0..$-1].length;
-		const string str=StructTupleMembers!(T[0..$-1]).str~"Unstatic!(T["~id.stringof~"]) _"~id.stringof~"; ";
+		const string str=cStructTupleMembers!(T[0..$-1]).str~"Unstatic!(T["~id.stringof~"]) _"~id.stringof~"; ";
 	} else const string str="";
 }
 
 private struct Stuple(T...) {
 	alias TypeTuple!() StupleMarker;
-	mixin(StructTupleMembers!(T).str);
+	mixin(cStructTupleMembers!(T).str);
 
 	// TODO: generalizable?
 	string Format(T...)(T t) {

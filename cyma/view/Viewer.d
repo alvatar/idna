@@ -137,23 +137,10 @@ class Viewer {
 	}
 
 	/++
-	 + Make an actor with immediate mode drawing capabilities with dynamically
-	 + dispatched delegates (used for high-level drawing functions, as they
-	 + have a high overhead)
+	 + Provide an actor for commands' direct output
 	 +/
-	import std.variant;
 	final OutputActor output() {
-		OutputActor result = new OutputActor;
-		result.__bindMethod( "test"
-				, delegate int(){ writeln("NO ARGS"); return 99; } );
-		/*
-		result.__bindMethod( "test2"
-				, delegate int(int a){ writeln(a); return 99; } );
-		result.__bindMethod( "test3"
-				, delegate int(int a,int b){ writeln(a); writeln(b); return 99; } );
-		*/
-		result["test5"] = delegate int(uint input){ return 3; };
-		return result;
+		return _viewActors[0];
 	}
 
 	/++

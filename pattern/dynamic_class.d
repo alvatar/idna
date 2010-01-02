@@ -97,13 +97,12 @@ template MakeClassDynamic() {
 			Variant vf(Variant[] iargs) {
 				alias ParameterTypeTuple!(T) Args;
 				Args targs;
-				debug if( iargs.length != targs.length )
-					throw new Exception(
-								"Incorrect number of arguments, expected: "
-								~ to!(string)(targs.length)
-								~ ", passed: "
-								~ to!(string)(iargs.length)
-								);
+				throw new Exception(
+							"Incorrect number of arguments, expected: "
+							~ to!(string)(targs.length)
+							~ ", passed: "
+							~ to!(string)(iargs.length)
+							);
 				foreach( i, a; targs )
 					targs[i] = iargs[i].get!(Args[i]);
 				static if( is(ReturnType!(T) == void) ) {
@@ -141,17 +140,14 @@ template MakeClassDynamic() {
 	 + Compiler doesn't currently understand variadic template for opDispatch
 	 +/
 	Variant opDispatch(string fname,Args...)(Args args) {
-		// TODO: try/catch
-		debug {
-			if( __dynamicMethods.containsKey( fname ) )
-				return __dynamicMethods[fname]( variantArray(args) );
-			else
-				throw new DynamicMethodException (
-						" Error calling dynamic method. Method "
-						~ fname
-						~ " has not been binded to class "
-						~ typeof(this).stringof );
-		} else return __dynamicMethods[fname]( variantArray(args) );
+		if( __dynamicMethods.containsKey( fname ) )
+			return __dynamicMethods[fname]( variantArray(args) );
+		else
+			throw new DynamicMethodException (
+					" Error calling dynamic method. Method "
+					~ fname
+					~ " has not been binded to class "
+					~ typeof(this).stringof );
 	}
 
 	/++
@@ -163,16 +159,14 @@ template MakeClassDynamic() {
 	 + instance.func2( variantArray(1,2) );
 	 +/
 	Variant opDispatch(string fname,T : Variant[])(Variant[] args) {
-		debug {
-			if( __dynamicMethods.containsKey( fname ) )
-				return __dynamicMethods[fname]( args );
-			else
-				throw new DynamicMethodException (
-						" Error calling dynamic method. Method "
-						~ fname
-						~ " has not been binded to class "
-					 	~ typeof(this).stringof );
-		} else return __dynamicMethods[fname]( args );
+		if( __dynamicMethods.containsKey( fname ) )
+			return __dynamicMethods[fname]( args );
+		else
+			throw new DynamicMethodException (
+					" Error calling dynamic method. Method "
+					~ fname
+					~ " has not been binded to class "
+					~ typeof(this).stringof );
 	}
 
 	Variant opIndex(string fname) {
@@ -226,18 +220,14 @@ template MakeClassDynamic() {
 	Variant __call(
 			Args...
 			)(string fname, Args args) {
-		debug {
-			if( auto f = __dynamicMethods.containsKey( fname ) )
-				return __dynamicMethods[fname]( variantArray(args[0..$]) );
-			else
-				throw new DynamicMethodException (
-						" Error calling dynamic method. Method "
-						~ fname
-						~ " has not been binded to class "
-					 	~ typeof(this).stringof );
-		} else {
+		if( auto f = __dynamicMethods.containsKey( fname ) )
 			return __dynamicMethods[fname]( variantArray(args[0..$]) );
-		}
+		else
+			throw new DynamicMethodException (
+					" Error calling dynamic method. Method "
+					~ fname
+					~ " has not been binded to class "
+					~ typeof(this).stringof );
 	}
 
 	/++
@@ -248,19 +238,15 @@ template MakeClassDynamic() {
 	 + _ui.output.__call("foo",variantArray(1.0,2.0));
 	 +/
 	Variant __call(
-			Args:Variant[]
-			)(string fname, Args args) {
-		debug {
-			if( __dynamicMethods.containsKey( fname ) )
-				return __dynamicMethods[fname]( args );
-			else
-				throw new DynamicMethodException (
-						" Error calling dynamic method. Method "
-						~ fname
-						~ " has not been binded to class "
-					 	~ typeof(this).stringof );
-		} else {
+		Args:Variant[]
+		)(string fname, Args args) {
+		if( __dynamicMethods.containsKey( fname ) )
 			return __dynamicMethods[fname]( args );
-		}
+		else
+			throw new DynamicMethodException (
+					" Error calling dynamic method. Method "
+					~ fname
+					~ " has not been binded to class "
+					~ typeof(this).stringof );
 	}
 }

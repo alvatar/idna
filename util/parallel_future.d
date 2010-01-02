@@ -769,6 +769,10 @@ private:
     }
 
     size_t defaultBlockSize(size_t rangeLen) {
+        if(this.size == 0) {
+            return rangeLen;
+        }
+
         immutable size_t twoSize = 2 * this.size;
         return (rangeLen / twoSize) + ((rangeLen % twoSize == 0) ? 0 : 1);
     }
@@ -787,7 +791,7 @@ public:
     /**Default constructor that initializes a ThreadPool with
      * however many cores are on your CPU.*/
     this(LockType lockType = LockType.MUTEX) {
-        this(coresPerCPU, lockType);
+        this(coresPerCPU - 1, lockType);
     }
 
     /**Allows for custom poolSize.*/
@@ -833,7 +837,7 @@ public:
     }
 
     /// Adds a Task to queue.
-    final void put(T)(T* task) if(is(T == Task)) {
+    void put(T)(T* task) if(is(T == Task)) {
         task.pool = this;
         abstractPut( cast(AbstractTask*) task);
     }
@@ -914,9 +918,8 @@ public:
     // Bug:  Weird behavior trying to do the overload the normal way.
     // Doing it with templating on the type of blockSize b/c that's the
     // only way it compiles.
-    MapType!(fun, R)[] map(alias fun, R, I)(R range, I blockSize,
-        MapType!(fun, R)[] buf = null)
-    if(is(I : size_t)) {
+    MapType!(fun, R)[] map(alias fun, R, I : size_t)(R range, I blockSize,
+        MapType!(fun, R)[] buf = null) {
         immutable len = range.length;
 
         if(buf.length == 0) {
@@ -927,6 +930,15 @@ public:
             "(Expected  :", len, " Got:  ", buf.length));
         if(blockSize > len) {
             blockSize = len;
+        }
+
+        // Handle as a special case:
+        if(size == 0) {
+            size_t index = 0;
+            foreach(elem; range) {
+                buf[index++] = unaryFun!(fun)(elem);
+            }
+            return buf;
         }
 
         alias MapTask!(fun, R) MTask;
@@ -1000,7 +1012,9 @@ public:
     /**Parallel map with default buffer size.*/
     MapType!(fun, R)[] map(alias fun, R)(R range, MapType!(fun, R)[] buf = null) {
         size_t blkSize = defaultBlockSize(range.length);
-        return this.map!(fun, R, size_t)(range, blkSize, buf);
+        alias map!(fun, R, size_t) mapFun;
+
+        return mapFun(range, blkSize, buf);
     }
 
     /**Parallel reduce.  For now, the range must offer random access and have
@@ -1025,7 +1039,11 @@ public:
      * ---
      */
     ReduceType!(fun, R, E)
-    reduce(alias fun, R, E)(R range, E startVal, size_t blockSize = 0) {
+    reduce(alias fun, R, E)(E startVal, R range, size_t blockSize = 0) {
+
+        if(size == 0) {
+            return std.algorithm.reduce!(fun)(startVal, range);
+        }
 
         // Unlike the rest of the functions here, I can't use the Task object
         // recycling trick here because this has to work on non-commutative
@@ -1109,7 +1127,7 @@ public:
     reduce(alias fun, R)(R range, size_t blockSize = 0) {
         auto startVal = range.front;
         range.popFront;
-        return reduce!(fun, R, ElementType!R)(range, startVal, blockSize);
+        return reduce!(fun, R, ElementType!R)(startVal, range, blockSize);
     }
 }
 
@@ -1166,6 +1184,16 @@ private struct ParallelForeach(R) {
     alias ParallelForeachTask!R PTask;
 
     int opApply(int delegate(ref E arg) dg) {
+
+        // Handle empty thread pool as special case.
+        if(pool.size == 0) {
+            int res = 0;
+            foreach(ref elem; range) {
+                res = dg(elem);
+            }
+            return res;
+        }
+
         PTask[] tasks = (cast(PTask*) alloca(pool.size * PTask.sizeof * 2))
                         [0..pool.size * 2];
         tasks[] = PTask.init;
@@ -1299,10 +1327,11 @@ version(unittest) {
 // These unittests are intended to also function as an example of how to
 // use this module.
 unittest {
+    foreach(poolSize; [0, 4])
     foreach(useSpinLocks; [LockType.MUTEX, LockType.SPINLOCK]) {
 
         // Create a ThreadPool object with the default number of threads.
-        pool = new ThreadPool(4, useSpinLocks);
+        pool = new ThreadPool(poolSize, useSpinLocks);
 
         // Create some data to work on.
         uint[] numbers = new uint[1_000];
@@ -1387,9 +1416,9 @@ unittest {
 // These unittests are intended more for actual testing and not so much
 // as examples.
 unittest {
-
+    foreach(poolSize; [0, 4])
     foreach(useSpinLocks; [LockType.MUTEX, LockType.SPINLOCK]) {
-        pool = new ThreadPool(4, useSpinLocks);
+        pool = new ThreadPool(poolSize, useSpinLocks);
 
         // Make sure work is reasonably balanced among threads.  This test is
         // non-deterministic and is more of a sanity check than something that

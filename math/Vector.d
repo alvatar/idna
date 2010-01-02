@@ -96,9 +96,6 @@ struct TVector( _type, int _dim ) {
 	}
 
 	// Predefined vector constants
-	/*static immutable Vector one = { array : TupleToArray!( With!(type).BuildValueTuple!(1,dim) ) };*/
-	/*static immutable TVector zero =
-		{ array : cast(type[dim])[ With!(type).BuildValueTuple!(immutable_scalar!(type,0),dim) ] };*/
 	mixin( GArrayStatic!(type, "zero").Repeat(iscalar!(type,0), dim) );
 	mixin( GArrayStatic!(type, "one").Repeat(iscalar!(type,1), dim) );
 

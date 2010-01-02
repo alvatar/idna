@@ -192,7 +192,7 @@ class JobHub
 	}
 
 	
-	private void addJob(inout ScheduledJob j) {
+	private void addJob(ref ScheduledJob j) {
 		scheduledJobs ~= j;
 		jobsModified = true;
 	}
@@ -215,7 +215,7 @@ class JobHub
 		// make a queue out of the jobs that we will run
 		void makeQueue() {
 			scheduledJobs.sort;
-			foreach (i, inout sj; scheduledJobs) {
+			foreach (i, ref sj; scheduledJobs) {
 				if (i+1 >= scheduledJobs.length || scheduledJobs[i+1].timeToRun > timeDelta) {
 					sj.next = -1;
 				} else {
@@ -226,7 +226,7 @@ class JobHub
 		
 		
 		// otherwise the gates to hell will open.
-		foreach (inout j; scheduledJobs) {
+		foreach (ref j; scheduledJobs) {
 			j.newJob = false;
 		}
 		
@@ -250,7 +250,7 @@ class JobHub
 				if (jobsModified) {
 					
 					// offset new jobs in time by the run time of the job that generated them
-					foreach (inout j; scheduledJobs) {
+					foreach (ref j; scheduledJobs) {
 						if (j.newJob) {
 							j.timeToRun += lastRunTime;
 							j.newJob = false;
@@ -300,7 +300,7 @@ class JobHub
 		}
 
 		// proceed to the next time tick
-		foreach (inout j; scheduledJobs) {
+		foreach (ref j; scheduledJobs) {
 			if (j.timeToRun != float.max) j.timeToRun -= timeDelta;
 		}
 		
