@@ -70,8 +70,6 @@ set guioptions=ac
 set helplang=en
 set hidden
 set hlsearch
-set iminsert=0
-set imsearch=0
 set makeprg=./build.sh
 set mouse=a
 set mousemodel=popup
@@ -116,10 +114,8 @@ let Tlist_Use_Horiz_Window =  0
 let EnhCommentifyAlignRight = "no"
 let EnhCommentifyMultiPartBlocks = "yes"
 let Tlist_Exit_OnlyWindow =  1 
-let NetrwTopLvlMenu = "Netrw."
 let Tlist_Display_Prototype =  0 
 let Tlist_Ctags_Cmd = "exuberant-ctags"
-let NetrwMenuPriority =  80 
 let Tlist_Highlight_Tag_On_BufEnter =  1 
 let Tlist_Auto_Highlight_Tag =  1 
 let Tlist_Show_Menu =  0 
@@ -134,7 +130,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-args /data/projects/idna/cyma/controller/GlUi.d
+silent! argdel *
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -187,8 +183,8 @@ setlocal formatexpr=
 setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
+setlocal iminsert=2
+setlocal imsearch=2
 setlocal include=
 setlocal includeexpr=
 setlocal indentexpr=

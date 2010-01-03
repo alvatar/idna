@@ -18,9 +18,6 @@ class CreateLine : ContextualizedCommand!(uint, vec2r, vec2r) {
 	mixin MakeCommandConstructor;
 
 	override bool execute( ref Model model ) {
-		//_ui.output().test5( 0xDEADC0DE );
-		//output.test5( 0xDEADC0DE );
-
 		if( context is null ) {
 			debug writeln("Command: Add line; No context defined -> requesting data");
 			interactive( model );

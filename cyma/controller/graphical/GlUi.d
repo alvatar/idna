@@ -76,7 +76,7 @@ class GlUi : BaseUi {
 	}
 
 	/++ Initialize Actors +/
-	void initActors( OutputActor[] drawActors ) {
+	void initActors( OutputActor[] outputActors ) {
 		// Create OpenGl input and context
 		_keyboard = new QueueKeyboardReader( inputHub.mainChannel );
 		_context = GLWindow();
@@ -91,7 +91,7 @@ class GlUi : BaseUi {
 			.create();
 		if( _context.created ) {
 			use(_context) in (GL gl) {
-				foreach( actor; drawActors ) {
+				foreach( actor; outputActors ) {
 					actor.start(gl);
 				}
 			};
@@ -195,23 +195,6 @@ class GlUi : BaseUi {
 	/++ User interface loop +/
 	void doUi( OutputActor[] outputActors ) {
 		/*
-		debug {
-			auto rnd = Random(unpredictableSeed);
-			auto com = new AddLine!(vec2f, vec2f);
-			driver.injectCommands( 
-				[ com._context(
-					MakeContext( 
-						vec2f( uniform(0,1.0,rnd), uniform(0,1.0,rnd) )
-						, vec2f( uniform(0,1.0,rnd),uniform(0,1.0,rnd) )
-						)
-					)
- 				]
-				);
-		}
-		*/
-
-
-		/*
 		void drawUi(GL gl) {
 			gl.Clear(GL_COLOR_BUFFER_BIT);
 			gl.withState(GL_BLEND).withoutState(GL_LIGHTING) in {
@@ -235,26 +218,20 @@ class GlUi : BaseUi {
 			initActors(outputActors);
 			_callInitActors = false;
 		}
-
 		if( _context.created ) {
 			use(_context) in (GL gl) {
 				foreach( ref a; outputActors ) {
 					// Update actors context with the GlUi's context
 					a.context = gl;
-					// Preprocess actor
-					if( a.preprocess )
-						a.preprocess()();
+					a.preprocess();
 				}
 				gl.Clear(GL_COLOR_BUFFER_BIT);
 				foreach( w; _widgets ) {
 					w.doWidget(gl);
 				}
 				foreach( ref a; outputActors ) {
-					// Execute actor
-					if( a.show )
-						a.show()();
+					a.show();
 				}
-				//drawUi(gl);
 			};
 			_context.update().show();
 		}

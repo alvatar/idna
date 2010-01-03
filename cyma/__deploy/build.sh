@@ -1,4 +1,4 @@
 #!/bin/sh
 
-xfbuild ../application/Main.d +h +noop +cdmd +obin/Cyma -I../../.. -I../../ -gc -debug -debug=verbose -L-lGL -L-lXrandr
+xfbuild ../application/Main.d +h +noop +full +cdmd +obin/Cyma -I../../.. -I../../ -gc -debug -debug=verbose -L-lGL -L-lXrandr
 if [[ `ls *di 2> /dev/null` ]]; then rm -R *di; fi;

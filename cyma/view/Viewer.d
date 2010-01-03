@@ -7,6 +7,7 @@ private {
 	import cyma.model.Model;
 	import cyma.view.canvas.All;
 	import cyma.controller.OutputActor;
+	import cyma.controller.MultiOutputActor;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -29,7 +30,7 @@ class Viewer {
 	 +/
 	final void init() {
 		foreach( i, type; CanvasTypes ) {
-			auto actor = addDrawActor( new type, type.stringof );
+			auto actor = addOutputActor( new type, type.stringof );
 		}
 	}
 
@@ -139,22 +140,25 @@ class Viewer {
 	/++
 	 + Provide an actor for commands' direct output
 	 +/
-	final OutputActor output() {
-		return _viewActors[0];
+	final MultiOutputActor output() {
+		auto res = new MultiOutputActor;
+		foreach(ref a;_viewActors) // TODO: ref?
+			res.addActor(a);
+		return res;
 	}
 
 	/++
 	 + Add canvas to the target list of the drawer
 	 +/
-	final private OutputActor addDrawActor( Canvas canvas, string name ) {
-		OutputActor newDrawActor = new OutputActor;
-		newDrawActor.name = name;
-		newDrawActor.canvas = canvas;
-		canvas.setParendDrawActor( newDrawActor );
-		_viewActors ~= newDrawActor;
+	final private OutputActor addOutputActor( Canvas canvas, string name ) {
+		OutputActor actor = new OutputActor;
+		actor.name = name;
+		actor.canvas = canvas;
+		canvas.setParendOutputActor( actor );
+		_viewActors ~= actor;
 
 		debug(verbose) writeln( "New registered Canvas: ", name );
-		return newDrawActor;
+		return actor;
 	}
 
 	/++

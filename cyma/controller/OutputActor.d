@@ -1,8 +1,7 @@
 module cyma.controller.OutputActor;
 
-private {
+protected {
 	import cyma.controller.graphical.ICanvas;
-	import pattern.dynamic_class;
 }
 
 /++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -13,24 +12,18 @@ class OutputActor {
 
 	alias void delegate() DrawFunction;
 
-	private {
-		string _name = "";
+	protected {
+		string _name;
 
 		bool _active = true;
 
-		bool _update = true;
+		ICanvas _canvas = null;
+
+		void[] _context = null;
 
 		DrawFunction _preprocess = null;
 
 		DrawFunction _show = null;
-	}
-
-	mixin MakeClassDynamic;
-
-	protected {
-		ICanvas _canvas = null;
-
-		void[] _context = null;
 	}
 
 	@property {
@@ -38,7 +31,7 @@ class OutputActor {
 			return _name;
 		}
 
-		string name( string name) {
+		string name(string name) {
 			return _name = name;
 		}
 
@@ -58,14 +51,6 @@ class OutputActor {
 			return _active = active;
 		}
 
-		bool update() {
-			return _update;
-		}
-
-		bool update( bool update ) {
-			return _update = update;
-		}
-
 		void[] context() {
 			return _context;
 		}
@@ -75,16 +60,20 @@ class OutputActor {
 		}
 	}
 
-	DrawFunction preprocess() {
-		return _preprocess;
+	void preprocess() {
+		if(_preprocess !is null
+			&& _active )
+			_preprocess();
 	}
 
 	DrawFunction preprocess( DrawFunction preprocess ) {
 		return _preprocess = preprocess;
 	}
 
-	DrawFunction show() {
-		return _show;
+	void show() {
+		if(_show !is null
+			&& _active )
+			_show();
 	}
 
 	DrawFunction show( DrawFunction show ) {

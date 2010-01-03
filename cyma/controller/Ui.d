@@ -58,14 +58,18 @@ abstract class BaseUi : Ui {
 	 + all commands +/
 	@property
 	EnvironmentProbe environment() {
+		debug if(_output is null)
+			throw new Exception("EnvironmentProbe is null");
 		return _environment;
 	}
 
-	/++ The output is controlled by the main user interface and passed to all
-	 + commands in its specific form, depending on the implementation of
+	/++
+	 + The OutputActor previously plugged
 	 + OutputActor for the specific Ui implementation +/
 	@property
 	OutputActor output() {
+		debug if(_output is null)
+			throw new Exception("OutputActor is null");
 		return _output;
 	}
 

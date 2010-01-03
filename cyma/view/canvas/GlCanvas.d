@@ -62,7 +62,7 @@ final class GlCanvas : Canvas {
 
 	final void updateContext() {
 		// Cast the DrawActor's environment to the right type for this canvas
-		gl = cast(GL)drawActor.context;
+		gl = cast(GL)outputActor.context;
 	}
 
 	final void clear() {

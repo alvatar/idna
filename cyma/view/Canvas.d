@@ -22,11 +22,11 @@ protected {
 abstract class Canvas : ICanvas {
 
 	/++ A link with a DrawActor that gives the Canvas all info needed +/
-	protected OutputActor drawActor;
+	protected OutputActor outputActor;
 
 	/++ Update the link with a DrawActor +/
-	void setParendDrawActor( OutputActor drawActor ) {
-		this.drawActor = drawActor;
+	void setParendOutputActor( OutputActor outputActor ) {
+		this.outputActor = outputActor;
 	}
 
 	void changed() {
