@@ -10,7 +10,8 @@ function checked_remove
 checked_remove Generator
 declare -rx DARGS="Main.d FreeList.d ThreadPool.d"
 
-ldc -ofGenerator $DARGS || dmd $DARGS || $DC $DARGS || echo -e "\n\nError compiling Generator. Check that you have either ldc or dmd compilers (D1) installed. If you have a D1 compiler with a different name, please set the environment variable \$DC\n" && echo -e "\n...compilation finished\n"
+#ldc -ofGenerator $DARGS || 
+dmd $DARGS || $DC $DARGS || echo -e "\n\nError compiling Generator. Check that you have either ldc or dmd compilers (D1) installed. If you have a D1 compiler with a different name, please set the environment variable \$DC\n" && echo -e "\n...compilation finished\n"
 
 checked_remove Main.o
 checked_remove FreeList.o
