@@ -1,5 +1,8 @@
 #!/bin/sh
 
+declare -x PATH_TO_SCRIPT=`dirname $0`
+
+cd $PATH_TO_SCRIPT
 if [[ -a .objs ]]; then rm -R .objs; fi;
 if [[ -a .deps ]]; then rm -R .deps; fi;
 if [[ -a .swp ]]; then rm .swp; fi;

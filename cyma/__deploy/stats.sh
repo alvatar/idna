@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH_TO_SCRIPT=`dirname $0`
+declare -x PATH_TO_SCRIPT=`dirname $0`
 
 cd $PATH_TO_SCRIPT
 cloc ..
