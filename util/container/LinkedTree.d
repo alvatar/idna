@@ -95,8 +95,6 @@ class LinkedTree (
 			}
 			result = dg( current.value );
 		}
-
-		return result;
 	}
 
 	/++
@@ -355,6 +353,7 @@ Returns: a copy of this iterator for chaining.
 				case TraverseMethod.LevelOrder:
 					bump = &nextLevelOrder;
 				break;
+				default: break;
 			}
 			version( D_Version2 ) {
 				return this;

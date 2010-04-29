@@ -130,6 +130,7 @@ class GlUi : BaseUi {
 					else
 						_driver.pushCode( unicodeArray );
 					break;
+					default: break;
 				}
 			}
 
@@ -153,6 +154,8 @@ class GlUi : BaseUi {
 
 					case Modes.Console:
 					break;
+
+					default: break;
 				}
 				/*
 				if( i.buttons == MouseInput.Button.Left

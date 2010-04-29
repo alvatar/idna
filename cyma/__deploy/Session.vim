@@ -63,7 +63,7 @@ unlet s:cpo_save
 set autoindent
 set backspace=2
 set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f|%l|\ %m,%f(%l):\ %m
-set fileencodings=ucs-bom,utf-8,default,latin1,default
+set fileencodings=ucs-bom,utf-8,default,latin1
 set guifont=montecarlo
 set guiheadroom=0
 set guioptions=ac
@@ -85,7 +85,6 @@ set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.info,.aux,.log,.dvi,.bbl,.out,.o,.lo
 set tabstop=4
 set termencoding=utf-8
 set wildmenu
-set window=29
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 let DidEnhancedCommentify =  1 

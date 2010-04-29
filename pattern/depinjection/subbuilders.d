@@ -58,7 +58,7 @@ class ConstantBuilder : ISingleBuilder {
 		fill[0..instance.length] = instance[0..$];
 	}
 
-	string toString() {
+	override string toString() {
 		return "Constant";
 	}
 }
@@ -112,7 +112,7 @@ class ContextAwareBuilder {
 		}
 	}
 
-	string toString () {
+	override string toString () {
 		if (regular) return regular.toString;
 		else return "specialized ContextAwareBuilder";
 	}

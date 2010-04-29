@@ -35,7 +35,7 @@ private class TimeReader : InputReader {
 
 class MainProcess : Process {
 
-	void exec() {
+	override void exec() {
 		HardwareTimer timer;
 
 		void delegate() tick;

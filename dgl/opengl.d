@@ -314,5 +314,4 @@ void* loadFuncFromGluLib(char* name) {
 	} else {
 		return func;
 	}
-	return null;
 }

@@ -11,7 +11,7 @@ abstract class MessageTrap {
 
 
 class MessageTrapT(T) : MessageTrap {
-	final void trap(Message msg) {
+	override final void trap(Message msg) {
 		T m = cast(T)msg;
 		assert (m !is null);
 		m_handler(m);

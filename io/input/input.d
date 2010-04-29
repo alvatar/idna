@@ -21,22 +21,25 @@ class InputQueue {
 }
 
 class InputQueueT(T) : InputQueue {
-	alias LinkedList!(T) Queue;
+	//alias LinkedList!(T) Queue; //SHIT!
+	alias T[] Queue;
 	Queue queue;
 
 	this() {
-		queue = new Queue;
+		//queue = new Queue;
 	}
    
    
 	override void sendOne(InputReader reader) {
-		T input = queue.get(0);
+		//T input = queue.get(0);
+		T input = queue[0];
 		reader.process_(T.inputTypeId, (cast(ubyte*)&input)[0 .. T.sizeof]);
 	}
 
 
 	override void removeOne() {
-		queue.removeHead();
+		//queue.removeHead();
+		queue = queue[1..$];
 	}
 
 
@@ -46,7 +49,8 @@ class InputQueueT(T) : InputQueue {
 
 
 	final void addOne(T x) {
-		queue.append(x);
+		//queue.append(x);
+		queue ~= x;
 	}
 }
 
@@ -308,13 +312,14 @@ class InputChannel {
 	
 	private {
 		InputQueue[] queues;
-		LinkedList!(int) queueIndices;
+		//LinkedList!(int) queueIndices;
+		int[] queueIndices;
 		
 		InputReader[] readers;
 	}
 
 	this() {
-		queueIndices = new LinkedList!(int);
+		//queueIndices = new LinkedList!(int);
 		queues.length = lastInputId;
 		foreach (i, ref q; queues) {
 			q = inputQueueFactories[i]();
@@ -325,17 +330,22 @@ class InputChannel {
 		readers ~= r;
 	}
 	
-	void opShl(T)(T newInput) {
-		queueIndices.append(newInput.inputTypeId);
+	void opBinary(string s, T)(T newInput) if (s == "<<") {
+		//queueIndices.append(newInput.inputTypeId);
+		queueIndices ~= newInput.inputTypeId;
 		getQueue!(T)(newInput.inputTypeId).addOne(newInput);
 	}
 	
 	bool empty() {
-		return queueIndices.isEmpty;
+		//return queueIndices.isEmpty;
+		return (queueIndices.length == 0);
 	}
 	
 	void dispatchOne() {
-		int qi = queueIndices.removeHead();
+		//int qi = queueIndices.removeHead();
+		int qi = queueIndices[0];
+		queueIndices = queueIndices[1..$];
+		//
 		InputQueue q = queues[qi];
 		foreach (reader; readers) {
 			q.sendOne(reader);

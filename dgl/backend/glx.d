@@ -400,7 +400,7 @@ class GLWindow : GLContext, DglWindow.Window {
 	}
 	
 	
-	GLWindow show() {
+	override GLWindow show() {
 		if (!_created) {
 			throw new Exception("Tried to show uninitialized window");
 		}
@@ -478,7 +478,7 @@ class GLWindow : GLContext, DglWindow.Window {
 	}
 
 
-	bool created() {
+	override bool created() {
 		return _created;
 	}
 

@@ -54,10 +54,11 @@ final class GlCanvas : Canvas {
 	}
 
 	~this() {
-		gl.ext(VERSION_1_5) in {
-			gl.DeleteBuffers(1, &vboIDs[0]);
-		};
-
+		if(_initialized) {
+			gl.ext(VERSION_1_5) in {
+				gl.DeleteBuffers(1, &vboIDs[0]);
+			};
+		}
 	}
 
 	final void updateContext() {
