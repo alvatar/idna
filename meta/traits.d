@@ -1,3 +1,9 @@
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Copyright:      Copyright (c) 2008 Matthias Walter. All rights reserved
+ + Copyright (c) 2010 by Álvaro Castro-Castilla, All Rights Reserved.
+ + Licensed under the MIT/X11 license, see LICENSE file for full description
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+
 module meta.traits;
 
 /// TODO: clean

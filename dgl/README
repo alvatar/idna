@@ -1,0 +1,10 @@
+About DGL
+===============================================================================
+
+Dgl is a fork of Dog http://hybrid.team0xf.com/wiki/Main/Dog
+by Team0xf
+
+The original code is licensed under MIT/X11, so is this fork.
+Please, see LICENSE file
+
+Dgl ports the code to D2, and works with Dmd version 2.046

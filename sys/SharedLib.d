@@ -5,6 +5,7 @@
  * Copyright: Copyright (C) 2007 Tomasz Stachowiak
  * License:   BSD style: $(LICENSE)
  * Authors:   Tomasz Stachowiak, Anders Bergh
+ *
  * Adapted to D2 by Álvaro Castro-Castilla
  */
 

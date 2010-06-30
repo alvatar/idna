@@ -1,9 +1,9 @@
-/**
-	Why bother driving the timer through the input subsystem ? The concept is that time should be an input.
-	Generally everything that can vary between subsequent engine executions has to be an input.
-	Why ?
-	That gives a possibility to perfectly reproduce any execution process / create replays / etc
-*/
+/++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ + Copyright (c) 2010 by Álvaro Castro-Castilla, All Rights Reserved.
+ + Licensed under the MIT/X11 license, see LICENSE file for full description
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++/
+
+// Generally everything that can vary between subsequent engine executions has to be an input.
 
 module core.MainProcess;
 
