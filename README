@@ -4,9 +4,9 @@ About IDNA
 Idna is currently in pre-alpha stage, and might not leave this state. It is
 programmed with D2, version 2.046, which is still an alpha compiler.
 
-IDNA is a personal framework, a hybrid of Phobos and Tango, that I use in my D
-programs along with phobos2 as standard/base libraries.
+IDNA is a personal framework for a CAD application, made for Phobos (with code
+from Tango and some other projects)
 
 The author of the code is Álvaro Castro-Castilla, unless stated otherwise in
-the file or an entire directory. See licenses for particular modules, too.
+a file or an entire directory. See licenses for particular modules, too.
 This code is licensed under MIT/X11. Please, see LICENSE file.
